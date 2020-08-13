@@ -1,8 +1,8 @@
-﻿using Fitograph.Api.Infrastructure;
+﻿using FitoGraph.Api.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
-using static Fitograph.Api.Infrastructure.AppEnums;
+using static FitoGraph.Api.Infrastructure.AppEnums;
 
-namespace Fitograph.Api.Areas.Supplier.Base
+namespace FitoGraph.Api.Areas.Supplier.Base
 {
     [Area(nameof(RoleEnum.Supplier))]
     public class BaseSupplierApiController : BaseApiController

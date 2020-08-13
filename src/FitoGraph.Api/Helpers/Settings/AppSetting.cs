@@ -1,0 +1,7 @@
+namespace FitoGraph.Api.Helpers.Settings
+{
+    public class AppSettings
+    {
+        public AppSettingDebug Debug { get; set; }
+    }
+}

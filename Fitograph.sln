@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{EBE1F5E2-3B64-4E06-917B-4DE3EC408638}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fitograph.Api", "src\Fitograph.Api\Fitograph.Api.csproj", "{AD204B7D-09C4-4B45-877D-84E29DCC161D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fitograph.Api", "src\FitoGraph.Api\FitoGraph.Api.csproj", "{AD204B7D-09C4-4B45-877D-84E29DCC161D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

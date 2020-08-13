@@ -1,20 +1,20 @@
-using Fitograph.Api.Areas.Admin.Base;
+﻿using FitoGraph.Api.Areas.Customer.Base;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Fitograph.Api.Areas.Admin.Controllers
+namespace FitoGraph.Api.Areas.Customer.Controllers
 {
-    public class TestController : BaseAdminApiController
+    public class TestController : BaseCustomerApiController
     {
         public TestController()
         {
         }
 
         [AllowAnonymous]
-        [HttpGet("Hi")]
+        [HttpGet("Hi")] 
         public IActionResult GetToken()
         {
-            return Ok("Hi from Admin");
+            return Ok("Hi from customer");
         }
     }
 }

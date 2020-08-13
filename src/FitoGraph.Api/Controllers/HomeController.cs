@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace Fitograph.Api.Controllers
+namespace FitoGraph.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]

@@ -1,4 +1,4 @@
-namespace Fitograph.Api.Infrastructure
+namespace FitoGraph.Api.Infrastructure
 {
     public class AppEnums
     {

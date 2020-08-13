@@ -2,6 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using FitoGraph.Api.Behaviors;
+using FitoGraph.Api.Helpers.Settings;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Fitograph.Api
+namespace FitoGraph.Api
 {
     public class Startup
     {
@@ -23,7 +27,16 @@ namespace Fitograph.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var AppSettingsSection = Configuration.GetSection("App");
             services.AddControllers();
+
+            services.AddMediatR(typeof(Startup));
+            services.AddAutoMapper(typeof(Startup));
+            services.Configure<AppSettings>(AppSettingsSection);
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(TransactionBehavior<,>));
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceBehavior<,>));
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(EventLoggerBehavior<,>));
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -1,8 +1,8 @@
-﻿using Fitograph.Api.Infrastructure;
+﻿using FitoGraph.Api.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
-using static Fitograph.Api.Infrastructure.AppEnums;
+using static FitoGraph.Api.Infrastructure.AppEnums;
 
-namespace Fitograph.Api.Areas.Admin.Base
+namespace FitoGraph.Api.Areas.Admin.Base
 {
     [Area(nameof(RoleEnum.Admin))]
     public class BaseAdminApiController : BaseApiController

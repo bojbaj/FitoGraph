@@ -1,8 +1,8 @@
-using Fitograph.Api.Areas.Supplier.Base;
+using FitoGraph.Api.Areas.Supplier.Base;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Fitograph.Api.Areas.Supplier.Controllers
+namespace FitoGraph.Api.Areas.Supplier.Controllers
 {
     public class TestController : BaseSupplierApiController
     {
