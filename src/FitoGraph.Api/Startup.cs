@@ -7,6 +7,7 @@ using FitoGraph.Api.Behaviors;
 using FitoGraph.Api.Helpers.Settings;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -37,6 +38,16 @@ namespace FitoGraph.Api
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceBehavior<,>));
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(EventLoggerBehavior<,>));
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("ApiCorsPolicy",
+                    builder => builder
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        //.AllowCredentials()
+                        );
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -48,12 +59,15 @@ namespace FitoGraph.Api
 
             app.UseRouting();
 
+            app.UseCors("ApiCorsPolicy");
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+
         }
     }
 }

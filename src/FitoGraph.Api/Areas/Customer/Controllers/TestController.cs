@@ -14,7 +14,7 @@ namespace FitoGraph.Api.Areas.Customer.Controllers
         [HttpGet("Hi")] 
         public IActionResult GetToken()
         {
-            return Ok("Hi from customer");
+            return Ok("Hi from Customer");
         }
     }
 }

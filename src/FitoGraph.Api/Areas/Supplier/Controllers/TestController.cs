@@ -14,7 +14,7 @@ namespace FitoGraph.Api.Areas.Supplier.Controllers
         [HttpGet("Hi")]
         public IActionResult GetToken()
         {
-            return Ok("Hi from supplier");
+            return Ok("Hi from Supplier");
         }
     }
 }
