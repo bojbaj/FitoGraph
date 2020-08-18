@@ -1,6 +1,6 @@
 ﻿using System;
 using FitoGraph.Api.Commands;
-using FitoGraph.Api.Domain.Models.Auth;
+using FitoGraph.Api.Domain.Models.Outputs;
 using MediatR;
 
 namespace FitoGraph.Api.Events

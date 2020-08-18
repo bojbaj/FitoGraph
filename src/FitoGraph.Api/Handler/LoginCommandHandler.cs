@@ -1,18 +1,24 @@
 using System;
+using System.Net;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
+using FirebaseAdmin;
+using FirebaseAdmin.Auth;
 using FitoGraph.Api.Commands;
 using FitoGraph.Api.Domain.Models;
 using FitoGraph.Api.Domain.Models.Auth;
+using FitoGraph.Api.Domain.Models.Outputs;
 using FitoGraph.Api.Helpers;
 using FitoGraph.Api.Helpers.Settings;
 using FitoGraph.Api.Infrastructure;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 
 namespace FitoGraph.Api.Commands.Handler
 {
@@ -20,6 +26,8 @@ namespace FitoGraph.Api.Commands.Handler
     {
         private readonly IMapper _mapper;
         private readonly AppSettings _appSettings;
+        private const string API_KEY = "AIzaSyAymOFvaSlasedfnhzmXkW7xspevY5Spc8";
+        private const string BASE_URL = "https://identitytoolkit.googleapis.com/v1/accounts:";
 
         public LoginCommandHandler(IMapper mapper, IOptionsSnapshot<AppSettings> appSettings)
         {
@@ -33,14 +41,61 @@ namespace FitoGraph.Api.Commands.Handler
             {
                 Result = new LoginOutput()
             };
+            LoginWithEmail loginWithEmail = new LoginWithEmail()
+            {
+                email = request.Username,
+                password = request.Password
+            };
+
+            HttpContent content = new StringContent(JsonConvert.SerializeObject(loginWithEmail), System.Text.Encoding.UTF8, "application/json"); ;
+            string action = $"signInWithPassword?key={API_KEY}";
+
+            var client = GetHttpClient();
+            HttpResponseMessage response = await client.PostAsync(BASE_URL + action, content);
+
             if (!request.Username.Equals("u1@site.com"))
             {
                 result.Message = "Username or Password is invalid";
                 return result;
             }
-            result.Result.Token = "eyJhbGciOiJSUzI1NiIsImtpZCI6IjQ5ZTg4YzUzNzYxOTk2YTczNjIzZjE5MWQ1MTJkMmI0N2RmODAyYTEiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vZGV2cHJvamVjdC1kZWJ1ZyIsImF1ZCI6ImRldnByb2plY3QtZGVidWciLCJhdXRoX3RpbWUiOjE1OTczMTYwMzEsInVzZXJfaWQiOiJMWHJ0QVl4VGlZYUx3andEVEg5c1Y5OVRQRGUyIiwic3ViIjoiTFhydEFZeFRpWWFMd2p3RFRIOXNWOTlUUERlMiIsImlhdCI6MTU5NzMxNjAzMSwiZXhwIjoxNTk3MzE5NjMxLCJlbWFpbCI6InUxQHNpdGUuY29tIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7ImVtYWlsIjpbInUxQHNpdGUuY29tIl19LCJzaWduX2luX3Byb3ZpZGVyIjoicGFzc3dvcmQifX0.iuZI2u4pzY2mQ-DHVr5IEfKVIC5-PWUGUngOblzM79DI06t0z_47k1J-ssV-VarC7OfcI1Uu5-QLVw-YCNrxnnE6kq2bJ9CNYzkU-bg52P2nRW3FY2yIy17ELLltb2_dXatpIOB59KF2pISWTY2LKD6wp8TtbKUhHShnIiRlbZDI-CbjJkUJLqGf2BH7LL1Cr8HpdoRXoxXbkBS1Q6NqETtjbxDn_9Zp_4KlJOnQttLwuZJHjF23O8iJ2vof7dT05kq38THDZxAjEz0xTxs_ClSPLKOHiDpRJNPSw2JQMftUwez6FFDig2XhP6yHTinmIuDNvY0frWdPvZZwjn14_g";
+            string strResponse = await response.Content.ReadAsStringAsync();
+            var loginWithEmailResponse = JsonConvert.DeserializeObject<LoginWithEmailResponse>(strResponse);
+            result.Result = new LoginOutput()
+            {
+                Token = loginWithEmailResponse.idToken
+            };
             result.Status = !string.IsNullOrEmpty(result.Result.Token);
             return result;
+        }
+
+        private HttpClient GetHttpClient()
+        {
+            var client = new HttpClient();
+            bool useProxy = _appSettings.Proxy.Enable;
+            if (useProxy)
+            {
+                string proxyHost = _appSettings.Proxy.Server;
+                int proxyPort = _appSettings.Proxy.Port;
+                string proxyUserName = _appSettings.Proxy.Username;
+                string proxyPassword = _appSettings.Proxy.Password;
+                bool hasAuth = !string.IsNullOrEmpty(_appSettings.Proxy.Username);
+                var proxy = new WebProxy
+                {
+                    Address = new Uri($"http://{proxyHost}:{proxyPort}"),
+                    BypassProxyOnLocal = false,
+                    UseDefaultCredentials = !hasAuth,
+                };
+                if (hasAuth)
+                {
+                    proxy.Credentials = new NetworkCredential(userName: proxyUserName, password: proxyPassword);
+                }
+                var httpClientHandler = new HttpClientHandler
+                {
+                    Proxy = proxy,
+                };
+                client = new HttpClient(handler: httpClientHandler, disposeHandler: true);
+            }
+            return client;
         }
     }
 }

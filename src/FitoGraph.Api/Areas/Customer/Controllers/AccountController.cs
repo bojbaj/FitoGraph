@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 using FitoGraph.Api.Areas.Customer.Base;
 using FitoGraph.Api.Commands;
 using FitoGraph.Api.Domain.Models;
-using FitoGraph.Api.Domain.Models.Auth;
+using FitoGraph.Api.Domain.Models.Outputs;
 using FitoGraph.Api.Events;
 using FitoGraph.Api.Infrastructure;
 using MediatR;

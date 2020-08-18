@@ -1,4 +1,4 @@
-namespace FitoGraph.Api.Domain.Models.Auth
+namespace FitoGraph.Api.Domain.Models.Outputs
 {
     public class LoginOutput
     {

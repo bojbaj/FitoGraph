@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using FitoGraph.Api.Domain.Models;
-using FitoGraph.Api.Domain.Models.Auth;
+using FitoGraph.Api.Domain.Models.Outputs;
 using MediatR;
 
 namespace FitoGraph.Api.Commands
