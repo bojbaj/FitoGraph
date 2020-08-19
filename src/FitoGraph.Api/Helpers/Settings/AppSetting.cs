@@ -4,5 +4,6 @@ namespace FitoGraph.Api.Helpers.Settings
     {
         public AppSettingDebug Debug { get; set; }
         public AppSettingProxy Proxy { get; set; }
+        public AppSettingFireBase FireBase { get; set; }
     }
 }

@@ -26,7 +26,6 @@ namespace FitoGraph.Api.Commands.Handler
     {
         private readonly IMapper _mapper;
         private readonly AppSettings _appSettings;
-        private const string API_KEY = "AIzaSyAymOFvaSlasedfnhzmXkW7xspevY5Spc8";
         private const string BASE_URL = "https://identitytoolkit.googleapis.com/v1/accounts:";
 
         public LoginCommandHandler(IMapper mapper, IOptionsSnapshot<AppSettings> appSettings)
@@ -48,16 +47,11 @@ namespace FitoGraph.Api.Commands.Handler
             };
 
             HttpContent content = new StringContent(JsonConvert.SerializeObject(loginWithEmail), System.Text.Encoding.UTF8, "application/json"); ;
-            string action = $"signInWithPassword?key={API_KEY}";
+            string action = $"signInWithPassword?key={_appSettings.FireBase.ApiKey}";
 
             var client = GetHttpClient();
             HttpResponseMessage response = await client.PostAsync(BASE_URL + action, content);
 
-            if (!request.Username.Equals("u1@site.com"))
-            {
-                result.Message = "Username or Password is invalid";
-                return result;
-            }
             string strResponse = await response.Content.ReadAsStringAsync();
             var loginWithEmailResponse = JsonConvert.DeserializeObject<LoginWithEmailResponse>(strResponse);
             result.Result = new LoginOutput()
@@ -65,6 +59,10 @@ namespace FitoGraph.Api.Commands.Handler
                 Token = loginWithEmailResponse.idToken
             };
             result.Status = !string.IsNullOrEmpty(result.Result.Token);
+            if (!result.Status)
+            {
+                result.Message = "Username or Password is invalid";
+            }
             return result;
         }
 
