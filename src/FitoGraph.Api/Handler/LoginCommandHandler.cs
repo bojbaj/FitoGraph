@@ -13,6 +13,7 @@ using FitoGraph.Api.Domain.Models;
 using FitoGraph.Api.Domain.Models.Auth;
 using FitoGraph.Api.Domain.Models.Outputs;
 using FitoGraph.Api.Helpers;
+using FitoGraph.Api.Helpers.Lib;
 using FitoGraph.Api.Helpers.Settings;
 using FitoGraph.Api.Infrastructure;
 using MediatR;
@@ -49,7 +50,7 @@ namespace FitoGraph.Api.Commands.Handler
             HttpContent content = new StringContent(JsonConvert.SerializeObject(loginWithEmail), System.Text.Encoding.UTF8, "application/json"); ;
             string action = $"signInWithPassword?key={_appSettings.FireBase.ApiKey}";
 
-            var client = GetHttpClient();
+            var client = HttpClientManager.GetHttpClientWithProxy(_appSettings.Proxy);
             HttpResponseMessage response = await client.PostAsync(BASE_URL + action, content);
 
             string strResponse = await response.Content.ReadAsStringAsync();
@@ -64,36 +65,6 @@ namespace FitoGraph.Api.Commands.Handler
                 result.Message = "Username or Password is invalid";
             }
             return result;
-        }
-
-        private HttpClient GetHttpClient()
-        {
-            var client = new HttpClient();
-            bool useProxy = _appSettings.Proxy.Enable;
-            if (useProxy)
-            {
-                string proxyHost = _appSettings.Proxy.Server;
-                int proxyPort = _appSettings.Proxy.Port;
-                string proxyUserName = _appSettings.Proxy.Username;
-                string proxyPassword = _appSettings.Proxy.Password;
-                bool hasAuth = !string.IsNullOrEmpty(_appSettings.Proxy.Username);
-                var proxy = new WebProxy
-                {
-                    Address = new Uri($"http://{proxyHost}:{proxyPort}"),
-                    BypassProxyOnLocal = false,
-                    UseDefaultCredentials = !hasAuth,
-                };
-                if (hasAuth)
-                {
-                    proxy.Credentials = new NetworkCredential(userName: proxyUserName, password: proxyPassword);
-                }
-                var httpClientHandler = new HttpClientHandler
-                {
-                    Proxy = proxy,
-                };
-                client = new HttpClient(handler: httpClientHandler, disposeHandler: true);
-            }
-            return client;
         }
     }
 }
