@@ -65,7 +65,6 @@ namespace FitoGraph.Api.Commands.Handler
             {
                 loginResult.Status = false;
                 loginResult.Message = "account is not verified yet!";
-                loginResult.Message = getUserDataResult.ToJsonString();
                 return loginResult;
             }
 
