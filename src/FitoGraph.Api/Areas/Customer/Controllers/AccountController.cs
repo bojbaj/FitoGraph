@@ -38,5 +38,24 @@ namespace FitoGraph.Api.Areas.Customer.Controllers
             }
             return Ok(result);
         }
+        
+        [AllowAnonymous]
+        [HttpPost("Register")]
+        public async Task<IActionResult> Register([FromBody] RegisterCommand model)
+        {
+            ResultWrapper<RegisterOutput> result = new ResultWrapper<RegisterOutput>();
+            model.Role = AppEnums.RoleEnum.Customer.ToString();
+            result = await _mediator.Send(model);
+            if (result.Status)
+            {
+                CustomerRegisterEvent opEvent = new CustomerRegisterEvent()
+                {
+                    Request = model,
+                    Response = result.Result
+                };
+                await _mediator.Publish(opEvent);
+            }
+            return Ok(result);
+        }
     }
 }

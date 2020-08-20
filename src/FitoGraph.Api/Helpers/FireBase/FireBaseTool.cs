@@ -15,12 +15,14 @@ namespace FitoGraph.Api.Helpers.FireBase
 {
     public interface IFireBaseTool
     {
+        Task<ResultWrapper<SignUpWithEmailAndPasswordResponse>> SignUpWithEmailAndPassword(SignUpWithEmailAndPasswordRequest request);
         Task<ResultWrapper<SignInWithEmailAndPasswordResponse>> SignInWithEmailAndPassword(SignInWithEmailAndPasswordRequest request);
         Task<ResultWrapper<GetUserDataResponse>> GetUserData(GetUserDataRequest request);
     }
     public class FireBaseTool : IFireBaseTool
     {
         private const string BASE_URL = "https://identitytoolkit.googleapis.com/v1/accounts:";
+        private const string SignUpWithPassword_URL = "signUp?key=API_KEY";
         private const string SignInWithPassword_URL = "signInWithPassword?key=API_KEY";
         private const string GetUserData_URL = "lookup?key=API_KEY";
         private readonly HttpClient _httpClient = null;
@@ -32,6 +34,29 @@ namespace FitoGraph.Api.Helpers.FireBase
             _mapper = mapper;
             _appSettings = appSettings.Value;
             _httpClient = HttpClientManager.GetHttpClientWithProxy(_appSettings.Proxy);
+        }
+
+        public async Task<ResultWrapper<SignUpWithEmailAndPasswordResponse>> SignUpWithEmailAndPassword(SignUpWithEmailAndPasswordRequest request)
+        {
+            ResultWrapper<SignUpWithEmailAndPasswordResponse> result = new ResultWrapper<SignUpWithEmailAndPasswordResponse>()
+            {
+                Result = new SignUpWithEmailAndPasswordResponse()
+            };
+
+            HttpContent content = new StringContent(JsonConvert.SerializeObject(request), System.Text.Encoding.UTF8, "application/json"); ;
+            string action = SignUpWithPassword_URL.Replace("API_KEY", _appSettings.FireBase.ApiKey);
+
+            HttpResponseMessage response = await _httpClient.PostAsync(BASE_URL + action, content);
+
+            string strResponse = await response.Content.ReadAsStringAsync();
+
+            result.Result = JsonConvert.DeserializeObject<SignUpWithEmailAndPasswordResponse>(strResponse);
+            result.Status = !string.IsNullOrEmpty(result.Result.idToken);
+            if (!result.Status)
+            {
+                result.Message = result.Result.error.message;
+            }
+            return result;
         }
 
         public async Task<ResultWrapper<SignInWithEmailAndPasswordResponse>> SignInWithEmailAndPassword(SignInWithEmailAndPasswordRequest request)
@@ -75,7 +100,7 @@ namespace FitoGraph.Api.Helpers.FireBase
             {
                 result.Message = "Can't retrive user data";
             }
-            result.Result = resultWrapper.users.FirstOrDefault();            
+            result.Result = resultWrapper.users.FirstOrDefault();
             return result;
         }
     }

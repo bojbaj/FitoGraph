@@ -1,9 +1,8 @@
 ﻿namespace FitoGraph.Api.Domain.Models.Auth
 {
-    public class SignInWithEmailAndPasswordRequest
+    public class SignUpWithEmailAndPasswordRequest
     {
         public string email { get; set; }
         public string password { get; set; }
-        public bool returnSecureToken { get; set; }
     }
 }
