@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using FitoGraph.Api.Behaviors;
+using FitoGraph.Api.Helpers.FireBase;
 using FitoGraph.Api.Helpers.Settings;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -37,6 +38,8 @@ namespace FitoGraph.Api
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(TransactionBehavior<,>));
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceBehavior<,>));
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(EventLoggerBehavior<,>));
+
+            services.AddScoped<IFireBaseTool, FireBaseTool>();
 
             services.AddCors(options =>
             {

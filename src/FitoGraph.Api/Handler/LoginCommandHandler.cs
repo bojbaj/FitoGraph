@@ -13,6 +13,7 @@ using FitoGraph.Api.Domain.Models;
 using FitoGraph.Api.Domain.Models.Auth;
 using FitoGraph.Api.Domain.Models.Outputs;
 using FitoGraph.Api.Helpers;
+using FitoGraph.Api.Helpers.FireBase;
 using FitoGraph.Api.Helpers.Lib;
 using FitoGraph.Api.Helpers.Settings;
 using FitoGraph.Api.Infrastructure;
@@ -25,46 +26,57 @@ namespace FitoGraph.Api.Commands.Handler
 {
     public class LoginCommandHandler : IRequestHandler<LoginCommand, ResultWrapper<LoginOutput>>
     {
-        private readonly IMapper _mapper;
-        private readonly AppSettings _appSettings;
-        private const string BASE_URL = "https://identitytoolkit.googleapis.com/v1/accounts:";
-
-        public LoginCommandHandler(IMapper mapper, IOptionsSnapshot<AppSettings> appSettings)
+        private readonly IFireBaseTool _fireBaseTool;
+        public LoginCommandHandler(IFireBaseTool fireBaseTool)
         {
-            _mapper = mapper;
-            _appSettings = appSettings.Value;
+            _fireBaseTool = fireBaseTool;
         }
 
         public async Task<ResultWrapper<LoginOutput>> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
-            ResultWrapper<LoginOutput> result = new ResultWrapper<LoginOutput>()
-            {
-                Result = new LoginOutput()
-            };
-            LoginWithEmail loginWithEmail = new LoginWithEmail()
+            ResultWrapper<LoginOutput> loginResult = new ResultWrapper<LoginOutput>();
+            SignInWithEmailAndPasswordRequest singInReq = new SignInWithEmailAndPasswordRequest()
             {
                 email = request.Username,
                 password = request.Password
             };
+            ResultWrapper<SignInWithEmailAndPasswordResponse> signInResult = await _fireBaseTool.SignInWithEmailAndPassword(singInReq);
 
-            HttpContent content = new StringContent(JsonConvert.SerializeObject(loginWithEmail), System.Text.Encoding.UTF8, "application/json"); ;
-            string action = $"signInWithPassword?key={_appSettings.FireBase.ApiKey}";
-
-            var client = HttpClientManager.GetHttpClientWithProxy(_appSettings.Proxy);
-            HttpResponseMessage response = await client.PostAsync(BASE_URL + action, content);
-
-            string strResponse = await response.Content.ReadAsStringAsync();
-            var loginWithEmailResponse = JsonConvert.DeserializeObject<LoginWithEmailResponse>(strResponse);
-            result.Result = new LoginOutput()
+            if (!signInResult.Status)
             {
-                Token = loginWithEmailResponse.idToken
-            };
-            result.Status = !string.IsNullOrEmpty(result.Result.Token);
-            if (!result.Status)
-            {
-                result.Message = "Username or Password is invalid";
+                loginResult.Status = false;
+                loginResult.Message = signInResult.Message;
+                return loginResult;
             }
-            return result;
+
+            GetUserDataRequest getUserDataReq = new GetUserDataRequest()
+            {
+                idToken = signInResult.Result.idToken
+            };
+
+            ResultWrapper<GetUserDataResponse> getUserDataResult = await _fireBaseTool.GetUserData(getUserDataReq);
+            if (!getUserDataResult.Status)
+            {
+                loginResult.Status = false;
+                loginResult.Message = getUserDataResult.Message;
+                return loginResult;
+            }
+            else if (!getUserDataResult.Result.emailVerified)
+            {
+                loginResult.Status = false;
+                loginResult.Message = "account is not verified yet!";
+                loginResult.Message = getUserDataResult.ToJsonString();
+                return loginResult;
+            }
+
+            loginResult.Status = true;
+            loginResult.Result = new LoginOutput()
+            {
+                Token = signInResult.Result.idToken,
+                IsVerifed = getUserDataResult.Result.emailVerified
+            };
+
+            return loginResult;
         }
     }
 }
