@@ -6,8 +6,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using FirebaseAdmin;
-using FirebaseAdmin.Auth;
 using FitoGraph.Api.Commands;
 using FitoGraph.Api.Domain.Models;
 using FitoGraph.Api.Domain.Models.Auth;
@@ -49,30 +47,10 @@ namespace FitoGraph.Api.Commands.Handler
                 return loginResult;
             }
 
-            GetUserDataRequest getUserDataReq = new GetUserDataRequest()
-            {
-                idToken = signInResult.Result.idToken
-            };
-
-            ResultWrapper<GetUserDataResponse> getUserDataResult = await _fireBaseTool.GetUserData(getUserDataReq);
-            if (!getUserDataResult.Status)
-            {
-                loginResult.Status = false;
-                loginResult.Message = getUserDataResult.Message;
-                return loginResult;
-            }
-            else if (!getUserDataResult.Result.emailVerified)
-            {
-                loginResult.Status = false;
-                loginResult.Message = "account is not verified yet!";
-                return loginResult;
-            }
-
             loginResult.Status = true;
             loginResult.Result = new LoginOutput()
             {
-                Token = signInResult.Result.idToken,
-                IsVerifed = getUserDataResult.Result.emailVerified
+                Token = signInResult.Result.idToken
             };
 
             return loginResult;

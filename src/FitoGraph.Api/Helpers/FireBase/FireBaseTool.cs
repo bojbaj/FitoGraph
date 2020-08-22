@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -95,6 +96,7 @@ namespace FitoGraph.Api.Helpers.FireBase
 
             string strResponse = await response.Content.ReadAsStringAsync();
             GetUserDataResponseWrapper resultWrapper = JsonConvert.DeserializeObject<GetUserDataResponseWrapper>(strResponse);
+            resultWrapper.users = resultWrapper.users ?? new List<GetUserDataResponse>() { };
             result.Status = resultWrapper.users.Count > 0;
             if (!result.Status)
             {
