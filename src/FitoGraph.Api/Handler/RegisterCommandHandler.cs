@@ -36,7 +36,7 @@ namespace FitoGraph.Api.Commands.Handler
             SignUpWithEmailAndPasswordRequest singUpReq = new SignUpWithEmailAndPasswordRequest()
             {
                 email = request.Username,
-                password = request.Password
+                password = request.Password                
             };
             ResultWrapper<SignUpWithEmailAndPasswordResponse> signUpResult = await _fireBaseTool.SignUpWithEmailAndPassword(singUpReq);
 

@@ -36,7 +36,8 @@ namespace FitoGraph.Api.Commands.Handler
             SignInWithEmailAndPasswordRequest singInReq = new SignInWithEmailAndPasswordRequest()
             {
                 email = request.Username,
-                password = request.Password
+                password = request.Password,
+                returnSecureToken = true
             };
             ResultWrapper<SignInWithEmailAndPasswordResponse> signInResult = await _fireBaseTool.SignInWithEmailAndPassword(singInReq);
 

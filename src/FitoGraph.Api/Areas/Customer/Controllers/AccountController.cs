@@ -6,6 +6,7 @@ using FitoGraph.Api.Areas.Customer.Base;
 using FitoGraph.Api.Commands;
 using FitoGraph.Api.Domain.Models;
 using FitoGraph.Api.Domain.Models.Outputs;
+using FitoGraph.Api.Domain.Models.User;
 using FitoGraph.Api.Events;
 using FitoGraph.Api.Infrastructure;
 using FitoGraph.Api.Queries;
@@ -14,6 +15,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
+using static FitoGraph.Api.Infrastructure.AppEnums;
 
 namespace FitoGraph.Api.Areas.Customer.Controllers
 {
@@ -67,16 +69,35 @@ namespace FitoGraph.Api.Areas.Customer.Controllers
         [HttpPost("IsVerified")]
         public async Task<IActionResult> IsVerified()
         {
-            string token = Request.Headers[HeaderNames.Authorization].FirstOrDefault().Split(' ')[1];
-            string userId = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "user_id").Value;
-            string email = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email).Value;
-            bool emailverified = Convert.ToBoolean(HttpContext.User.Claims.FirstOrDefault(x => x.Type == "email_verified").Value);
+            FirebaseUser user = HttpContext.GetFirebaseUser();
             VerificationCheckQuery model = new VerificationCheckQuery()
             {
-                idToken = token
+                idToken = user.Token
             };
             ResultWrapper<VerificationCheckOutput> result = new ResultWrapper<VerificationCheckOutput>();
             result = await _mediator.Send(model);
+            return Ok(result);
+        }
+
+        [HttpPost("Send-Verification-Email")]
+        public async Task<IActionResult> SendVerificationEmail()
+        {
+            FirebaseUser user = HttpContext.GetFirebaseUser();
+            SendVerificationEmailCommand model = new SendVerificationEmailCommand()
+            {
+                idToken = user.Token
+            };
+            ResultWrapper<SendVerificationEmailOutput> result = new ResultWrapper<SendVerificationEmailOutput>();
+            result = await _mediator.Send(model);
+            if (result.Status)
+            {
+                SendverificationEmailEvent opEvent = new SendverificationEmailEvent()
+                {
+                    Request = model,
+                    Response = result.Result
+                };
+                await _mediator.Publish(opEvent);
+            }
             return Ok(result);
         }
     }

@@ -8,5 +8,15 @@ namespace FitoGraph.Api.Infrastructure
             Supplier,
             Admin
         }
+        public enum ClaimEnum
+        {
+            user_id,
+            Token
+        }
+
+        public enum FireBaseRequestEnum
+        {
+            VERIFY_EMAIL
+        }
     }
 }

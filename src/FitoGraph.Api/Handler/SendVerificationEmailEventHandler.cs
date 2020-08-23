@@ -8,16 +8,16 @@ using FitoGraph.Api.Infrastructure;
 
 namespace FitoGraph.Api.Handler
 {
-    public class CustomerRegisterEventHandler : INotificationHandler<CustomerRegisterEvent>
+    public class SendVerificationEmailEventHandler : INotificationHandler<CustomerLoggedInEvent>
     {
-        private readonly ILogger<CustomerRegisterEventHandler> _logger;
+        private readonly ILogger<SendVerificationEmailEventHandler> _logger;
 
-        public CustomerRegisterEventHandler(ILogger<CustomerRegisterEventHandler> logger)
+        public SendVerificationEmailEventHandler(ILogger<SendVerificationEmailEventHandler> logger)
         {
             _logger = logger;
         }
 
-        public Task Handle(CustomerRegisterEvent notification, CancellationToken cancellationToken)
+        public Task Handle(CustomerLoggedInEvent notification, CancellationToken cancellationToken)
         {
             string logMessage = $"new registration at {DateTime.Now}: \r\n {notification.ToJsonString()}";
             _logger.Log(LogLevel.Information, logMessage);

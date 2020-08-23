@@ -19,6 +19,8 @@ namespace FitoGraph.Api.Helpers.FireBase
         Task<ResultWrapper<SignUpWithEmailAndPasswordResponse>> SignUpWithEmailAndPassword(SignUpWithEmailAndPasswordRequest request);
         Task<ResultWrapper<SignInWithEmailAndPasswordResponse>> SignInWithEmailAndPassword(SignInWithEmailAndPasswordRequest request);
         Task<ResultWrapper<GetUserDataResponse>> GetUserData(GetUserDataRequest request);
+        Task<ResultWrapper<SendVerificationEmailResponse>> SendEmailVerification(SendVerificationEmailRequest request);
+
     }
     public class FireBaseTool : IFireBaseTool
     {
@@ -26,6 +28,8 @@ namespace FitoGraph.Api.Helpers.FireBase
         private const string SignUpWithPassword_URL = "signUp?key=API_KEY";
         private const string SignInWithPassword_URL = "signInWithPassword?key=API_KEY";
         private const string GetUserData_URL = "lookup?key=API_KEY";
+        private const string SendVerificationEmail_URL = "sendOobCode?key=API_KEY";
+
         private readonly HttpClient _httpClient = null;
         private readonly AppSettings _appSettings;
         private readonly IMapper _mapper;
@@ -103,6 +107,28 @@ namespace FitoGraph.Api.Helpers.FireBase
                 result.Message = "Can't retrive user data";
             }
             result.Result = resultWrapper.users.FirstOrDefault();
+            return result;
+        }
+        public async Task<ResultWrapper<SendVerificationEmailResponse>> SendEmailVerification(SendVerificationEmailRequest request)
+        {
+            ResultWrapper<SendVerificationEmailResponse> result = new ResultWrapper<SendVerificationEmailResponse>()
+            {
+                Result = new SendVerificationEmailResponse()
+            };
+
+            HttpContent content = new StringContent(JsonConvert.SerializeObject(request), System.Text.Encoding.UTF8, "application/json"); ;
+            string action = SendVerificationEmail_URL.Replace("API_KEY", _appSettings.FireBase.ApiKey);
+
+            HttpResponseMessage response = await _httpClient.PostAsync(BASE_URL + action, content);
+
+            string strResponse = await response.Content.ReadAsStringAsync();
+
+            result.Result = JsonConvert.DeserializeObject<SendVerificationEmailResponse>(strResponse);
+            result.Status = !string.IsNullOrEmpty(result.Result.email);
+            if (!result.Status)
+            {
+                result.Message = result.Result.error.message;
+            }
             return result;
         }
     }
