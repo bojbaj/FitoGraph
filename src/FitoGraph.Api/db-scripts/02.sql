@@ -24,7 +24,7 @@ BEGIN
     (3, 'Maintain Weigth', GETDATE(), 1)
     SET IDENTITY_INSERT TGoal OFF
 END
---SELECT * FROM TGoal
+SELECT * FROM TGoal
 
 IF NOT EXISTS (SELECT 1 FROM  TWeeklyGoal)
 BEGIN
@@ -41,7 +41,7 @@ BEGIN
     (2, 'Gain 1 Kg per week', '', GETDATE(), 1),
     (3, 'Maintain your current weight', '', GETDATE(), 1)
 END
---SELECT * FROM TWeeklyGoal
+SELECT * FROM TWeeklyGoal
 
 
 IF NOT EXISTS (SELECT 1 FROM TSport)

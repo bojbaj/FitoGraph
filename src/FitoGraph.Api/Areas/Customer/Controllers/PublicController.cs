@@ -126,8 +126,22 @@ namespace FitoGraph.Api.Areas.Customer.Controllers
             GetAllGoalsQuery model = new GetAllGoalsQuery()
             {
                 idToken = user.Token
-            }; 
+            };
             ResultWrapper<GetAllGoalsOutput> result = new ResultWrapper<GetAllGoalsOutput>();
+            result = await _mediator.Send(model);
+            return Ok(result);
+        }
+
+        [HttpGet("weekly-goals/{goalId}")]
+        public async Task<IActionResult> GetWeeklyGoals(int goalId)
+        {
+            FirebaseUser user = HttpContext.GetFirebaseUser();
+            GetAllWeeklyGoalsQuery model = new GetAllWeeklyGoalsQuery()
+            {
+                idToken = user.Token,
+                TGoalId = goalId
+            };
+            ResultWrapper<GetAllWeeklyGoalsOutput> result = new ResultWrapper<GetAllWeeklyGoalsOutput>();
             result = await _mediator.Send(model);
             return Ok(result);
         }
