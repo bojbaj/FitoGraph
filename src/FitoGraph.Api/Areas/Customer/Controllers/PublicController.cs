@@ -118,5 +118,18 @@ namespace FitoGraph.Api.Areas.Customer.Controllers
             result = await _mediator.Send(model);
             return Ok(result);
         }
+
+        [HttpGet("goals")]
+        public async Task<IActionResult> GetGoals()
+        {
+            FirebaseUser user = HttpContext.GetFirebaseUser();
+            GetAllGoalsQuery model = new GetAllGoalsQuery()
+            {
+                idToken = user.Token
+            }; 
+            ResultWrapper<GetAllGoalsOutput> result = new ResultWrapper<GetAllGoalsOutput>();
+            result = await _mediator.Send(model);
+            return Ok(result);
+        }
     }
 }
