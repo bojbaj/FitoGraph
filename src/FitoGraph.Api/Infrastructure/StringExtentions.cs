@@ -16,6 +16,8 @@ namespace FitoGraph.Api.Infrastructure
 
         public static string JoinWithCDNAddress(this string Url)
         {
+            if (string.IsNullOrEmpty(Url))
+                return string.Empty;
             string CDN_URL = Startup.StaticConfig.GetValue<string>("App:Config:CDN_URL");
             if (CDN_URL.EndsWith("/"))
                 CDN_URL = CDN_URL.Substring(0, CDN_URL.Length - 1);

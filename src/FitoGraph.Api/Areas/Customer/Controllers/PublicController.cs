@@ -27,7 +27,7 @@ namespace FitoGraph.Api.Areas.Customer.Controllers
         {
             _mediator = mediator;
         }
-       
+
         [HttpGet("body-types")]
         public async Task<IActionResult> GetBodyTypes()
         {
@@ -37,7 +37,85 @@ namespace FitoGraph.Api.Areas.Customer.Controllers
                 idToken = user.Token
             };
             ResultWrapper<GetAllBodyTypesOutput> result = new ResultWrapper<GetAllBodyTypesOutput>();
-            result = await _mediator.Send(model);            
+            result = await _mediator.Send(model);
+            return Ok(result);
+        }
+
+        [HttpGet("sports")]
+        public async Task<IActionResult> GetSports()
+        {
+            FirebaseUser user = HttpContext.GetFirebaseUser();
+            GetAllSportsQuery model = new GetAllSportsQuery()
+            {
+                idToken = user.Token
+            };
+            ResultWrapper<GetAllSportsOutput> result = new ResultWrapper<GetAllSportsOutput>();
+            result = await _mediator.Send(model);
+            return Ok(result);
+        }
+
+        [HttpGet("food-types")]
+        public async Task<IActionResult> GetFoodTypes()
+        {
+            FirebaseUser user = HttpContext.GetFirebaseUser();
+            GetAllFoodTypesQuery model = new GetAllFoodTypesQuery()
+            {
+                idToken = user.Token
+            };
+            ResultWrapper<GetAllFoodTypesOutput> result = new ResultWrapper<GetAllFoodTypesOutput>();
+            result = await _mediator.Send(model);
+            return Ok(result);
+        }
+
+        [HttpGet("activity-levels")]
+        public async Task<IActionResult> GetActivityLevels()
+        {
+            FirebaseUser user = HttpContext.GetFirebaseUser();
+            GetAllActivityLevelsQuery model = new GetAllActivityLevelsQuery()
+            {
+                idToken = user.Token
+            };
+            ResultWrapper<GetAllActivityLevelsOutput> result = new ResultWrapper<GetAllActivityLevelsOutput>();
+            result = await _mediator.Send(model);
+            return Ok(result);
+        }
+
+        [HttpGet("allergies")]
+        public async Task<IActionResult> GetAllergies()
+        {
+            FirebaseUser user = HttpContext.GetFirebaseUser();
+            GetAllAllergiesQuery model = new GetAllAllergiesQuery()
+            {
+                idToken = user.Token
+            };
+            ResultWrapper<GetAllAllergiesOutput> result = new ResultWrapper<GetAllAllergiesOutput>();
+            result = await _mediator.Send(model);
+            return Ok(result);
+        }
+
+        [HttpGet("deficiencies")]
+        public async Task<IActionResult> GetDeficiencies()
+        {
+            FirebaseUser user = HttpContext.GetFirebaseUser();
+            GetAllDeficienciesQuery model = new GetAllDeficienciesQuery()
+            {
+                idToken = user.Token
+            };
+            ResultWrapper<GetAllDeficienciesOutput> result = new ResultWrapper<GetAllDeficienciesOutput>();
+            result = await _mediator.Send(model);
+            return Ok(result);
+        }
+
+        [HttpGet("diets")]
+        public async Task<IActionResult> GetDiets()
+        {
+            FirebaseUser user = HttpContext.GetFirebaseUser();
+            GetAllDietsQuery model = new GetAllDietsQuery()
+            {
+                idToken = user.Token
+            };
+            ResultWrapper<GetAllDietsOutput> result = new ResultWrapper<GetAllDietsOutput>();
+            result = await _mediator.Send(model);
             return Ok(result);
         }
     }

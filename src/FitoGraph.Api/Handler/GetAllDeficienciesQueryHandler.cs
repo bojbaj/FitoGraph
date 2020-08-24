@@ -26,26 +26,26 @@ using Newtonsoft.Json;
 
 namespace FitoGraph.Api.Commands.Handler
 {
-    public class GetAllBodyTypesQueryHandler : IRequestHandler<GetAllBodyTypesQuery, ResultWrapper<GetAllBodyTypesOutput>>
+    public class GetAllDeficienciesQueryHandler : IRequestHandler<GetAllDeficienciesQuery, ResultWrapper<GetAllDeficienciesOutput>>
     {
         private readonly IFireBaseTool _fireBaseTool;
         private readonly AppDbContext _dbContext;
-        public GetAllBodyTypesQueryHandler(IFireBaseTool fireBaseTool, AppDbContext dbContext)
+        public GetAllDeficienciesQueryHandler(IFireBaseTool fireBaseTool, AppDbContext dbContext)
         {
             _fireBaseTool = fireBaseTool;
             _dbContext = dbContext;
         }
 
-        public async Task<ResultWrapper<GetAllBodyTypesOutput>> Handle(GetAllBodyTypesQuery request, CancellationToken cancellationToken)
+        public async Task<ResultWrapper<GetAllDeficienciesOutput>> Handle(GetAllDeficienciesQuery request, CancellationToken cancellationToken)
         {
-            ResultWrapper<GetAllBodyTypesOutput> result = new ResultWrapper<GetAllBodyTypesOutput>();
+            ResultWrapper<GetAllDeficienciesOutput> result = new ResultWrapper<GetAllDeficienciesOutput>();
 
             GetUserDataRequest getUserDataReq = new GetUserDataRequest()
             {
                 idToken = request.idToken
             };
 
-            var tDataList = await _dbContext.TBodyType.ToListAsync();
+            var tDataList = await _dbContext.TDeficiency.ToListAsync();
             var list = tDataList.Select(x => new PublicListItem()
             {
                 Enabled = x.Enabled,
@@ -56,7 +56,7 @@ namespace FitoGraph.Api.Commands.Handler
             })
             .ToList();
             result.Status = true;
-            result.Result = new GetAllBodyTypesOutput()
+            result.Result = new GetAllDeficienciesOutput()
             {
                 list = list
             };

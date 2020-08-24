@@ -26,26 +26,26 @@ using Newtonsoft.Json;
 
 namespace FitoGraph.Api.Commands.Handler
 {
-    public class GetAllBodyTypesQueryHandler : IRequestHandler<GetAllBodyTypesQuery, ResultWrapper<GetAllBodyTypesOutput>>
+    public class GetAllDietsQueryHandler : IRequestHandler<GetAllDietsQuery, ResultWrapper<GetAllDietsOutput>>
     {
         private readonly IFireBaseTool _fireBaseTool;
         private readonly AppDbContext _dbContext;
-        public GetAllBodyTypesQueryHandler(IFireBaseTool fireBaseTool, AppDbContext dbContext)
+        public GetAllDietsQueryHandler(IFireBaseTool fireBaseTool, AppDbContext dbContext)
         {
             _fireBaseTool = fireBaseTool;
             _dbContext = dbContext;
         }
 
-        public async Task<ResultWrapper<GetAllBodyTypesOutput>> Handle(GetAllBodyTypesQuery request, CancellationToken cancellationToken)
+        public async Task<ResultWrapper<GetAllDietsOutput>> Handle(GetAllDietsQuery request, CancellationToken cancellationToken)
         {
-            ResultWrapper<GetAllBodyTypesOutput> result = new ResultWrapper<GetAllBodyTypesOutput>();
+            ResultWrapper<GetAllDietsOutput> result = new ResultWrapper<GetAllDietsOutput>();
 
             GetUserDataRequest getUserDataReq = new GetUserDataRequest()
             {
                 idToken = request.idToken
             };
 
-            var tDataList = await _dbContext.TBodyType.ToListAsync();
+            var tDataList = await _dbContext.TDiet.ToListAsync();
             var list = tDataList.Select(x => new PublicListItem()
             {
                 Enabled = x.Enabled,
@@ -56,7 +56,7 @@ namespace FitoGraph.Api.Commands.Handler
             })
             .ToList();
             result.Status = true;
-            result.Result = new GetAllBodyTypesOutput()
+            result.Result = new GetAllDietsOutput()
             {
                 list = list
             };
