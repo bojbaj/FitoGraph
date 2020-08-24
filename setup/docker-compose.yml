@@ -1,0 +1,12 @@
+version: "3.7"
+services:    
+  db:
+    image: microsoft/mssql-server-linux:latest
+    container_name: "fitograph_db_server"
+    ports:
+      - "7001:1433"
+    volumes:
+      - /home/alireza/shared/mssql/fitograph:/var/opt/mssql
+    environment:
+      SA_PASSWORD: "Az123456"
+      ACCEPT_EULA: "Y"

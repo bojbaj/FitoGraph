@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="36.02" height="44.017" viewBox="0 0 36.02 44.017">
+  <g id="badminton" transform="translate(-6 -1.983)" style="isolation: isolate">
+    <path id="Path_483" data-name="Path 483" d="M41,18.188a1.5,1.5,0,0,0-1.8-1.126l-7.013,1.856-6.221-3.949c-.207-.1-4.968-.938-4.968-.938L8.129,9.14a1.5,1.5,0,1,0-1.258,2.723L19,18V36a2.038,2.038,0,0,0,.06.485l2,8a2,2,0,1,0,3.88-.971L23,35.754l.408-3.983L25.1,35.633a2.01,2.01,0,0,0,.379.669l6,7a2,2,0,0,0,3.038-2.6L28.774,34,26,26V19.641l5.329,2.2A1.514,1.514,0,0,0,32,22a1.532,1.532,0,0,0,.336-.038l7.538-1.977A1.5,1.5,0,0,0,41,18.188Z" fill="#ffba57"/>
+    <path id="Path_484" data-name="Path 484" d="M23.5,5A3.5,3.5,0,1,1,20,8.5,3.5,3.5,0,0,1,23.5,5" fill="#ffba57"/>
+    <path id="Path_485" data-name="Path 485" d="M19,36V26h5L23,36Z" fill="#e64a19"/>
+    <g id="Group_1319" data-name="Group 1319">
+      <path id="Path_486" data-name="Path 486" d="M37.47,5.829c.94,2.112.6,4.348-.768,4.995s-3.232-.541-4.172-2.652-.6-4.348.768-4.995S36.53,3.717,37.47,5.829Z" fill="none" stroke="#ff754c" stroke-miterlimit="10" stroke-width="2"/>
+      <line id="Line_4" data-name="Line 4" x2="4.124" y2="8.249" transform="translate(37.001 11.189)" fill="none" stroke="#ff754c" stroke-miterlimit="10" stroke-width="2"/>
+    </g>
+    <path id="Path_487" data-name="Path 487" d="M8,3V5l4,1V2Z" fill="#b0bec5"/>
+    <circle id="Ellipse_336" data-name="Ellipse 336" cx="1" cy="1" r="1" transform="translate(7 3)" fill="#455a64"/>
+    <path id="Path_488" data-name="Path 488" d="M25.969,14.969c-.208-.1-4.969-.938-4.969-.938l-2-.76V26h7V14.989Z" fill="#7e8ccf"/>
+    <path id="Path_489" data-name="Path 489" d="M19,26l3,3,3.1,6.633L28.773,34,26,26Z" fill="#ff754c"/>
+  </g>
+</svg>

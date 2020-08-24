@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using AspNetCore.Firebase.Authentication.Extensions;
 using AutoMapper;
 using FitoGraph.Api.Behaviors;
+using FitoGraph.Api.Domain.DB;
 using FitoGraph.Api.Helpers.FireBase;
 using FitoGraph.Api.Helpers.Settings;
 using MediatR;
@@ -16,6 +17,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -27,9 +29,12 @@ namespace FitoGraph.Api
 {
     public class Startup
     {
+        public static IConfiguration StaticConfig { get; private set; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            StaticConfig = configuration;
         }
 
         public IConfiguration Configuration { get; }
@@ -78,6 +83,9 @@ namespace FitoGraph.Api
                     };
                 });
 
+            services.AddDbContext<AppDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("AppDb")));
+
             services.AddControllers();
 
             services.AddMediatR(typeof(Startup));
@@ -101,12 +109,16 @@ namespace FitoGraph.Api
             });
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AppDbContext dbContext)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            DbInitializer.Initialize(dbContext);
+
+            app.UseStaticFiles();
 
             app.UseRouting();
 

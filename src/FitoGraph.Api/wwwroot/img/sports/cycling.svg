@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="36" viewBox="0 0 40 36">
+  <g id="cycling_road" transform="translate(-4 -6)" style="isolation: isolate">
+    <g id="Group_1320" data-name="Group 1320">
+      <circle id="Ellipse_337" data-name="Ellipse 337" cx="1" cy="1" r="1" transform="translate(11 33)" fill="#607d8b"/>
+      <circle id="Ellipse_338" data-name="Ellipse 338" cx="1" cy="1" r="1" transform="translate(35 33)" fill="#607d8b"/>
+    </g>
+    <g id="Group_1321" data-name="Group 1321">
+      <path id="Path_510" data-name="Path 510" d="M39.5,18H33.271l-3.733-5.2c-.044-.079-.075-.162-.126-.238a3.5,3.5,0,0,0-4.854-.971l-8,6a3.5,3.5,0,0,0-.971,4.854,3.449,3.449,0,0,0,.747.785,1.179,1.179,0,0,0,.1.117l.332.184c.062.036.123.072.187.1l5.929,3.283-.873,7.865a2,2,0,0,0,1.767,2.209c.075.007.15.011.224.011a2,2,0,0,0,1.984-1.779l1-9A2,2,0,0,0,26.2,24.4l-3.474-2.7,5.608-4.206,2.945,2.878A1.5,1.5,0,0,0,32.5,21h7a1.5,1.5,0,0,0,0-3Z" fill="#ffba57"/>
+      <path id="Path_511" data-name="Path 511" d="M33.5,6A3.5,3.5,0,1,1,30,9.5,3.5,3.5,0,0,1,33.5,6" fill="#ffba57"/>
+    </g>
+    <g id="Group_1322" data-name="Group 1322">
+      <circle id="Ellipse_339" data-name="Ellipse 339" cx="7" cy="7" r="7" transform="translate(5 27)" fill="none" stroke="#b0bec5" stroke-width="2"/>
+      <circle id="Ellipse_340" data-name="Ellipse 340" cx="7" cy="7" r="7" transform="translate(29 27)" fill="none" stroke="#b0bec5" stroke-width="2"/>
+    </g>
+    <path id="Path_512" data-name="Path 512" d="M22.726,21.7l-6.168-4.111a3.5,3.5,0,0,0-.971,4.854,3.449,3.449,0,0,0,.747.785,1.179,1.179,0,0,0,.1.117l.332.184c.062.036.123.072.187.1L22.5,26.7l3.751-2.251c-.018-.015-.031-.035-.05-.049Z" fill="#2d4c5c"/>
+    <path id="Path_513" data-name="Path 513" d="M29.538,12.8c-.044-.079-.075-.162-.126-.238a3.5,3.5,0,0,0-4.854-.971l-8,6L22.726,21.7l5.608-4.206,2.627,2.567L31,20l2.158-2.158Z" fill="#9575cd"/>
+  </g>
+</svg>
