@@ -91,7 +91,7 @@ namespace FitoGraph.Api.Areas.Customer.Controllers
             result = await _mediator.Send(model);
             if (result.Status)
             {
-                SendverificationEmailEvent opEvent = new SendverificationEmailEvent()
+                SendVerificationEmailEvent opEvent = new SendVerificationEmailEvent()
                 {
                     Request = model,
                     Response = result.Result

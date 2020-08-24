@@ -5,7 +5,7 @@ using MediatR;
 
 namespace FitoGraph.Api.Events
 {
-    public class SendverificationEmailEvent : INotification
+    public class SendVerificationEmailEvent : INotification
     {
         public SendVerificationEmailCommand Request { get; set; }
         public SendVerificationEmailOutput Response { get; set; }
