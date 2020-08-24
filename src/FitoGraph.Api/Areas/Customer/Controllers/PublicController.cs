@@ -145,5 +145,18 @@ namespace FitoGraph.Api.Areas.Customer.Controllers
             result = await _mediator.Send(model);
             return Ok(result);
         }
+
+        [HttpGet("nutrition-conditions")]
+        public async Task<IActionResult> GetNutritionConditions()
+        {
+            FirebaseUser user = HttpContext.GetFirebaseUser();
+            GetAllNutritionConditionsQuery model = new GetAllNutritionConditionsQuery()
+            {
+                idToken = user.Token
+            };
+            ResultWrapper<GetAllNutritionConditionsOutput> result = new ResultWrapper<GetAllNutritionConditionsOutput>();
+            result = await _mediator.Send(model);
+            return Ok(result);
+        }
     }
 }
