@@ -8,6 +8,7 @@ using FitoGraph.Api.Domain.Models;
 using FitoGraph.Api.Domain.Models.Outputs;
 using FitoGraph.Api.Domain.Models.User;
 using FitoGraph.Api.Events;
+using FitoGraph.Api.Filters;
 using FitoGraph.Api.Infrastructure;
 using FitoGraph.Api.Queries;
 using MediatR;
@@ -19,6 +20,7 @@ using static FitoGraph.Api.Infrastructure.AppEnums;
 
 namespace FitoGraph.Api.Areas.Customer.Controllers
 {
+    [UserVerification]
     public class PublicController : BaseCustomerApiController
     {
         private readonly IMediator _mediator;
