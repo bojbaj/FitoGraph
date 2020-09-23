@@ -11,12 +11,12 @@ namespace FitoGraph.Api.Domain.Models.Outputs
         public string Phone { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public TBodyType TBodyType { get; set; }
-        public ICollection<TUserFoodType> TUserFoodTypes { get; set; }
-        public ICollection<TUserNutritionCondition> TUserNutritionConditions { get; set; }
-        public ICollection<TUserSport> TUserSports { get; set; }
-        public ICollection<TUserAllergy> TUserAllergies { get; set; }
-        public ICollection<TUserDiet> TUserDiets { get; set; }
-        public ICollection<TUserDeficiency> TUserDeficiencies { get; set; }
+        public TBodyType BodyType { get; set; }
+        public ICollection<TUserFoodType> UserFoodTypes { get; set; }
+        public ICollection<TUserNutritionCondition> UserNutritionConditions { get; set; }
+        public ICollection<TUserSport> UserSports { get; set; }
+        public ICollection<TUserAllergy> UserAllergies { get; set; }
+        public ICollection<TUserDiet> UserDiets { get; set; }
+        public ICollection<TUserDeficiency> UserDeficiencies { get; set; }
     }
 }

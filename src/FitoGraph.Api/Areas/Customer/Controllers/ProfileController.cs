@@ -34,6 +34,14 @@ namespace FitoGraph.Api.Areas.Customer.Controllers
         public async Task<IActionResult> Get()
         {
             FirebaseUser user = HttpContext.GetFirebaseUser();
+
+            CreateUserCommand createUserCommand = new CreateUserCommand()
+            {
+                Email = user.Email,
+                FireBaseId = user.UserId
+            };
+            ResultWrapper<CreateUserOutput> createUserResult = await _mediator.Send(createUserCommand);
+
             GetProfileQuery model = new GetProfileQuery()
             {
                 firebaseId = user.UserId

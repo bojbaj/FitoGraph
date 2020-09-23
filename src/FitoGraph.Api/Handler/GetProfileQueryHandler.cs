@@ -61,13 +61,13 @@ namespace FitoGraph.Api.Commands.Handler
                 FirstName = tUser.FirstName,
                 LastName = tUser.LastName,
                 Phone = tUser.Phone,
-                TBodyType = tUser.TBodyType,
-                TUserAllergies = tUser.TUserAllergies,
-                TUserDeficiencies = tUser.TUserDeficiencies,
-                TUserDiets = tUser.TUserDiets,
-                TUserFoodTypes = tUser.TUserFoodTypes,
-                TUserNutritionConditions = tUser.TUserNutritionConditions,
-                TUserSports = tUser.TUserSports
+                BodyType = tUser.TBodyType,
+                UserAllergies = tUser.TUserAllergies,
+                UserDeficiencies = tUser.TUserDeficiencies,
+                UserDiets = tUser.TUserDiets,
+                UserFoodTypes = tUser.TUserFoodTypes,
+                UserNutritionConditions = tUser.TUserNutritionConditions,
+                UserSports = tUser.TUserSports
             };
             return result;
         }

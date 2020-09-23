@@ -83,13 +83,6 @@ namespace FitoGraph.Api.Areas.Customer.Controllers
             };
             ResultWrapper<VerificationCheckOutput> result = new ResultWrapper<VerificationCheckOutput>();
             result = await _mediator.Send(model);
-
-            CreateUserCommand createUserCommand = new CreateUserCommand()
-            {
-                Email = user.Email,
-                FireBaseId = user.UserId
-            };
-            ResultWrapper<CreateUserOutput> createUserResult = await _mediator.Send(createUserCommand);
             return Ok(result);
         }
 
