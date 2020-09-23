@@ -50,6 +50,7 @@ namespace FitoGraph.Api.Commands.Handler
             loginResult.Result = new RegisterOutput()
             {
                 Token = signUpResult.Result.idToken,
+                LocalId = signUpResult.Result.localId                
             };
 
             return loginResult;

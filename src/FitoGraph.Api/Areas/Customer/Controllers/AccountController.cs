@@ -62,6 +62,13 @@ namespace FitoGraph.Api.Areas.Customer.Controllers
                     Response = result.Result
                 };
                 await _mediator.Publish(opEvent);
+
+                CreateUserCommand createUserCommand = new CreateUserCommand()
+                {
+                    Email = model.Username,
+                    FireBaseId = result.Result.LocalId
+                };
+                ResultWrapper<CreateUserOutput> createUserResult = await _mediator.Send(createUserCommand);
             }
             return Ok(result);
         }
@@ -76,6 +83,13 @@ namespace FitoGraph.Api.Areas.Customer.Controllers
             };
             ResultWrapper<VerificationCheckOutput> result = new ResultWrapper<VerificationCheckOutput>();
             result = await _mediator.Send(model);
+
+            CreateUserCommand createUserCommand = new CreateUserCommand()
+            {
+                Email = user.Email,
+                FireBaseId = user.UserId
+            };
+            ResultWrapper<CreateUserOutput> createUserResult = await _mediator.Send(createUserCommand);
             return Ok(result);
         }
 
