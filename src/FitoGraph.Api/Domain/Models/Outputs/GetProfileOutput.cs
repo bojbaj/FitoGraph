@@ -12,16 +12,7 @@ namespace FitoGraph.Api.Domain.Models.Outputs
         public string Phone { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-
-        #region Reloations
         public TBodyType BodyType { get; set; }
-        public ICollection<TUserFoodType> UserFoodTypes { get; set; }
-        public ICollection<TUserNutritionCondition> UserNutritionConditions { get; set; }
-        public ICollection<TUserSport> UserSports { get; set; }
-        public ICollection<TUserAllergy> UserAllergies { get; set; }
-        public ICollection<TUserDiet> UserDiets { get; set; }
-        public ICollection<TUserDeficiency> UserDeficiencies { get; set; }
-        #endregion
 
         #region Calculations
         public int Age

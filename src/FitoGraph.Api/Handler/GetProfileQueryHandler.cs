@@ -45,12 +45,6 @@ namespace FitoGraph.Api.Commands.Handler
 
             var tUser = await _dbContext.TUser
                 .Include(x => x.TBodyType)
-                .Include(x => x.TUserAllergies)
-                .Include(x => x.TUserDeficiencies)
-                .Include(x => x.TUserDiets)
-                .Include(x => x.TUserFoodTypes)
-                .Include(x => x.TUserNutritionConditions)
-                .Include(x => x.TUserSports)
                 .FirstOrDefaultAsync(x => x.FireBaseId == request.firebaseId);
             result.Status = true;
             result.Result = new GetProfileOutput()
@@ -61,14 +55,9 @@ namespace FitoGraph.Api.Commands.Handler
                 FirstName = tUser.FirstName,
                 LastName = tUser.LastName,
                 Phone = tUser.Phone,
-                BodyType = tUser.TBodyType,
-                UserAllergies = tUser.TUserAllergies,
-                UserDeficiencies = tUser.TUserDeficiencies,
-                UserDiets = tUser.TUserDiets,
-                UserFoodTypes = tUser.TUserFoodTypes,
-                UserNutritionConditions = tUser.TUserNutritionConditions,
-                UserSports = tUser.TUserSports
+                BodyType = tUser.TBodyType ?? new Domain.Entities.TBodyType()
             };
+            result.Result.BodyType.Image = result.Result.BodyType.Image.JoinWithCDNAddress();
             return result;
         }
     }
