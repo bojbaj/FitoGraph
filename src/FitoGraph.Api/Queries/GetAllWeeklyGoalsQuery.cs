@@ -7,7 +7,7 @@ namespace FitoGraph.Api.Queries
 {
     public class GetAllWeeklyGoalsQuery : IRequest<ResultWrapper<GetAllWeeklyGoalsOutput>>
     {
-        public string idToken { get; set; }
+        public string firebaseId { get; set; }
         public int TGoalId { get; set; }
     }
 }

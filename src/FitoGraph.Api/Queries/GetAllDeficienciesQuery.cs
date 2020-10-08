@@ -7,6 +7,6 @@ namespace FitoGraph.Api.Queries
 {
     public class GetAllDeficienciesQuery : IRequest<ResultWrapper<GetAllDeficienciesOutput>>
     {
-        public string idToken { get; set; }
+        public string firebaseId { get; set; }
     }
 }

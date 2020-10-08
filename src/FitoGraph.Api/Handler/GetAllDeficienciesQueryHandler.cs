@@ -40,16 +40,12 @@ namespace FitoGraph.Api.Commands.Handler
         {
             ResultWrapper<GetAllDeficienciesOutput> result = new ResultWrapper<GetAllDeficienciesOutput>();
 
-            GetUserDataRequest getUserDataReq = new GetUserDataRequest()
-            {
-                idToken = request.idToken
-            };
-
-            var tDataList = await _dbContext.TDeficiency.ToListAsync();
+            var tDataList = await _dbContext.TDeficiency
+                .Include(x => x.TUserDeficiencies).ThenInclude(x => x.TUser).ToListAsync();
             var list = tDataList.Select(x => new PublicListItem()
             {
                 Enabled = x.Enabled,
-                Selected = false,
+                Selected = x.TUserDeficiencies.Any(z => z.TUser.FireBaseId == request.firebaseId),
                 Text = x.Title,
                 Value = x.Id.ToString(),
                 Image = x.Image.JoinWithCDNAddress()

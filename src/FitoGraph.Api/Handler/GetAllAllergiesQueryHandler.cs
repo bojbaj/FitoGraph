@@ -40,16 +40,12 @@ namespace FitoGraph.Api.Commands.Handler
         {
             ResultWrapper<GetAllAllergiesOutput> result = new ResultWrapper<GetAllAllergiesOutput>();
 
-            GetUserDataRequest getUserDataReq = new GetUserDataRequest()
-            {
-                idToken = request.idToken
-            };
-
-            var tDataList = await _dbContext.TAllergy.ToListAsync();
+            var tDataList = await _dbContext.TAllergy
+                .Include(x => x.TUserAllergies).ThenInclude(x => x.TUser).ToListAsync();
             var list = tDataList.Select(x => new PublicListItem()
             {
                 Enabled = x.Enabled,
-                Selected = false,
+                Selected = x.TUserAllergies.Any(z => z.TUser.FireBaseId == request.firebaseId),
                 Text = x.Title,
                 Value = x.Id.ToString(),
                 Image = x.Image.JoinWithCDNAddress()

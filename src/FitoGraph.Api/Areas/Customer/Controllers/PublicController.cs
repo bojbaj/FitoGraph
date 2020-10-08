@@ -36,7 +36,7 @@ namespace FitoGraph.Api.Areas.Customer.Controllers
             FirebaseUser user = HttpContext.GetFirebaseUser();
             GetAllBodyTypesQuery model = new GetAllBodyTypesQuery()
             {
-                idToken = user.Token
+                firebaseId = user.UserId
             };
             ResultWrapper<GetAllBodyTypesOutput> result = new ResultWrapper<GetAllBodyTypesOutput>();
             result = await _mediator.Send(model);
@@ -49,7 +49,7 @@ namespace FitoGraph.Api.Areas.Customer.Controllers
             FirebaseUser user = HttpContext.GetFirebaseUser();
             GetAllSportsQuery model = new GetAllSportsQuery()
             {
-                idToken = user.Token
+                firebaseId = user.UserId
             };
             ResultWrapper<GetAllSportsOutput> result = new ResultWrapper<GetAllSportsOutput>();
             result = await _mediator.Send(model);
@@ -62,7 +62,7 @@ namespace FitoGraph.Api.Areas.Customer.Controllers
             FirebaseUser user = HttpContext.GetFirebaseUser();
             GetAllFoodTypesQuery model = new GetAllFoodTypesQuery()
             {
-                idToken = user.Token
+                firebaseId = user.UserId
             };
             ResultWrapper<GetAllFoodTypesOutput> result = new ResultWrapper<GetAllFoodTypesOutput>();
             result = await _mediator.Send(model);
@@ -75,7 +75,7 @@ namespace FitoGraph.Api.Areas.Customer.Controllers
             FirebaseUser user = HttpContext.GetFirebaseUser();
             GetAllActivityLevelsQuery model = new GetAllActivityLevelsQuery()
             {
-                idToken = user.Token
+                firebaseId = user.UserId
             };
             ResultWrapper<GetAllActivityLevelsOutput> result = new ResultWrapper<GetAllActivityLevelsOutput>();
             result = await _mediator.Send(model);
@@ -88,7 +88,7 @@ namespace FitoGraph.Api.Areas.Customer.Controllers
             FirebaseUser user = HttpContext.GetFirebaseUser();
             GetAllAllergiesQuery model = new GetAllAllergiesQuery()
             {
-                idToken = user.Token
+                firebaseId = user.UserId
             };
             ResultWrapper<GetAllAllergiesOutput> result = new ResultWrapper<GetAllAllergiesOutput>();
             result = await _mediator.Send(model);
@@ -101,7 +101,7 @@ namespace FitoGraph.Api.Areas.Customer.Controllers
             FirebaseUser user = HttpContext.GetFirebaseUser();
             GetAllDeficienciesQuery model = new GetAllDeficienciesQuery()
             {
-                idToken = user.Token
+                firebaseId = user.UserId
             };
             ResultWrapper<GetAllDeficienciesOutput> result = new ResultWrapper<GetAllDeficienciesOutput>();
             result = await _mediator.Send(model);
@@ -114,7 +114,7 @@ namespace FitoGraph.Api.Areas.Customer.Controllers
             FirebaseUser user = HttpContext.GetFirebaseUser();
             GetAllDietsQuery model = new GetAllDietsQuery()
             {
-                idToken = user.Token
+                firebaseId = user.UserId
             };
             ResultWrapper<GetAllDietsOutput> result = new ResultWrapper<GetAllDietsOutput>();
             result = await _mediator.Send(model);
@@ -127,7 +127,7 @@ namespace FitoGraph.Api.Areas.Customer.Controllers
             FirebaseUser user = HttpContext.GetFirebaseUser();
             GetAllGoalsQuery model = new GetAllGoalsQuery()
             {
-                idToken = user.Token
+                firebaseId = user.UserId
             };
             ResultWrapper<GetAllGoalsOutput> result = new ResultWrapper<GetAllGoalsOutput>();
             result = await _mediator.Send(model);
@@ -140,7 +140,7 @@ namespace FitoGraph.Api.Areas.Customer.Controllers
             FirebaseUser user = HttpContext.GetFirebaseUser();
             GetAllWeeklyGoalsQuery model = new GetAllWeeklyGoalsQuery()
             {
-                idToken = user.Token,
+                firebaseId = user.UserId,
                 TGoalId = goalId
             };
             ResultWrapper<GetAllWeeklyGoalsOutput> result = new ResultWrapper<GetAllWeeklyGoalsOutput>();
@@ -154,7 +154,7 @@ namespace FitoGraph.Api.Areas.Customer.Controllers
             FirebaseUser user = HttpContext.GetFirebaseUser();
             GetAllNutritionConditionsQuery model = new GetAllNutritionConditionsQuery()
             {
-                idToken = user.Token
+                firebaseId = user.UserId
             };
             ResultWrapper<GetAllNutritionConditionsOutput> result = new ResultWrapper<GetAllNutritionConditionsOutput>();
             result = await _mediator.Send(model);
@@ -167,7 +167,7 @@ namespace FitoGraph.Api.Areas.Customer.Controllers
             FirebaseUser user = HttpContext.GetFirebaseUser();
             GetAllRegionCountriesQuery model = new GetAllRegionCountriesQuery()
             {
-                userId = user.UserId
+                firebaseId = user.UserId
             };
             ResultWrapper<GetAllRegionCountriesOutput> result = new ResultWrapper<GetAllRegionCountriesOutput>();
             result = await _mediator.Send(model);
@@ -180,7 +180,7 @@ namespace FitoGraph.Api.Areas.Customer.Controllers
             FirebaseUser user = HttpContext.GetFirebaseUser();
             GetRegionStatesQuery model = new GetRegionStatesQuery()
             {
-                userId = user.UserId,
+                firebaseId = user.UserId,
                 TRegionCountryId = regionCountryId
             };
             ResultWrapper<GetRegionStatesOutput> result = new ResultWrapper<GetRegionStatesOutput>();
@@ -193,7 +193,7 @@ namespace FitoGraph.Api.Areas.Customer.Controllers
             FirebaseUser user = HttpContext.GetFirebaseUser();
             GetRegionCitiesQuery model = new GetRegionCitiesQuery()
             {
-                userId = user.UserId,
+                firebaseId = user.UserId,
                 TRegionStateId = regionStateId
             };
             ResultWrapper<GetRegionCitiesOutput> result = new ResultWrapper<GetRegionCitiesOutput>();

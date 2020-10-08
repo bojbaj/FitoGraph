@@ -38,11 +38,6 @@ namespace FitoGraph.Api.Commands.Handler
         {
             ResultWrapper<GetProfileOutput> result = new ResultWrapper<GetProfileOutput>();
 
-            GetUserDataRequest getUserDataReq = new GetUserDataRequest()
-            {
-                idToken = request.firebaseId
-            };
-
             var tUser = await _dbContext.TUser
                 .Include(x => x.TBodyType)
                 .FirstOrDefaultAsync(x => x.FireBaseId == request.firebaseId);

@@ -47,7 +47,7 @@ namespace FitoGraph.Api.Commands.Handler
             var list = tDataList.Select(x => new PublicListItem()
             {
                 Enabled = x.Enabled,
-                Selected = x.TRegionCities.SelectMany(z => z.TUsers).Any(z => z.FireBaseId == request.userId),
+                Selected = x.TRegionCities.SelectMany(z => z.TUsers).Any(z => z.FireBaseId == request.firebaseId),
                 Text = x.Title,
                 Value = x.Id.ToString(),
                 Image = x.Image.JoinWithCDNAddress()

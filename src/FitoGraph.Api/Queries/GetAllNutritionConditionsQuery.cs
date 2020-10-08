@@ -7,6 +7,6 @@ namespace FitoGraph.Api.Queries
 {
     public class GetAllNutritionConditionsQuery : IRequest<ResultWrapper<GetAllNutritionConditionsOutput>>
     {
-        public string idToken { get; set; }
+        public string firebaseId { get; set; }
     }
 }

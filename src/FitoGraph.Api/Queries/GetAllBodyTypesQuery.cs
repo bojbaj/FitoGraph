@@ -7,6 +7,6 @@ namespace FitoGraph.Api.Queries
 {
     public class GetAllBodyTypesQuery : IRequest<ResultWrapper<GetAllBodyTypesOutput>>
     {
-        public string idToken { get; set; }
+        public string firebaseId { get; set; }
     }
 }

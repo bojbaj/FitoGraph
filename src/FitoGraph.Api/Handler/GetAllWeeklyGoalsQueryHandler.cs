@@ -40,18 +40,14 @@ namespace FitoGraph.Api.Commands.Handler
         {
             ResultWrapper<GetAllWeeklyGoalsOutput> result = new ResultWrapper<GetAllWeeklyGoalsOutput>();
 
-            GetUserDataRequest getUserDataReq = new GetUserDataRequest()
-            {
-                idToken = request.idToken
-            };
-
             var tDataList = await _dbContext.TWeeklyGoal
+                .Include(x => x.TUsers)
                 .Where(x => request.TGoalId == x.TGoalId)
                 .ToListAsync();
             var list = tDataList.Select(x => new PublicListItem()
             {
                 Enabled = x.Enabled,
-                Selected = false,
+                Selected = x.TUsers.Any(z => z.FireBaseId == request.firebaseId),
                 Text = x.Title,
                 Value = x.Id.ToString(),
                 Image = x.Image.JoinWithCDNAddress()
