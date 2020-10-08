@@ -167,7 +167,7 @@ namespace FitoGraph.Api.Areas.Customer.Controllers
             FirebaseUser user = HttpContext.GetFirebaseUser();
             GetAllRegionCountriesQuery model = new GetAllRegionCountriesQuery()
             {
-                idToken = user.Token
+                userId = user.UserId
             };
             ResultWrapper<GetAllRegionCountriesOutput> result = new ResultWrapper<GetAllRegionCountriesOutput>();
             result = await _mediator.Send(model);
@@ -180,7 +180,7 @@ namespace FitoGraph.Api.Areas.Customer.Controllers
             FirebaseUser user = HttpContext.GetFirebaseUser();
             GetRegionStatesQuery model = new GetRegionStatesQuery()
             {
-                idToken = user.Token,
+                userId = user.UserId,
                 TRegionCountryId = regionCountryId
             };
             ResultWrapper<GetRegionStatesOutput> result = new ResultWrapper<GetRegionStatesOutput>();
@@ -193,7 +193,7 @@ namespace FitoGraph.Api.Areas.Customer.Controllers
             FirebaseUser user = HttpContext.GetFirebaseUser();
             GetRegionCitiesQuery model = new GetRegionCitiesQuery()
             {
-                idToken = user.Token,
+                userId = user.UserId,
                 TRegionStateId = regionStateId
             };
             ResultWrapper<GetRegionCitiesOutput> result = new ResultWrapper<GetRegionCitiesOutput>();

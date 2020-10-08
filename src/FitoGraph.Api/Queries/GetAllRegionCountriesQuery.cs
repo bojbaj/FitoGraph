@@ -7,6 +7,6 @@ namespace FitoGraph.Api.Queries
 {
     public class GetAllRegionCountriesQuery : IRequest<ResultWrapper<GetAllRegionCountriesOutput>>
     {
-        public string idToken { get; set; }
+        public string userId { get; set; }
     }
 }

@@ -40,18 +40,14 @@ namespace FitoGraph.Api.Commands.Handler
         {
             ResultWrapper<GetRegionCitiesOutput> result = new ResultWrapper<GetRegionCitiesOutput>();
 
-            GetUserDataRequest getUserDataReq = new GetUserDataRequest()
-            {
-                idToken = request.idToken
-            };
-
             var tDataList = await _dbContext.TRegionCity
+                .Include(x => x.TUsers)
                 .Where(x => request.TRegionStateId == x.TRegionStateId)
                 .ToListAsync();
             var list = tDataList.Select(x => new PublicListItem()
             {
                 Enabled = x.Enabled,
-                Selected = false,
+                Selected = x.TUsers.Any(z => z.FireBaseId == request.userId),
                 Text = x.Title,
                 Value = x.Id.ToString(),
                 Image = x.Image.JoinWithCDNAddress()
