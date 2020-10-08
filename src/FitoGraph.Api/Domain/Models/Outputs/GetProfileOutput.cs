@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using FitoGraph.Api.Domain.Entities;
 using static FitoGraph.Api.Infrastructure.AppEnums;
@@ -12,6 +13,7 @@ namespace FitoGraph.Api.Domain.Models.Outputs
         public string Phone { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public int BirthYear { get; set; }
         public TBodyType BodyType { get; set; }
 
         #region Calculations
@@ -19,7 +21,7 @@ namespace FitoGraph.Api.Domain.Models.Outputs
         {
             get
             {
-                return 0;
+                return (DateTime.Now.Year - BirthYear);
             }
         }
         public decimal BMI

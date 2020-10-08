@@ -11,6 +11,7 @@ namespace FitoGraph.Api.Domain.Entities
         public string LastName { get; set; }
         public string PostalCode { get; set; }
         public string Address { get; set; }
+        public int BirthYear { get; set; }
         public int? TRegionCityId { get; set; }
 
         public int? TBodyTypeId { get; set; }

@@ -42,12 +42,9 @@ namespace FitoGraph.Api.Commands.Handler
                 if (tUser == null)
                 {
                     tUser = new TUser()
-                    {
+                    { 
                         Email = request.Email,
                         FireBaseId = request.FireBaseId,
-                        FirstName = request.FirstName,
-                        LastName = request.LastName,
-                        Phone = request.Phone,
                         Enabled = true
                     };
                     _dbContext.TUser.Add(tUser);
@@ -55,9 +52,6 @@ namespace FitoGraph.Api.Commands.Handler
                 else
                 {
                     tUser.FireBaseId = request.FireBaseId;
-                    tUser.FirstName = request.FirstName;
-                    tUser.LastName = request.LastName;
-                    tUser.Phone = request.Phone;
                 }
                 await _dbContext.SaveChangesAsync();
                 createUserResult.Status = true;
@@ -65,10 +59,7 @@ namespace FitoGraph.Api.Commands.Handler
                 {
                     Id = tUser.Id,
                     Email = tUser.Email,
-                    FireBaseId = tUser.FireBaseId,
-                    FirstName = tUser.FirstName,
-                    LastName = tUser.LastName,
-                    Phone = tUser.Phone
+                    FireBaseId = tUser.FireBaseId
                 };
             }
             catch (Exception ex)

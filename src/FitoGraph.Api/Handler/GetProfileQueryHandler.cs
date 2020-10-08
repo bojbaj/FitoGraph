@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using FitoGraph.Api.Commands;
 using FitoGraph.Api.Domain.DB;
+using FitoGraph.Api.Domain.Entities;
 using FitoGraph.Api.Domain.Models;
 using FitoGraph.Api.Domain.Models.Auth;
 using FitoGraph.Api.Domain.Models.Outputs;
@@ -38,9 +40,10 @@ namespace FitoGraph.Api.Commands.Handler
         {
             ResultWrapper<GetProfileOutput> result = new ResultWrapper<GetProfileOutput>();
 
-            var tUser = await _dbContext.TUser
+            TUser tUser = await _dbContext.TUser
                 .Include(x => x.TBodyType)
                 .FirstOrDefaultAsync(x => x.FireBaseId == request.firebaseId);
+
             result.Status = true;
             result.Result = new GetProfileOutput()
             {
@@ -49,6 +52,7 @@ namespace FitoGraph.Api.Commands.Handler
                 Enabled = tUser.Enabled,
                 FirstName = tUser.FirstName,
                 LastName = tUser.LastName,
+                BirthYear = tUser.BirthYear,
                 Phone = tUser.Phone,
                 BodyType = tUser.TBodyType ?? new Domain.Entities.TBodyType()
             };

@@ -11,8 +11,5 @@ namespace FitoGraph.Api.Commands
         public string FireBaseId { get; set; }
         [Required]
         public string Email { get; set; }
-        public string Phone { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
     }
 }

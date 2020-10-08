@@ -50,5 +50,15 @@ namespace FitoGraph.Api.Areas.Customer.Controllers
             result = await _mediator.Send(model);
             return Ok(result);
         }
+
+        [HttpPost("update-baseinfo")]
+        public async Task<IActionResult> GetToken([FromBody] UpdateProfileBaseInfoCommand model)
+        {
+            FirebaseUser user = HttpContext.GetFirebaseUser();
+            model.firebaseId = user.UserId;
+            ResultWrapper<UpdateProfileBaseInfoOutput> result = new ResultWrapper<UpdateProfileBaseInfoOutput>();
+            result = await _mediator.Send(model);         
+            return Ok(result);
+        }
     }
 }
