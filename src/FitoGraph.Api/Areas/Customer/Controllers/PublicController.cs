@@ -160,5 +160,45 @@ namespace FitoGraph.Api.Areas.Customer.Controllers
             result = await _mediator.Send(model);
             return Ok(result);
         }
+
+        [HttpGet("region-countries")]
+        public async Task<IActionResult> GetRegionCountries()
+        {
+            FirebaseUser user = HttpContext.GetFirebaseUser();
+            GetAllRegionCountriesQuery model = new GetAllRegionCountriesQuery()
+            {
+                idToken = user.Token
+            };
+            ResultWrapper<GetAllRegionCountriesOutput> result = new ResultWrapper<GetAllRegionCountriesOutput>();
+            result = await _mediator.Send(model);
+            return Ok(result);
+        }
+
+        [HttpGet("region-states/{regionCountryId}")]
+        public async Task<IActionResult> GetRegionStates(int regionCountryId)
+        {
+            FirebaseUser user = HttpContext.GetFirebaseUser();
+            GetRegionStatesQuery model = new GetRegionStatesQuery()
+            {
+                idToken = user.Token,
+                TRegionCountryId = regionCountryId
+            };
+            ResultWrapper<GetRegionStatesOutput> result = new ResultWrapper<GetRegionStatesOutput>();
+            result = await _mediator.Send(model);
+            return Ok(result);
+        }
+        [HttpGet("region-cities/{regionStateId}")]
+        public async Task<IActionResult> GetRegionCities(int regionStateId)
+        {
+            FirebaseUser user = HttpContext.GetFirebaseUser();
+            GetRegionCitiesQuery model = new GetRegionCitiesQuery()
+            {
+                idToken = user.Token,
+                TRegionStateId = regionStateId
+            };
+            ResultWrapper<GetRegionCitiesOutput> result = new ResultWrapper<GetRegionCitiesOutput>();
+            result = await _mediator.Send(model);
+            return Ok(result);
+        }
     }
 }

@@ -37,6 +37,9 @@ namespace FitoGraph.Api.Domain.DB
         public DbSet<TUserNutritionCondition> TUserNutritionCondition { get; set; }
         public DbSet<TGoal> TGoal { get; set; }
         public DbSet<TWeeklyGoal> TWeeklyGoal { get; set; }
+        public DbSet<TRegionCountry> TRegionCountry { get; set; }
+        public DbSet<TRegionState> TRegionState { get; set; }
+        public DbSet<TRegionCity> TRegionCity { get; set; }
 
     }
 }
