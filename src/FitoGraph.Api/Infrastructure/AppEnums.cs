@@ -31,5 +31,19 @@ namespace FitoGraph.Api.Infrastructure
             OverWeight,
             Obese
         }
+        public enum WaistToHipsRatioEnum
+        {
+            NULL,
+            EXCELENT,
+            GOOD,
+            AVERAGE,
+            AT_RISK
+        }
+        public enum GenderEnum
+        {
+            NULL = 0,
+            MALE = 1,
+            FEMALE = 2
+        }
     }
 }

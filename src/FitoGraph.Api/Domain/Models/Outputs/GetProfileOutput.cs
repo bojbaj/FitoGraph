@@ -26,10 +26,15 @@ namespace FitoGraph.Api.Domain.Models.Outputs
         public decimal Hips { get; set; }
         public decimal Forearms { get; set; }
         public decimal Fat { get; set; }
-
-        public TBodyType BodyType { get; set; }
+        public decimal ActivityLevelPalForMale { get; set; } = 1.3M;
+        public decimal ActivityLevelPalForFemale { get; set; } = 1.3M;
+        public decimal ActivityLevelCarb { get; set; } = 0.8M;
+        public decimal ActivityLevelProtein { get; set; } = 3M;
+        public BodyTypeOutput BodyType { get; set; }
+        public int GenderValue { get; set; } = 1;
 
         #region Calculations
+        private GenderEnum Gender { get { return Enum.Parse<GenderEnum>(GenderValue.ToString()); } }
         private decimal HeightInMeter { get { return Height / 100.0M; } }
         public int Age
         {
@@ -45,6 +50,7 @@ namespace FitoGraph.Api.Domain.Models.Outputs
             {
                 if (_BMI != 0)
                     return _BMI.ToString("N2").toDecimal(0);
+                
                 _BMI = UserInfoCalculator.GetBMI(HeightInMeter, Weight);
                 return _BMI.ToString("N2").toDecimal(0);
             }
@@ -53,19 +59,127 @@ namespace FitoGraph.Api.Domain.Models.Outputs
         {
             get
             {
-                switch (BMI)
-                {
-                    case 0:
-                        return BmiLabelEnum.NULL.ToString();
-                    case var _ when (BMI < 18.5M):
-                        return BmiLabelEnum.UnderWeight.ToString();
-                    case var _ when (BMI < 25M):
-                        return BmiLabelEnum.Normal.ToString();
-                    case var _ when (BMI < 30M):
-                        return BmiLabelEnum.OverWeight.ToString();
-                    default:
-                        return BmiLabelEnum.Obese.ToString();
-                }
+                return UserInfoCalculator.GetBmiStatus(BMI).ToString();
+            }
+        }
+
+        private decimal _WaistToHipsRatio;
+        public decimal WaistToHipsRatio
+        {
+            get
+            {
+                if (_WaistToHipsRatio != 0)
+                    return _WaistToHipsRatio;
+                
+                _WaistToHipsRatio = (Hips == 0.0M) ? 0 : (Waist / Hips);
+                return _WaistToHipsRatio.ToString("N2").toDecimal(0);
+            }
+        }
+        public string WaistToHipsRatioStatus
+        {
+            get
+            {
+                return UserInfoCalculator.GetWaistToHipsRatioStatus(Gender, WaistToHipsRatio);
+            }
+        }
+        private decimal _BMR;
+        public decimal BMR
+        {
+            get
+            {
+                if (_BMR != 0)
+                    return _BMR;
+                
+                _BMR = UserInfoCalculator.GetMBR(Gender, Weight, Height, Age);
+                return _BMR;
+            }
+        }
+        private decimal _DailyCalories;
+        public decimal DailyCalories
+        {
+            get
+            {
+                if (_DailyCalories != 0)
+                    return _DailyCalories;
+                
+                _DailyCalories = UserInfoCalculator.GetDailyCalories(Gender, BMR, ActivityLevelPalForMale, ActivityLevelPalForFemale);
+                return _DailyCalories;
+            }
+        }
+        private decimal _DailyCarbInGram;
+        public decimal DailyCarbInGram
+        {
+            get
+            {
+                if (_DailyCarbInGram != 0)
+                    return _DailyCarbInGram.ToString("N2").toDecimal(0);
+
+                if (DailyCalories > 0.0M)
+                    _DailyCarbInGram = ActivityLevelCarb * Weight;
+                return _DailyCarbInGram.ToString("N2").toDecimal(0);
+            }
+        }
+
+        private decimal _DailyCarbInCalory;
+        public decimal DailyCarbInCalory
+        {
+            get
+            {
+                if (_DailyCarbInCalory != 0)
+                    return _DailyCarbInCalory.ToString("N2").toDecimal(0);
+
+                _DailyCarbInCalory = DailyCarbInGram * 4;
+                return _DailyCarbInCalory.ToString("N2").toDecimal(0);
+            }
+        }
+        private decimal _DailyProteinInGram;
+        public decimal DailyProteinInGram
+        {
+            get
+            {
+                if (_DailyProteinInGram != 0)
+                    return _DailyProteinInGram.ToString("N2").toDecimal(0);
+
+                if (DailyCalories > 0.0M)
+                    _DailyProteinInGram = ActivityLevelProtein * Weight;
+                return _DailyProteinInGram.ToString("N2").toDecimal(0);
+            }
+        }
+        private decimal _DailyProteinInCalory;
+        public decimal DailyProteinInCalory
+        {
+            get
+            {
+                if (_DailyProteinInCalory != 0)
+                    return _DailyProteinInCalory.ToString("N2").toDecimal(0);
+
+                _DailyProteinInCalory = DailyProteinInGram * 4;
+                return _DailyProteinInCalory.ToString("N2").toDecimal(0);
+            }
+        }
+        private decimal _DailyFatInCalory;
+        public decimal DailyFatInCalory
+        {
+            get
+            {
+                if (_DailyFatInCalory != 0)
+                    return _DailyFatInCalory.ToString("N2").toDecimal(0);
+
+                if (DailyCalories > 0.0M)
+                    _DailyFatInCalory = (DailyCalories - DailyProteinInCalory - DailyCarbInCalory);
+                return _DailyFatInCalory.ToString("N2").toDecimal(0);
+            }
+        }
+        private decimal _DailyFatInGram;
+        public decimal DailyFatInGram
+        {
+            get
+            {
+                if (_DailyFatInGram != 0)
+                    return _DailyFatInGram.ToString("N2").toDecimal(0);
+
+                _DailyFatInGram = DailyFatInCalory / 9;
+                return _DailyFatInGram.ToString("N2").toDecimal(0);
             }
         }
         public CustomerStateEnum CustomerState

@@ -66,7 +66,12 @@ namespace FitoGraph.Api.Commands.Handler
                 Hips = tUser.Hips,
                 Forearms = tUser.Forearms,
                 Fat = tUser.Fat,
-                BodyType = tUser.TBodyType ?? new Domain.Entities.TBodyType()
+                BodyType = tUser.TBodyType == null ? new BodyTypeOutput() : new BodyTypeOutput()
+                {
+                    Id = tUser.TBodyType.Id,
+                    Title = tUser.TBodyType.Title,
+                    Image = tUser.TBodyType.Image
+                }
             };
             result.Result.BodyType.Image = result.Result.BodyType.Image.JoinWithCDNAddress();
             return result;
