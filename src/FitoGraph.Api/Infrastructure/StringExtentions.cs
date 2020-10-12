@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 
@@ -27,6 +28,31 @@ namespace FitoGraph.Api.Infrastructure
 
             return $"{CDN_URL}/{Url}";
         }
-
+        public static string SafeReplace(this string input, string find, string replace, bool matchWholeWord = true)
+        {
+            string textToFind = matchWholeWord ? string.Format(@"\b{0}\b", find) : find;
+            return Regex.Replace(input, textToFind, replace);
+        }
+        public static string EscapeSQLInjection(this string input)
+        {
+            return input
+                .Replace("'", "''")
+                ;
+        }
+        public static string FixPersianNumbers(this string input)
+        {
+            return (input ?? string.Empty)
+                .Replace("۰", "0")
+                .Replace("۱", "1")
+                .Replace("۲", "2")
+                .Replace("۳", "3")
+                .Replace("۴", "4")
+                .Replace("۵", "5")
+                .Replace("۶", "6")
+                .Replace("۷", "7")
+                .Replace("۸", "8")
+                .Replace("۹", "9")
+                ;
+        }
     }
 }

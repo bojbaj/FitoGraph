@@ -42,6 +42,7 @@ namespace FitoGraph.Api.Commands.Handler
 
             TUser tUser = await _dbContext.TUser
                 .Include(x => x.TBodyType)
+                .Include(x => x.TRegionCity).ThenInclude(x => x.TRegionState)
                 .FirstOrDefaultAsync(x => x.FireBaseId == request.firebaseId);
 
             result.Status = true;
@@ -54,6 +55,11 @@ namespace FitoGraph.Api.Commands.Handler
                 LastName = tUser.LastName,
                 BirthYear = tUser.BirthYear,
                 Phone = tUser.Phone,
+                Address = tUser.Address,
+                PostalCode = tUser.PostalCode,
+                RegionCityId = tUser.TRegionCityId.toInt(0),
+                RegionStateId = tUser.TRegionCity?.TRegionStateId.toInt(0) ?? 0,
+                RegionCountryId = tUser.TRegionCity?.TRegionState?.TRegionCountryId.toInt(0) ?? 0,
                 BodyType = tUser.TBodyType ?? new Domain.Entities.TBodyType()
             };
             result.Result.BodyType.Image = result.Result.BodyType.Image.JoinWithCDNAddress();
