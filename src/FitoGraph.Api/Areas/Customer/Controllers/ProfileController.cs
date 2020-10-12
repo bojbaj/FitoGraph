@@ -52,12 +52,21 @@ namespace FitoGraph.Api.Areas.Customer.Controllers
         }
 
         [HttpPost("update-baseinfo")]
-        public async Task<IActionResult> GetToken([FromBody] UpdateProfileBaseInfoCommand model)
+        public async Task<IActionResult> UpdateProfileBaseInfo([FromBody] UpdateProfileBaseInfoCommand model)
         {
             FirebaseUser user = HttpContext.GetFirebaseUser();
             model.firebaseId = user.UserId;
             ResultWrapper<UpdateProfileBaseInfoOutput> result = new ResultWrapper<UpdateProfileBaseInfoOutput>();
-            result = await _mediator.Send(model);         
+            result = await _mediator.Send(model);
+            return Ok(result);
+        }
+        [HttpPost("update-bodyinfo")]
+        public async Task<IActionResult> UpdateProfileBodyInfo([FromBody] UpdateProfileBodyInfoCommand model)
+        {
+            FirebaseUser user = HttpContext.GetFirebaseUser();
+            model.firebaseId = user.UserId;
+            ResultWrapper<UpdateProfileBodyInfoOutput> result = new ResultWrapper<UpdateProfileBodyInfoOutput>();
+            result = await _mediator.Send(model);
             return Ok(result);
         }
     }

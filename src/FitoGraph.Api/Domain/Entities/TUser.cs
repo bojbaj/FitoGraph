@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FitoGraph.Api.Domain.Entities
 {
@@ -12,6 +13,18 @@ namespace FitoGraph.Api.Domain.Entities
         public string PostalCode { get; set; }
         public string Address { get; set; }
         public int BirthYear { get; set; }
+        [Column(TypeName = "decimal(6,2)")]
+        public decimal Weight { get; set; }
+        [Column(TypeName = "decimal(6,2)")]
+        public decimal Height { get; set; }
+        [Column(TypeName = "decimal(6,2)")]
+        public decimal Waist { get; set; }
+        [Column(TypeName = "decimal(6,2)")]
+        public decimal Hips { get; set; }
+        [Column(TypeName = "decimal(6,2)")]
+        public decimal Forearms { get; set; }
+        [Column(TypeName = "decimal(6,2)")]
+        public decimal Fat { get; set; }
         public int? TRegionCityId { get; set; }
 
         public int? TBodyTypeId { get; set; }

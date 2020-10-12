@@ -11,7 +11,7 @@ namespace FitoGraph.Api.Infrastructure
         public enum UserClaimEnum
         {
             user_id,
-            email_verified            
+            email_verified
         }
 
         public enum FireBaseRequestEnum
@@ -22,6 +22,14 @@ namespace FitoGraph.Api.Infrastructure
         {
             PROFILE_NOT_COMPLETED = 0,
             READY = 100
+        }
+        public enum BmiLabelEnum
+        {
+            NULL,
+            UnderWeight,
+            Normal,
+            OverWeight,
+            Obese
         }
     }
 }

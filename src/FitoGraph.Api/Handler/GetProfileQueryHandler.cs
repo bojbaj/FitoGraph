@@ -60,6 +60,12 @@ namespace FitoGraph.Api.Commands.Handler
                 RegionCityId = tUser.TRegionCityId.toInt(0),
                 RegionStateId = tUser.TRegionCity?.TRegionStateId.toInt(0) ?? 0,
                 RegionCountryId = tUser.TRegionCity?.TRegionState?.TRegionCountryId.toInt(0) ?? 0,
+                Weight = tUser.Weight,
+                Height = tUser.Height,
+                Waist = tUser.Waist,
+                Hips = tUser.Hips,
+                Forearms = tUser.Forearms,
+                Fat = tUser.Fat,
                 BodyType = tUser.TBodyType ?? new Domain.Entities.TBodyType()
             };
             result.Result.BodyType.Image = result.Result.BodyType.Image.JoinWithCDNAddress();
