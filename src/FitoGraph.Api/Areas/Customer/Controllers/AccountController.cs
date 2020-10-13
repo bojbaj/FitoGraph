@@ -66,7 +66,8 @@ namespace FitoGraph.Api.Areas.Customer.Controllers
                 CreateUserCommand createUserCommand = new CreateUserCommand()
                 {
                     Email = model.Username,
-                    FireBaseId = result.Result.LocalId
+                    FireBaseId = result.Result.LocalId,
+                    Gender = model.Gender
                 };
                 ResultWrapper<CreateUserOutput> createUserResult = await _mediator.Send(createUserCommand);
             }

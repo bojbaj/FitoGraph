@@ -26,15 +26,15 @@ namespace FitoGraph.Api.Domain.Models.Outputs
         public decimal Hips { get; set; }
         public decimal Forearms { get; set; }
         public decimal Fat { get; set; }
-        public decimal ActivityLevelPalForMale { get; set; } = 1.3M;
-        public decimal ActivityLevelPalForFemale { get; set; } = 1.3M;
-        public decimal ActivityLevelCarb { get; set; } = 0.8M;
-        public decimal ActivityLevelProtein { get; set; } = 3M;
+        public decimal ActivityLevelPalForMale { get; set; }
+        public decimal ActivityLevelPalForFemale { get; set; }
+        public decimal ActivityLevelCarb { get; set; }
+        public decimal ActivityLevelProtein { get; set; }
         public BodyTypeOutput BodyType { get; set; }
-        public int GenderValue { get; set; } = 1;
+        public int Gender { get; set; }
 
         #region Calculations
-        private GenderEnum Gender { get { return Enum.Parse<GenderEnum>(GenderValue.ToString()); } }
+        private GenderEnum GenderEn { get { return Enum.Parse<GenderEnum>(Gender.ToString()); } }
         private decimal HeightInMeter { get { return Height / 100.0M; } }
         public int Age
         {
@@ -50,7 +50,7 @@ namespace FitoGraph.Api.Domain.Models.Outputs
             {
                 if (_BMI != 0)
                     return _BMI.ToString("N2").toDecimal(0);
-                
+
                 _BMI = UserInfoCalculator.GetBMI(HeightInMeter, Weight);
                 return _BMI.ToString("N2").toDecimal(0);
             }
@@ -70,7 +70,7 @@ namespace FitoGraph.Api.Domain.Models.Outputs
             {
                 if (_WaistToHipsRatio != 0)
                     return _WaistToHipsRatio;
-                
+
                 _WaistToHipsRatio = (Hips == 0.0M) ? 0 : (Waist / Hips);
                 return _WaistToHipsRatio.ToString("N2").toDecimal(0);
             }
@@ -79,7 +79,7 @@ namespace FitoGraph.Api.Domain.Models.Outputs
         {
             get
             {
-                return UserInfoCalculator.GetWaistToHipsRatioStatus(Gender, WaistToHipsRatio);
+                return UserInfoCalculator.GetWaistToHipsRatioStatus(GenderEn, WaistToHipsRatio);
             }
         }
         private decimal _BMR;
@@ -89,8 +89,8 @@ namespace FitoGraph.Api.Domain.Models.Outputs
             {
                 if (_BMR != 0)
                     return _BMR;
-                
-                _BMR = UserInfoCalculator.GetMBR(Gender, Weight, Height, Age);
+
+                _BMR = UserInfoCalculator.GetMBR(GenderEn, Weight, Height, Age);
                 return _BMR;
             }
         }
@@ -101,8 +101,8 @@ namespace FitoGraph.Api.Domain.Models.Outputs
             {
                 if (_DailyCalories != 0)
                     return _DailyCalories;
-                
-                _DailyCalories = UserInfoCalculator.GetDailyCalories(Gender, BMR, ActivityLevelPalForMale, ActivityLevelPalForFemale);
+
+                _DailyCalories = UserInfoCalculator.GetDailyCalories(GenderEn, BMR, ActivityLevelPalForMale, ActivityLevelPalForFemale);
                 return _DailyCalories;
             }
         }

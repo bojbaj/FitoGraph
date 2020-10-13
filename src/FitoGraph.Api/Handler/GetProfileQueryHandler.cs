@@ -36,13 +36,14 @@ namespace FitoGraph.Api.Commands.Handler
             _dbContext = dbContext;
         }
 
-        public async Task<ResultWrapper<GetProfileOutput>> Handle(GetProfileQuery request, CancellationToken cancellationToken)
-        {
+            public async Task<ResultWrapper<GetProfileOutput>> Handle(GetProfileQuery request, CancellationToken cancellationToken)
+            {
             ResultWrapper<GetProfileOutput> result = new ResultWrapper<GetProfileOutput>();
 
             TUser tUser = await _dbContext.TUser
                 .Include(x => x.TBodyType)
                 .Include(x => x.TRegionCity).ThenInclude(x => x.TRegionState)
+                .Include(x => x.TActivityLevel)
                 .FirstOrDefaultAsync(x => x.FireBaseId == request.firebaseId);
 
             result.Status = true;
@@ -71,7 +72,12 @@ namespace FitoGraph.Api.Commands.Handler
                     Id = tUser.TBodyType.Id,
                     Title = tUser.TBodyType.Title,
                     Image = tUser.TBodyType.Image
-                }
+                },
+                ActivityLevelPalForMale = tUser.TActivityLevel?.PALForMale ?? 0,
+                ActivityLevelPalForFemale = tUser.TActivityLevel?.PALForFeMale ?? 0,
+                ActivityLevelCarb = tUser.TActivityLevel?.Carb ?? 0,
+                ActivityLevelProtein = tUser.TActivityLevel?.Protein ?? 0,
+                Gender = tUser.Gender
             };
             result.Result.BodyType.Image = result.Result.BodyType.Image.JoinWithCDNAddress();
             return result;

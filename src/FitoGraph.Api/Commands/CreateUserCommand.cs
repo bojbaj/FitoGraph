@@ -11,5 +11,8 @@ namespace FitoGraph.Api.Commands
         public string FireBaseId { get; set; }
         [Required]
         public string Email { get; set; }
+        [Required]
+        [Range(1, 2, ErrorMessage = "Please select your gender")]
+        public int Gender { get; set; }
     }
 }

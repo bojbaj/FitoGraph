@@ -26,11 +26,11 @@ namespace FitoGraph.Api.Domain.Entities
         [Column(TypeName = "decimal(6,2)")]
         public decimal Fat { get; set; }
         public int? TRegionCityId { get; set; }
-
+        public int Gender { get; set; }
         public int? TBodyTypeId { get; set; }
-
         public TRegionCity TRegionCity { get; set; }
         public TBodyType TBodyType { get; set; }
+        public TActivityLevel TActivityLevel { get; set; }
 
         public ICollection<TUserFoodType> TUserFoodTypes { get; set; }
         public ICollection<TUserNutritionCondition> TUserNutritionConditions { get; set; }

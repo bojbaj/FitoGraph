@@ -11,6 +11,9 @@ namespace FitoGraph.Api.Commands
         public string Username { get; set; }
         [Required]
         public string Password { get; set; }        
+        [Required]
+        [Range(1, 2, ErrorMessage = "Please select your gender")]
+        public int Gender { get; set; }
         public string Role { get; set; }        
     }
 }

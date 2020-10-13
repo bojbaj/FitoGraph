@@ -22,6 +22,7 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using static FitoGraph.Api.Infrastructure.AppEnums;
 
 namespace FitoGraph.Api.Commands.Handler
 {
@@ -38,20 +39,30 @@ namespace FitoGraph.Api.Commands.Handler
             ResultWrapper<CreateUserOutput> createUserResult = new ResultWrapper<CreateUserOutput>();
             try
             {
+                GenderEnum GenderEn = GenderEnum.NULL;
+                if (!Enum.TryParse<GenderEnum>(request.Gender.ToString(), true, out GenderEn))
+                {
+                    createUserResult.Status = false;
+                    createUserResult.Message = "Gender value is invalid!";
+                    return createUserResult;
+                }
+
                 TUser tUser = _dbContext.TUser.FirstOrDefault(x => x.Email == request.Email);
                 if (tUser == null)
                 {
                     tUser = new TUser()
-                    { 
+                    {
                         Email = request.Email,
                         FireBaseId = request.FireBaseId,
-                        Enabled = true
+                        Enabled = true,
+                        Gender = request.Gender
                     };
                     _dbContext.TUser.Add(tUser);
                 }
                 else
                 {
                     tUser.FireBaseId = request.FireBaseId;
+                    tUser.Gender = request.Gender;
                 }
                 await _dbContext.SaveChangesAsync();
                 createUserResult.Status = true;

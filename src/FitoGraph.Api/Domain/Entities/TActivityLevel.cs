@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FitoGraph.Api.Domain.Entities
 {
@@ -7,10 +8,14 @@ namespace FitoGraph.Api.Domain.Entities
         public string Title { get; set; }
         public string Image { get; set; }
         public string Note { get; set; }
-        public double PALForMale { get; set; }
-        public double PALForFeMale { get; set; }
-        public double Protein { get; set; }
-        public double Carb { get; set; }
+        [Column(TypeName = "decimal(6,2)")]
+        public decimal PALForMale { get; set; }
+        [Column(TypeName = "decimal(6,2)")]
+        public decimal PALForFeMale { get; set; }
+        [Column(TypeName = "decimal(6,2)")]
+        public decimal Protein { get; set; }
+        [Column(TypeName = "decimal(6,2)")]
+        public decimal Carb { get; set; }
         public ICollection<TUser> TUsers { get; set; }
     }
 }
