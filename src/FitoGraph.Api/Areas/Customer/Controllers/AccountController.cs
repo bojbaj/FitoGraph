@@ -108,5 +108,13 @@ namespace FitoGraph.Api.Areas.Customer.Controllers
             }
             return Ok(result);
         }
+        [AllowAnonymous]
+        [HttpPost("RefreshToken")]
+        public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenCommand model)
+        {
+            ResultWrapper<RefreshTokenOutput> result = new ResultWrapper<RefreshTokenOutput>();
+            result = await _mediator.Send(model);
+            return Ok(result);
+        }
     }
 }

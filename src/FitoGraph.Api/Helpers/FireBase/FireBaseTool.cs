@@ -20,15 +20,16 @@ namespace FitoGraph.Api.Helpers.FireBase
         Task<ResultWrapper<SignInWithEmailAndPasswordResponse>> SignInWithEmailAndPassword(SignInWithEmailAndPasswordRequest request);
         Task<ResultWrapper<GetUserDataResponse>> GetUserData(GetUserDataRequest request);
         Task<ResultWrapper<SendVerificationEmailResponse>> SendEmailVerification(SendVerificationEmailRequest request);
-
+        Task<ResultWrapper<RefreshTokenResponse>> RefreshToken(RefreshTokenRequest request);
     }
     public class FireBaseTool : IFireBaseTool
     {
-        private const string BASE_URL = "https://identitytoolkit.googleapis.com/v1/accounts:";
-        private const string SignUpWithPassword_URL = "signUp?key=API_KEY";
-        private const string SignInWithPassword_URL = "signInWithPassword?key=API_KEY";
-        private const string GetUserData_URL = "lookup?key=API_KEY";
-        private const string SendVerificationEmail_URL = "sendOobCode?key=API_KEY";
+        private const string BASE_URL = "https://identitytoolkit.googleapis.com/v1/";
+        private const string SignUpWithPassword_URL = "accounts:signUp?key=API_KEY";
+        private const string SignInWithPassword_URL = "accounts:signInWithPassword?key=API_KEY";
+        private const string GetUserData_URL = "accounts:lookup?key=API_KEY";
+        private const string SendVerificationEmail_URL = "accounts:sendOobCode?key=API_KEY";
+        private const string RefreshToken_URL = "token?key=API_KEY";
 
         private readonly HttpClient _httpClient = null;
         private readonly AppSettings _appSettings;
@@ -128,6 +129,27 @@ namespace FitoGraph.Api.Helpers.FireBase
             if (!result.Status)
             {
                 result.Message = result.Result.error.message;
+            }
+            return result;
+        }
+        public async Task<ResultWrapper<RefreshTokenResponse>> RefreshToken(RefreshTokenRequest request)
+        {
+            ResultWrapper<RefreshTokenResponse> result = new ResultWrapper<RefreshTokenResponse>()
+            {
+                Result = new RefreshTokenResponse()
+            };
+
+            HttpContent content = new StringContent(JsonConvert.SerializeObject(request), System.Text.Encoding.UTF8, "application/json"); ;
+            string action = RefreshToken_URL.Replace("API_KEY", _appSettings.FireBase.ApiKey);
+
+            HttpResponseMessage response = await _httpClient.PostAsync(BASE_URL + action, content);
+
+            string strResponse = await response.Content.ReadAsStringAsync();
+            result.Result = JsonConvert.DeserializeObject<RefreshTokenResponse>(strResponse);
+            result.Status = !string.IsNullOrEmpty(result.Result.id_token);
+            if (!result.Status)
+            {
+                result.Message = "RefreshToken is invalid";                
             }
             return result;
         }

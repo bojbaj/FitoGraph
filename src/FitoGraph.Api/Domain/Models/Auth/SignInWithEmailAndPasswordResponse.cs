@@ -7,5 +7,6 @@
         public string idToken { get; set; }
         public string displayName { get; set; }
         public bool registered { get; set; }
+        public string refreshToken { get; set; }        
     }
 }

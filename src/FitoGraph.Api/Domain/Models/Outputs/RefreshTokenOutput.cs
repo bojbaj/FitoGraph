@@ -1,6 +1,6 @@
 namespace FitoGraph.Api.Domain.Models.Outputs
 {
-    public class LoginOutput
+    public class RefreshTokenOutput
     {
         public string Token { get; set; }
         public string RefreshToken { get; set; }

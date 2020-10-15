@@ -51,7 +51,8 @@ namespace FitoGraph.Api.Commands.Handler
             loginResult.Status = true;
             loginResult.Result = new LoginOutput()
             {
-                Token = signInResult.Result.idToken
+                Token = signInResult.Result.idToken,
+                RefreshToken = signInResult.Result.refreshToken
             };
 
             return loginResult;

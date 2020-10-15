@@ -16,7 +16,8 @@ namespace FitoGraph.Api.Infrastructure
 
         public enum FireBaseRequestEnum
         {
-            VERIFY_EMAIL
+            VERIFY_EMAIL,
+            refresh_token
         }
         public enum CustomerStateEnum
         {
