@@ -61,5 +61,14 @@ namespace FitoGraph.Api.Areas.Customer.Controllers
             result = await _mediator.Send(model);
             return Ok(result);
         }
+        [HttpPost("update-activities")]
+        public async Task<IActionResult> UpdateProfileActivities([FromBody] UpdateProfileActivitiesCommand model)
+        {
+            FirebaseUser user = HttpContext.GetFirebaseUser();
+            model.firebaseId = user.UserId;
+            ResultWrapper<UpdateProfileActivitiesOutput> result = new ResultWrapper<UpdateProfileActivitiesOutput>();
+            result = await _mediator.Send(model);
+            return Ok(result);
+        }
     }
 }
