@@ -50,6 +50,13 @@ namespace FitoGraph.Api.Commands.Handler
             List<TUserSport> userSports = _dbContext.TUserSport.Where(x => x.TUser.FireBaseId == request.firebaseId).ToList();
             _dbContext.TUserSport.RemoveRange(userSports.Where(x => !request.Activities.Contains(x.TSportId)));
 
+            int selectedSportsCount = _dbContext.TSport.Where(x => request.Activities.Contains(x.Id)).Count();
+            if (selectedSportsCount != request.Activities.Count)
+            {
+                updateProfileResult.Status = false;
+                updateProfileResult.Message = "Selected activities are invalid!";
+                return updateProfileResult;
+            }
             foreach (int sportId in request.Activities.Where(x => !userSports.Any(z => z.TSportId == x)))
             {
                 _dbContext.TUserSport.Add(new TUserSport()
