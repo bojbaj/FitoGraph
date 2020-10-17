@@ -46,5 +46,11 @@ namespace FitoGraph.Api.Infrastructure
             MALE = 1,
             FEMALE = 2
         }
+        public enum GoalEnum
+        {
+            LOSE_WEIGHT = 1,
+            GAIN_WEIGHT = 2,
+            MAINTAIN_WEIGHT = 3
+        }
     }
 }

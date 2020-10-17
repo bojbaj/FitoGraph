@@ -38,5 +38,5 @@ INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
 VALUES (N'20201013075920_user_gender', N'3.1.7');
 
 
---ROLLBACK
-COMMIT
+ROLLBACK
+--COMMIT
