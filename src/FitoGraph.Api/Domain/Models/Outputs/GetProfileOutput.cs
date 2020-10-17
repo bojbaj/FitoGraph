@@ -26,10 +26,14 @@ namespace FitoGraph.Api.Domain.Models.Outputs
         public decimal Hips { get; set; }
         public decimal Forearms { get; set; }
         public decimal Fat { get; set; }
+        public decimal TargetWeight { get; set; }
         public decimal ActivityLevelPalForMale { get; set; }
         public decimal ActivityLevelPalForFemale { get; set; }
         public decimal ActivityLevelCarb { get; set; }
         public decimal ActivityLevelProtein { get; set; }
+        public int ActivityLevelId { get; set; }
+        public int GoalId { get; set; }
+        public int WeeklyGoalId { get; set; }
         public BodyTypeOutput BodyType { get; set; }
         public int Gender { get; set; }
 
