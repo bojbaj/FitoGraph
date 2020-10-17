@@ -67,7 +67,7 @@ namespace FitoGraph.Api.Commands.Handler
             }
             int r = await _dbContext.SaveChangesAsync();
 
-            if (r <= 0)
+            if (r < 0)
             {
                 updateProfileResult.Status = false;
                 updateProfileResult.Message = "Unhandled error!";

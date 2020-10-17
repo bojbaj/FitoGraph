@@ -70,12 +70,22 @@ namespace FitoGraph.Api.Areas.Customer.Controllers
             result = await _mediator.Send(model);
             return Ok(result);
         }
-         [HttpPost("update-target")]
+        [HttpPost("update-target")]
         public async Task<IActionResult> UpdateProfileTarget([FromBody] UpdateProfileTargetCommand model)
         {
             FirebaseUser user = HttpContext.GetFirebaseUser();
             model.firebaseId = user.UserId;
             ResultWrapper<UpdateProfileTargetOutput> result = new ResultWrapper<UpdateProfileTargetOutput>();
+            result = await _mediator.Send(model);
+            return Ok(result);
+        }
+
+        [HttpPost("update-health-conditions")]
+        public async Task<IActionResult> UpdateProfileHealthConditions([FromBody] UpdateProfileHealthConditionsCommand model)
+        {
+            FirebaseUser user = HttpContext.GetFirebaseUser();
+            model.firebaseId = user.UserId;
+            ResultWrapper<UpdateProfileHealthConditionsOutput> result = new ResultWrapper<UpdateProfileHealthConditionsOutput>();
             result = await _mediator.Send(model);
             return Ok(result);
         }
