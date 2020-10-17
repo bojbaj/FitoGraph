@@ -36,7 +36,7 @@ namespace FitoGraph.Api.Commands.Handler
             SignUpWithEmailAndPasswordRequest singUpReq = new SignUpWithEmailAndPasswordRequest()
             {
                 email = request.Username,
-                password = request.Password                
+                password = request.Password
             };
             ResultWrapper<SignUpWithEmailAndPasswordResponse> signUpResult = await _fireBaseTool.SignUpWithEmailAndPassword(singUpReq);
 
@@ -50,7 +50,8 @@ namespace FitoGraph.Api.Commands.Handler
             loginResult.Result = new RegisterOutput()
             {
                 Token = signUpResult.Result.idToken,
-                LocalId = signUpResult.Result.localId                
+                LocalId = signUpResult.Result.localId,
+                RefreshToken = signUpResult.Result.refreshToken
             };
 
             return loginResult;
