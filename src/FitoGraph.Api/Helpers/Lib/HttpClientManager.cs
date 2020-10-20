@@ -3,38 +3,57 @@ using System.Net;
 using System.Net.Http;
 using FitoGraph.Api.Helpers.Settings;
 using Microsoft.Extensions.Options;
+using MihaZupan;
 
 namespace FitoGraph.Api.Helpers.Lib
 {
     public static class HttpClientManager
-    {        
-        public static HttpClient GetHttpClientWithProxy(AppSettingProxy proxy)
+    {
+        public static IWebProxy GetWebProxy(AppSettingProxy proxy)
         {
-            var client = new HttpClient();
+            IWebProxy webProxy = new WebProxy();
             bool useProxy = proxy.Enable;
             if (useProxy)
             {
+                string proxyType = proxy.Type;
                 string proxyHost = proxy.Server;
                 int proxyPort = proxy.Port;
                 string proxyUserName = proxy.Username;
                 string proxyPassword = proxy.Password;
                 bool hasAuth = !string.IsNullOrEmpty(proxy.Username);
-                var webProxy = new WebProxy
+
+                if (proxyType == "http")
                 {
-                    Address = new Uri($"http://{proxyHost}:{proxyPort}"),
-                    BypassProxyOnLocal = false,
-                    UseDefaultCredentials = !hasAuth,
-                };
-                if (hasAuth)
-                {
-                    webProxy.Credentials = new NetworkCredential(userName: proxyUserName, password: proxyPassword);
+                    webProxy = new WebProxy
+                    {
+                        Address = new Uri($"http://{proxyHost}:{proxyPort}"),
+                        BypassProxyOnLocal = false,
+                        UseDefaultCredentials = !hasAuth,
+                    };
+                    if (hasAuth)
+                    {
+                        webProxy.Credentials = new NetworkCredential(userName: proxyUserName, password: proxyPassword);
+                    }
                 }
-                var httpClientHandler = new HttpClientHandler
+                else if (proxyType == "socks5")
                 {
-                    Proxy = webProxy,
-                };
-                client = new HttpClient(handler: httpClientHandler, disposeHandler: true);
+                    webProxy = new HttpToSocks5Proxy(proxyHost, proxyPort);
+                }
             }
+            return webProxy;
+        }
+        public static HttpClientHandler GetHttpClientHandlerWithProxy(AppSettingProxy proxy)
+        {
+            var httpClientHandler = new HttpClientHandler()
+            {
+                Proxy = GetWebProxy(proxy)
+            };
+            return httpClientHandler;
+        }
+        public static HttpClient GetHttpClientWithProxy(AppSettingProxy proxy)
+        {
+            var httpClientHandler = GetHttpClientHandlerWithProxy(proxy);
+            var client = new HttpClient(httpClientHandler, true);
             return client;
         }
     }

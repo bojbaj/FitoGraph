@@ -44,33 +44,14 @@ namespace FitoGraph.Api
             var AppSettingsSection = Configuration.GetSection("App");
             string fireBaseProjectId = Configuration.GetValue<string>("App:FireBase:ProjectId");
 
-            bool useProxy = Configuration.GetValue<bool>("App:Proxy:Enable");
-            var webProxy = new WebProxy();
-            if (useProxy)
-            {
-                string proxyHost = Configuration.GetValue<string>("App:Proxy:Server");
-                int proxyPort = Configuration.GetValue<int>("App:Proxy:Port");
-                string proxyUserName = Configuration.GetValue<string>("App:Proxy:Username");
-                string proxyPassword = Configuration.GetValue<string>("App:Proxy:Password");
-                bool hasAuth = !string.IsNullOrEmpty(proxyUserName);
-                webProxy = new WebProxy
-                {
-                    Address = new Uri($"http://{proxyHost}:{proxyPort}"),
-                    BypassProxyOnLocal = false,
-                    UseDefaultCredentials = !hasAuth,
-                };
-                if (hasAuth)
-                {
-                    webProxy.Credentials = new NetworkCredential(userName: proxyUserName, password: proxyPassword);
-                }
-            }
+            AppSettingProxy proxySettings = Configuration.GetSection("App:Proxy").Get<AppSettingProxy>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
                     options.BackchannelHttpHandler = new HttpClientHandler
                     {
-                        Proxy = webProxy
+                        Proxy = Helpers.Lib.HttpClientManager.GetWebProxy(proxySettings)
                     };
                     options.Authority = $"https://securetoken.google.com/{fireBaseProjectId}";
                     options.TokenValidationParameters = new TokenValidationParameters
