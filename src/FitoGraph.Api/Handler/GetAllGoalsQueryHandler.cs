@@ -41,11 +41,13 @@ namespace FitoGraph.Api.Commands.Handler
             ResultWrapper<GetAllGoalsOutput> result = new ResultWrapper<GetAllGoalsOutput>();
 
             var tDataList = await _dbContext.TGoal
-                .Include(x=> x.TUsers).ToListAsync();
+                .Include(x => x.TWeeklyGoals)
+                .ThenInclude(x => x.TUsers)
+                .ToListAsync();
             var list = tDataList.Select(x => new PublicListItem()
             {
                 Enabled = x.Enabled,
-                Selected = x.TUsers.Any(z => z.FireBaseId == request.firebaseId),
+                Selected = x.TWeeklyGoals?.SelectMany(z => z.TUsers)?.Any(z => z.FireBaseId == request.firebaseId) ?? false,
                 Text = x.Title,
                 Value = x.Id.ToString(),
                 Image = x.Image.JoinWithCDNAddress()
