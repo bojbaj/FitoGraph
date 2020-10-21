@@ -190,7 +190,7 @@ namespace FitoGraph.Api.Domain.Models.Outputs
         {
             get
             {
-                if (BMI == 0)
+                if (BMI == 0 || GoalId == 0)
                 {
                     return CustomerStateEnum.PROFILE_NOT_COMPLETED;
                 }
