@@ -186,6 +186,20 @@ namespace FitoGraph.Api.Domain.Models.Outputs
                 return _DailyFatInGram.ToString("N2").toDecimal(0);
             }
         }
+        private decimal _ProgressInPercent;
+        public decimal ProgressInPercent
+        {
+            get
+            {
+                if (_ProgressInPercent != 0)
+                    return _ProgressInPercent.ToString("N0").toDecimal(0);
+
+                decimal maxDiff = 10M;
+                decimal weightDiff = maxDiff - Math.Min(maxDiff, Math.Abs(Weight - TargetWeight));
+                _ProgressInPercent = (weightDiff * 100) / maxDiff;
+                return _ProgressInPercent.ToString("N0").toDecimal(0);
+            }
+        }
         public CustomerStateEnum CustomerState
         {
             get
