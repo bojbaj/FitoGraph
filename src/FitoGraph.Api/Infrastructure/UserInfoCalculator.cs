@@ -64,16 +64,23 @@ namespace FitoGraph.Api.Infrastructure
                 return WaistToHipsRatioEnum.NULL.ToString();
             }
         }
-        public static decimal GetMBR(GenderEnum Gender, decimal Weight, decimal Height, int Age)
+        public static decimal GetMBR(GenderEnum Gender, decimal Weight, decimal Height, int Age, decimal Fat)
         {
             decimal _BMR = 0;
-            if (Gender == GenderEnum.MALE)
+            if (Fat != 0)
             {
-                _BMR = ((10 * Weight) + (6.25M * Height) - (5 * Age) + 5);
+                _BMR = 370 + ((21.6M * (1M - (Fat / 100M))) * Weight);
             }
-            else if (Gender == GenderEnum.FEMALE)
+            else
             {
-                _BMR = ((10 * Weight) + (6.25M * Height) - (5 * Age) - 161);
+                if (Gender == GenderEnum.MALE)
+                {
+                    _BMR = ((10 * Weight) + (6.25M * Height) - (5 * Age) + 5);
+                }
+                else if (Gender == GenderEnum.FEMALE)
+                {
+                    _BMR = ((10 * Weight) + (6.25M * Height) - (5 * Age) - 161);
+                }
             }
             return _BMR.ToString("N2").toDecimal(0);
         }

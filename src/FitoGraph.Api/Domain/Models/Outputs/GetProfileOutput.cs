@@ -94,7 +94,7 @@ namespace FitoGraph.Api.Domain.Models.Outputs
                 if (_BMR != 0)
                     return _BMR;
 
-                _BMR = UserInfoCalculator.GetMBR(GenderEn, Weight, Height, Age);
+                _BMR = UserInfoCalculator.GetMBR(GenderEn, Weight, Height, Age, Fat);
                 return _BMR;
             }
         }
