@@ -14,5 +14,6 @@ namespace FitoGraph.Api.Commands
         [Required]
         [Range(1, 2, ErrorMessage = "Please select your gender")]
         public int Gender { get; set; }
+        public Infrastructure.AppEnums.RoleEnum Role { get; set; }
     }
 }

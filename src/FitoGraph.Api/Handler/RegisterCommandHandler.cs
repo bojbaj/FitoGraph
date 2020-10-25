@@ -32,7 +32,7 @@ namespace FitoGraph.Api.Commands.Handler
 
         public async Task<ResultWrapper<RegisterOutput>> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
-            ResultWrapper<RegisterOutput> loginResult = new ResultWrapper<RegisterOutput>();
+            ResultWrapper<RegisterOutput> registerResult = new ResultWrapper<RegisterOutput>();
             SignUpWithEmailAndPasswordRequest singUpReq = new SignUpWithEmailAndPasswordRequest()
             {
                 email = request.Username,
@@ -42,19 +42,19 @@ namespace FitoGraph.Api.Commands.Handler
 
             if (!signUpResult.Status)
             {
-                loginResult.Status = false;
-                loginResult.Message = signUpResult.Message;
-                return loginResult;
+                registerResult.Status = false;
+                registerResult.Message = signUpResult.Message;
+                return registerResult;
             }
-            loginResult.Status = true;
-            loginResult.Result = new RegisterOutput()
+            registerResult.Status = true;
+            registerResult.Result = new RegisterOutput()
             {
                 Token = signUpResult.Result.idToken,
                 LocalId = signUpResult.Result.localId,
                 RefreshToken = signUpResult.Result.refreshToken
             };
 
-            return loginResult;
+            return registerResult;
         }
     }
 }

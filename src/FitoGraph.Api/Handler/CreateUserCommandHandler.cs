@@ -55,7 +55,8 @@ namespace FitoGraph.Api.Commands.Handler
                         Email = request.Email,
                         FireBaseId = request.FireBaseId,
                         Enabled = true,
-                        Gender = request.Gender
+                        Gender = request.Gender,
+                        Role = request.Role
                     };
                     _dbContext.TUser.Add(tUser);
                 }

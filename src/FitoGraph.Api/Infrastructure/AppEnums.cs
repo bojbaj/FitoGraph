@@ -4,9 +4,10 @@ namespace FitoGraph.Api.Infrastructure
     {
         public enum RoleEnum
         {
-            Customer,
-            Supplier,
-            Admin
+            NULL = 0,
+            Customer = 1,
+            Supplier = 2,
+            Admin = 3
         }
         public enum UserClaimEnum
         {

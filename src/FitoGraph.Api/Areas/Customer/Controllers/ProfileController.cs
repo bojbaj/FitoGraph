@@ -20,7 +20,7 @@ using static FitoGraph.Api.Infrastructure.AppEnums;
 
 namespace FitoGraph.Api.Areas.Customer.Controllers
 {
-    [UserVerification]
+    [UserVerification(RoleEnum.Customer)]
     public class ProfileController : BaseCustomerApiController
     {
         private readonly IMediator _mediator;

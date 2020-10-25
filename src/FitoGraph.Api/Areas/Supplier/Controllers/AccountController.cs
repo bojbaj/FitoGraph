@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using FitoGraph.Api.Areas.Customer.Base;
+using FitoGraph.Api.Areas.Supplier.Base;
 using FitoGraph.Api.Commands;
 using FitoGraph.Api.Domain.Models;
 using FitoGraph.Api.Domain.Models.Outputs;
@@ -17,9 +17,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
 using static FitoGraph.Api.Infrastructure.AppEnums;
 
-namespace FitoGraph.Api.Areas.Customer.Controllers
+namespace FitoGraph.Api.Areas.Supplier.Controllers
 {
-    public class AccountController : BaseCustomerApiController
+    public class AccountController : BaseSupplierApiController
     {
         private readonly IMediator _mediator;
 
@@ -33,11 +33,11 @@ namespace FitoGraph.Api.Areas.Customer.Controllers
         public async Task<IActionResult> GetToken([FromBody] LoginCommand model)
         {
             ResultWrapper<LoginOutput> result = new ResultWrapper<LoginOutput>();
-            model.Role = AppEnums.RoleEnum.Customer.ToString();
+            model.Role = AppEnums.RoleEnum.Supplier.ToString();
             result = await _mediator.Send(model);
             if (result.Status)
             {
-                CustomerLoggedInEvent opEvent = new CustomerLoggedInEvent()
+                SupplierLoggedInEvent opEvent = new SupplierLoggedInEvent()
                 {
                     Request = model,
                     Response = result.Result
@@ -52,11 +52,11 @@ namespace FitoGraph.Api.Areas.Customer.Controllers
         public async Task<IActionResult> Register([FromBody] RegisterCommand model)
         {
             ResultWrapper<RegisterOutput> result = new ResultWrapper<RegisterOutput>();
-            model.Role = AppEnums.RoleEnum.Customer;
+            model.Role = AppEnums.RoleEnum.Supplier;
             result = await _mediator.Send(model);
             if (result.Status)
             {
-                CustomerRegisterEvent opEvent = new CustomerRegisterEvent()
+                SupplierRegisterEvent opEvent = new SupplierRegisterEvent()
                 {
                     Request = model,
                     Response = result.Result
@@ -68,7 +68,7 @@ namespace FitoGraph.Api.Areas.Customer.Controllers
                     Email = model.Username,
                     FireBaseId = result.Result.LocalId,
                     Gender = model.Gender,
-                    Role = AppEnums.RoleEnum.Admin
+                    Role = AppEnums.RoleEnum.Supplier
                 };
                 ResultWrapper<CreateUserOutput> createUserResult = await _mediator.Send(createUserCommand);
             }
