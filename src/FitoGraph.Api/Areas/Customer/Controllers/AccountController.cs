@@ -68,7 +68,7 @@ namespace FitoGraph.Api.Areas.Customer.Controllers
                     Email = model.Username,
                     FireBaseId = result.Result.LocalId,
                     Gender = model.Gender,
-                    Role = AppEnums.RoleEnum.Admin
+                    Role = AppEnums.RoleEnum.Customer
                 };
                 ResultWrapper<CreateUserOutput> createUserResult = await _mediator.Send(createUserCommand);
             }

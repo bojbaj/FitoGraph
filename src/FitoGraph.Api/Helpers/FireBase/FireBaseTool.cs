@@ -21,6 +21,7 @@ namespace FitoGraph.Api.Helpers.FireBase
         Task<ResultWrapper<GetUserDataResponse>> GetUserData(GetUserDataRequest request);
         Task<ResultWrapper<SendVerificationEmailResponse>> SendEmailVerification(SendVerificationEmailRequest request);
         Task<ResultWrapper<RefreshTokenResponse>> RefreshToken(RefreshTokenRequest request);
+        Task<ResultWrapper<DeleteUserResponse>> DeleteUser(DeleteUserRequest request);
     }
     public class FireBaseTool : IFireBaseTool
     {
@@ -30,6 +31,7 @@ namespace FitoGraph.Api.Helpers.FireBase
         private const string GetUserData_URL = "accounts:lookup?key=API_KEY";
         private const string SendVerificationEmail_URL = "accounts:sendOobCode?key=API_KEY";
         private const string RefreshToken_URL = "token?key=API_KEY";
+        private const string DeleteUser_URL = "accounts:delete?key=API_KEY";
 
         private readonly HttpClient _httpClient = null;
         private readonly AppSettings _appSettings;
@@ -149,8 +151,32 @@ namespace FitoGraph.Api.Helpers.FireBase
             result.Status = !string.IsNullOrEmpty(result.Result.id_token);
             if (!result.Status)
             {
-                result.Message = "RefreshToken is invalid";                
+                result.Message = "RefreshToken is invalid";
             }
+            return result;
+        }
+        public async Task<ResultWrapper<DeleteUserResponse>> DeleteUser(DeleteUserRequest request)
+        {
+            ResultWrapper<DeleteUserResponse> result = new ResultWrapper<DeleteUserResponse>()
+            {
+                Result = new DeleteUserResponse()
+            };
+
+            HttpContent content = new StringContent(JsonConvert.SerializeObject(request), System.Text.Encoding.UTF8, "application/json"); ;
+            string action = DeleteUser_URL.Replace("API_KEY", _appSettings.FireBase.ApiKey);
+
+            HttpResponseMessage response = await _httpClient.PostAsync(BASE_URL + action, content);
+
+            string strResponse = await response.Content.ReadAsStringAsync();
+
+            result.Result = JsonConvert.DeserializeObject<DeleteUserResponse>(strResponse);
+            result.Status = result.Result.error == null;
+            if (!result.Status)
+            {
+                result.Message = result.Result.error.message;
+            }
+            result.Status = false;
+            result.Message = strResponse;
             return result;
         }
     }
