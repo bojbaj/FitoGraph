@@ -8,6 +8,7 @@ using FitoGraph.Api.Domain.Models;
 using FitoGraph.Api.Domain.Models.Outputs;
 using FitoGraph.Api.Domain.Models.User;
 using FitoGraph.Api.Events;
+using FitoGraph.Api.Filters;
 using FitoGraph.Api.Infrastructure;
 using FitoGraph.Api.Queries;
 using MediatR;
@@ -47,7 +48,7 @@ namespace FitoGraph.Api.Areas.Admin.Controllers
             return Ok(result);
         }
 
-        [AllowAnonymous]
+        [UserVerification(RoleEnum.Admin)]
         [HttpPost("Register")]
         public async Task<IActionResult> Register([FromBody] RegisterCommand model)
         {
@@ -75,6 +76,7 @@ namespace FitoGraph.Api.Areas.Admin.Controllers
             return Ok(result);
         }
 
+        [UserVerification(RoleEnum.Admin)]
         [HttpPost("IsVerified")]
         public async Task<IActionResult> IsVerified()
         {
@@ -88,6 +90,7 @@ namespace FitoGraph.Api.Areas.Admin.Controllers
             return Ok(result);
         }
 
+        [UserVerification(RoleEnum.Admin)]
         [HttpPost("Send-Verification-Email")]
         public async Task<IActionResult> SendVerificationEmail()
         {
