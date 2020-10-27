@@ -10,6 +10,7 @@ using FitoGraph.Api.Behaviors;
 using FitoGraph.Api.Domain.DB;
 using FitoGraph.Api.Helpers.FireBase;
 using FitoGraph.Api.Helpers.Settings;
+using FitoGraph.Api.Infrastructure;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -90,12 +91,14 @@ namespace FitoGraph.Api
             });
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AppDbContext dbContext)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AppDbContext dbContext, ILogger<Startup> logger)
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                // app.UseDeveloperExceptionPage();                
             }
+
+            app.ConfigureExceptionHandler(logger);
 
             DbInitializer.Initialize(dbContext);
 

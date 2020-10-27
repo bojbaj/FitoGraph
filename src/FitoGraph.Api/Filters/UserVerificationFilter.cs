@@ -25,7 +25,7 @@ namespace FitoGraph.Api.Filters
                 context.Result = new UnauthorizedResult();
             }
             TUser tUser = _dbContext.TUser.FirstOrDefault(x => x.FireBaseId == firebaseUser.UserId);
-            if (tUser.Role != _role)
+            if (tUser == null || tUser.Role != _role)
             {
                 context.Result = new UnauthorizedResult();
             }
