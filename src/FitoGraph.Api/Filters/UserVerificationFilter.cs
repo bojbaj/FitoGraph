@@ -20,7 +20,8 @@ namespace FitoGraph.Api.Filters
         public void OnAuthorization(AuthorizationFilterContext context)
         {
             var firebaseUser = context.HttpContext.GetFirebaseUser();
-            if (firebaseUser == null || !firebaseUser.EmailVerified)
+            bool emailVerifed = firebaseUser.EmailVerified || (new AppEnums.RoleEnum[] { AppEnums.RoleEnum.Admin, AppEnums.RoleEnum.Supplier }.Contains(_role));
+            if (firebaseUser == null || !emailVerifed)
             {
                 context.Result = new UnauthorizedResult();
             }
