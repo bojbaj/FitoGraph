@@ -30,7 +30,7 @@ namespace FitoGraph.Api.Areas.Supplier.Handlers
             {
                 Enabled = x.Enabled,
                 Selected = x.FireBaseId == request.firebaseId,
-                Text = x.Email,
+                Text = $"{x.RestaurantName}-{x.FirstName} {x.LastName} [{x.Email}]",
                 Value = x.Id.ToString(),
                 Image = string.Empty
             })

@@ -54,5 +54,42 @@ namespace FitoGraph.Api.Areas.Supplier.Controllers
             result = await _mediator.Send(model);
             return Ok(result);
         }
+
+        [HttpPost("add")]
+        public async Task<IActionResult> Add([FromBody] CreateSupplierCommand createSupplierCommand)
+        {
+            ResultWrapper<RegisterOutput> result = new ResultWrapper<RegisterOutput>();
+            createSupplierCommand.Role = AppEnums.RoleEnum.Supplier;
+            RegisterCommand registerCommand = new RegisterCommand()
+            {
+                Gender = createSupplierCommand.Gender,
+                Username = createSupplierCommand.Email,
+                Password = createSupplierCommand.Password,
+                Role = createSupplierCommand.Role
+            };
+            result = await _mediator.Send(registerCommand);
+
+            if (!result.Status)
+            {
+                return Ok(result);
+            }
+            AdminRegisterEvent opEvent = new AdminRegisterEvent()
+            {
+                Request = registerCommand,
+                Response = result.Result
+            };
+            await _mediator.Publish(opEvent);
+
+            createSupplierCommand.FireBaseId = result.Result.LocalId;
+            ResultWrapper<CreateSupplierOutput> createSupplierResult = await _mediator.Send(createSupplierCommand);
+            return Ok(createSupplierResult);
+        }
+
+        [HttpPost("update")]
+        public async Task<IActionResult> Update([FromBody] UpdateSupplierCommand updateSupplierCommand)
+        {
+            ResultWrapper<UpdateSupplierOutput> updateSupplierResult = await _mediator.Send(updateSupplierCommand);
+            return Ok(updateSupplierResult);
+        }
     }
 }

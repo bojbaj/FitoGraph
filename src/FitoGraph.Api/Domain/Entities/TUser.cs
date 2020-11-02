@@ -8,6 +8,7 @@ namespace FitoGraph.Api.Domain.Entities
         public string FireBaseId { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
+        public string RestaurantName { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string PostalCode { get; set; }
