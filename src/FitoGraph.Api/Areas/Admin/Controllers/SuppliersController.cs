@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using FitoGraph.Api.Areas.Supplier.Base;
 using FitoGraph.Api.Areas.Admin.Commands;
 using FitoGraph.Api.Areas.Admin.Outputs;
 using FitoGraph.Api.Areas.Admin.Queries;
@@ -20,11 +19,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
 using static FitoGraph.Api.Infrastructure.AppEnums;
+using FitoGraph.Api.Areas.Admin.Base;
 
 namespace FitoGraph.Api.Areas.Supplier.Controllers
 {
-    [UserVerification(RoleEnum.Supplier)]
-    public class SuppliersController : BaseSupplierApiController
+    [UserVerification(RoleEnum.Admin)]
+    public class SuppliersController : BaseAdminApiController
     {
         private readonly IMediator _mediator;
 
