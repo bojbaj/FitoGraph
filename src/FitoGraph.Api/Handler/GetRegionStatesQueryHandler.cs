@@ -48,10 +48,7 @@ namespace FitoGraph.Api.Commands.Handler
             {
                 Enabled = x.Enabled,
                 Selected = x.TRegionCities.SelectMany(z => z.TUsers)
-                    .Any(z => 
-                        (string.IsNullOrEmpty(request.firebaseId) || z.FireBaseId == request.firebaseId) &&
-                        (request.userId == 0 || z.Id == request.userId)
-                    ),
+                    .Any(z => (z.FireBaseId == request.firebaseId) || (z.Id == request.userId)),
                 Text = x.Title,
                 Value = x.Id.ToString(),
                 Image = x.Image.JoinWithCDNAddress()
