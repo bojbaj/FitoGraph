@@ -45,6 +45,21 @@ namespace FitoGraph.Api.Areas.Supplier.Controllers
             result = await _mediator.Send(model);
             return Ok(result);
         }
+
+        [HttpGet("get/{id}")]
+        public async Task<IActionResult> GetSupplier(int id)
+        {
+            FirebaseUser user = HttpContext.GetFirebaseUser();
+            GetSupplierQuery model = new GetSupplierQuery()
+            {
+                firebaseId = user.UserId,
+                Id = id
+            };
+            ResultWrapper<GetSupplierOutput> result = new ResultWrapper<GetSupplierOutput>();
+            result = await _mediator.Send(model);
+            return Ok(result);
+        }
+
         [HttpPost("delete")]
         public async Task<IActionResult> DeleteSupplier(DeleteSupplierCommand model)
         {
