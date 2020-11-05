@@ -8,5 +8,6 @@ namespace FitoGraph.Api.Queries
     public class GetAllRegionCountriesQuery : IRequest<ResultWrapper<GetAllRegionCountriesOutput>>
     {
         public string firebaseId { get; set; }
+        public int userId { get; set; }
     }
 }
