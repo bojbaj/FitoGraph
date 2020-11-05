@@ -34,7 +34,6 @@ namespace FitoGraph.Api.Areas.Admin.Controllers
         [HttpGet("region-countries/{userId?}")]
         public async Task<IActionResult> GetRegionCountries(int userId = 0)
         {
-            // FirebaseUser user = HttpContext.GetFirebaseUser();
             GetAllRegionCountriesQuery model = new GetAllRegionCountriesQuery()
             {
                 userId = userId
@@ -47,7 +46,6 @@ namespace FitoGraph.Api.Areas.Admin.Controllers
         [HttpGet("region-states/{regionCountryId}/{userId?}")]
         public async Task<IActionResult> GetRegionStates(int regionCountryId, int userId = 0)
         {
-            // FirebaseUser user = HttpContext.GetFirebaseUser();
             GetRegionStatesQuery model = new GetRegionStatesQuery()
             {
                 userId = userId,
@@ -60,7 +58,6 @@ namespace FitoGraph.Api.Areas.Admin.Controllers
         [HttpGet("region-cities/{regionStateId}/{userId?}")]
         public async Task<IActionResult> GetRegionCities(int regionStateId, int userId = 0)
         {
-            // FirebaseUser user = HttpContext.GetFirebaseUser();
             GetRegionCitiesQuery model = new GetRegionCitiesQuery()
             {
                 userId = userId,
