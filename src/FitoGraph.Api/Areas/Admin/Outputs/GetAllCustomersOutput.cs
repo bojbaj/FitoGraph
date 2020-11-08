@@ -6,5 +6,15 @@ namespace FitoGraph.Api.Areas.Admin.Outputs
     public class GetAllCustomersOutput
     {
         public List<PublicListItem> list { get; set; }
+        public int totalItems { get; set; }
+        public int pageSize { get; set; }
+        public int pageNumber { get; set; }
+        public int totalPages
+        {
+            get
+            {
+                return (totalItems / pageSize) + 1;
+            }
+        }
     }
 }

@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using FitoGraph.Api.Areas.Customer.Base;
 using FitoGraph.Api.Areas.Admin.Commands;
 using FitoGraph.Api.Areas.Admin.Outputs;
 using FitoGraph.Api.Areas.Admin.Queries;
@@ -20,11 +19,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
 using static FitoGraph.Api.Infrastructure.AppEnums;
+using FitoGraph.Api.Areas.Admin.Base;
 
-namespace FitoGraph.Api.Areas.Customer.Controllers
+namespace FitoGraph.Api.Areas.Admin.Controllers
 {
-    [UserVerification(RoleEnum.Customer)]
-    public class CustomersController : BaseCustomerApiController
+    [UserVerification(RoleEnum.Admin)]
+    public class CustomersController : BaseAdminApiController
     {
         private readonly IMediator _mediator;
 
@@ -34,17 +34,34 @@ namespace FitoGraph.Api.Areas.Customer.Controllers
         }
 
         [HttpGet("list")]
-        public async Task<IActionResult> GetCustomers()
+        public async Task<IActionResult> GetCustomers(GetAllCustomersQuery query)
         {
             FirebaseUser user = HttpContext.GetFirebaseUser();
-            GetAllCustomersQuery model = new GetAllCustomersQuery()
-            {
-                firebaseId = user.UserId
-            };
+            query.firebaseId = user.UserId;
+            if (query.pageSize < 0)
+                query.pageSize = 20;
+
+            if (query.pageNumber < 0)
+                query.pageNumber = 1;
+
             ResultWrapper<GetAllCustomersOutput> result = new ResultWrapper<GetAllCustomersOutput>();
+            result = await _mediator.Send(query);
+            return Ok(result);
+        }
+
+        [HttpGet("get/{id}")]
+        public async Task<IActionResult> Get(int Id)
+        {
+            FirebaseUser user = HttpContext.GetFirebaseUser();
+            GetCustomerQuery model = new GetCustomerQuery()
+            {
+                Id = Id
+            };
+            ResultWrapper<GetCustomerOutput> result = new ResultWrapper<GetCustomerOutput>();
             result = await _mediator.Send(model);
             return Ok(result);
         }
+
         [HttpPost("delete")]
         public async Task<IActionResult> DeleteCustomer(DeleteCustomerCommand model)
         {

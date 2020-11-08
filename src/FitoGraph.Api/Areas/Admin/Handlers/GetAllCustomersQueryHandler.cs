@@ -25,7 +25,16 @@ namespace FitoGraph.Api.Areas.Customer.Handlers
         {
             ResultWrapper<GetAllCustomersOutput> result = new ResultWrapper<GetAllCustomersOutput>();
 
-            var tDataList = await _dbContext.TUser.Where(x => x.Role == Infrastructure.AppEnums.RoleEnum.Customer).ToListAsync();
+            var tDataList = await _dbContext.TUser
+            .Where(x => x.Role == Infrastructure.AppEnums.RoleEnum.Customer)
+            .Skip(request.pageSize * (request.pageNumber - 1))
+            .Take(request.pageSize)
+            .ToListAsync();
+
+            int totalItems = await _dbContext.TUser
+                        .Where(x => x.Role == Infrastructure.AppEnums.RoleEnum.Customer)
+                        .CountAsync();
+
             var list = tDataList.Select(x => new PublicListItem()
             {
                 Enabled = x.Enabled,
@@ -38,7 +47,10 @@ namespace FitoGraph.Api.Areas.Customer.Handlers
             result.Status = true;
             result.Result = new GetAllCustomersOutput()
             {
-                list = list
+                list = list,
+                pageSize = request.pageSize,
+                pageNumber = request.pageNumber,
+                totalItems = totalItems
             };
 
             return result;
