@@ -34,14 +34,13 @@ namespace FitoGraph.Api.Areas.Admin.Controllers
         }
 
         [HttpGet("list")]
-        public async Task<IActionResult> GetCustomers(GetAllCustomersQuery query)
+        public async Task<IActionResult> GetCustomers([FromQuery] GetAllCustomersQuery query)
         {
             FirebaseUser user = HttpContext.GetFirebaseUser();
-            query.firebaseId = user.UserId;
-            if (query.pageSize < 0)
+            if (query.pageSize <= 0)
                 query.pageSize = 20;
 
-            if (query.pageNumber < 0)
+            if (query.pageNumber <= 0)
                 query.pageNumber = 1;
 
             ResultWrapper<GetAllCustomersOutput> result = new ResultWrapper<GetAllCustomersOutput>();

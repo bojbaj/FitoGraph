@@ -33,12 +33,16 @@ namespace FitoGraph.Api.Areas.Customer.Handlers
 
             int totalItems = await _dbContext.TUser
                         .Where(x => x.Role == Infrastructure.AppEnums.RoleEnum.Customer)
+                        .Where(x =>
+                        string.IsNullOrEmpty(request.query) ||
+                        x.Email.Contains(request.query) || x.Phone.Contains(request.query) ||
+                        x.FirstName.Contains(request.query) || x.LastName.Contains(request.query))
                         .CountAsync();
 
             var list = tDataList.Select(x => new PublicListItem()
             {
                 Enabled = x.Enabled,
-                Selected = x.FireBaseId == request.firebaseId,
+                Selected = false,
                 Text = x.Email,
                 Value = x.Id.ToString(),
                 Image = string.Empty
