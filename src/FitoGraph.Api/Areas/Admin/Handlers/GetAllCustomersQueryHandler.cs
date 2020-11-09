@@ -27,17 +27,27 @@ namespace FitoGraph.Api.Areas.Customer.Handlers
 
             var tDataList = await _dbContext.TUser
             .Where(x => x.Role == Infrastructure.AppEnums.RoleEnum.Customer)
+            .Where(x => 
+            string.IsNullOrEmpty(request.query) ||
+            x.Email.Contains(request.query) || 
+            x.Phone.Contains(request.query) ||
+            x.FirstName.Contains(request.query) || 
+            x.LastName.Contains(request.query)
+            )
             .Skip(request.pageSize * (request.pageNumber - 1))
             .Take(request.pageSize)
             .ToListAsync();
 
             int totalItems = await _dbContext.TUser
-                        .Where(x => x.Role == Infrastructure.AppEnums.RoleEnum.Customer)
-                        .Where(x =>
-                        string.IsNullOrEmpty(request.query) ||
-                        x.Email.Contains(request.query) || x.Phone.Contains(request.query) ||
-                        x.FirstName.Contains(request.query) || x.LastName.Contains(request.query))
-                        .CountAsync();
+                .Where(x => x.Role == Infrastructure.AppEnums.RoleEnum.Customer)
+                .Where(x => 
+                string.IsNullOrEmpty(request.query) ||
+                x.Email.Contains(request.query) || 
+                x.Phone.Contains(request.query) ||
+                x.FirstName.Contains(request.query) || 
+                x.LastName.Contains(request.query)
+                )
+                .CountAsync();
 
             var list = tDataList.Select(x => new PublicListItem()
             {
