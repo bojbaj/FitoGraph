@@ -18,6 +18,12 @@ namespace FitoGraph.Api.Domain.DB
                 relationship.DeleteBehavior = DeleteBehavior.NoAction;
             }
             base.OnModelCreating(modelbuilder);
+
+            modelbuilder.Entity<TNutritionGroup>()
+                .HasIndex(p => p.Code).IsUnique().HasName("UQ_TNutritionGroup_Code");
+
+            modelbuilder.Entity<TNutrition>()
+                .HasIndex(p => p.Code).IsUnique().HasName("UQ_TNutrition_Code");
         }
 
         public DbSet<TBodyType> TBodyType { get; set; }
@@ -40,6 +46,11 @@ namespace FitoGraph.Api.Domain.DB
         public DbSet<TRegionCountry> TRegionCountry { get; set; }
         public DbSet<TRegionState> TRegionState { get; set; }
         public DbSet<TRegionCity> TRegionCity { get; set; }
+        public DbSet<TReference> TReference { get; set; }
+        public DbSet<TNutritionGroup> TNutritionGroup { get; set; }
+        public DbSet<TNutrition> TNutrition { get; set; }
+        public DbSet<TFood> TFood { get; set; }
+        public DbSet<TFoodNutrition> TFoodNutrition { get; set; }
 
     }
 }
