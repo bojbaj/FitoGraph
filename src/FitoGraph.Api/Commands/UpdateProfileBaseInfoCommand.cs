@@ -16,6 +16,7 @@ namespace FitoGraph.Api.Commands
         [Range(1900, 2100, ErrorMessage = "Birth year isn't valid")]
         public int BirthYear { get; set; }
         public string PostalCode { get; set; }
+        public string Phone { get; set; }
         public string Address { get; set; }
         [Required]
         [Range(1, int.MaxValue, ErrorMessage = "Selected city isn't valid")]

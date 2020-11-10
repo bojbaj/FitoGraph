@@ -7,6 +7,6 @@ namespace FitoGraph.Api.Areas.Admin.Outputs
     {
         public string RegionCountryName { get; set; }
         public string RegionStateName { get; set; }
-        public string RegionCityname { get; set; }
+        public string RegionCityName { get; set; }
     }
 }

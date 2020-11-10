@@ -50,7 +50,7 @@ namespace FitoGraph.Api.Areas.Supplier.Handlers
                 RegionCityId = tUser.TRegionCityId.toInt(0),
                 RegionStateId = tUser.TRegionCity?.TRegionStateId.toInt(0) ?? 0,
                 RegionCountryId = tUser.TRegionCity?.TRegionState?.TRegionCountryId.toInt(0) ?? 0,
-                RegionCityname = tUser.TRegionCity?.Title ?? string.Empty,
+                RegionCityName = tUser.TRegionCity?.Title ?? string.Empty,
                 RegionStateName = tUser.TRegionCity?.TRegionState?.Title ?? string.Empty,
                 RegionCountryName = tUser.TRegionCity?.TRegionState?.TRegionCountry?.Title ?? string.Empty,
                 Weight = tUser.Weight,

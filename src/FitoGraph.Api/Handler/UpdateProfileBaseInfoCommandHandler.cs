@@ -49,6 +49,7 @@ namespace FitoGraph.Api.Commands.Handler
             tUser.FirstName = request.FirstName;
             tUser.LastName = request.LastName;
             tUser.BirthYear = request.BirthYear;
+            tUser.Phone = request.Phone;
             tUser.PostalCode = request.PostalCode;
             tUser.Address = request.Address;
             tUser.TRegionCityId = request.CityId;
