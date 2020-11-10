@@ -5,5 +5,8 @@ namespace FitoGraph.Api.Areas.Admin.Outputs
 {
     public class GetCustomerOutput : CustomerProfileCalculated
     {
+        public string RegionCountryName { get; set; }
+        public string RegionStateName { get; set; }
+        public string RegionCityname { get; set; }
     }
 }

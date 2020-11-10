@@ -30,7 +30,7 @@ namespace FitoGraph.Api.Areas.Supplier.Handlers
 
             TUser tUser = await _dbContext.TUser
                 .Include(x => x.TBodyType)
-                .Include(x => x.TRegionCity).ThenInclude(x => x.TRegionState)
+                .Include(x => x.TRegionCity).ThenInclude(x => x.TRegionState).ThenInclude(x => x.TRegionCountry)
                 .Include(x => x.TActivityLevel)
                 .Include(x => x.TWeeklyGoal)
                 .FirstOrDefaultAsync(x => x.Id == request.Id);
@@ -50,6 +50,9 @@ namespace FitoGraph.Api.Areas.Supplier.Handlers
                 RegionCityId = tUser.TRegionCityId.toInt(0),
                 RegionStateId = tUser.TRegionCity?.TRegionStateId.toInt(0) ?? 0,
                 RegionCountryId = tUser.TRegionCity?.TRegionState?.TRegionCountryId.toInt(0) ?? 0,
+                RegionCityname = tUser.TRegionCity?.Title ?? string.Empty,
+                RegionStateName = tUser.TRegionCity?.TRegionState?.Title ?? string.Empty,
+                RegionCountryName = tUser.TRegionCity?.TRegionState?.TRegionCountry?.Title ?? string.Empty,
                 Weight = tUser.Weight,
                 Height = tUser.Height,
                 Waist = tUser.Waist,
