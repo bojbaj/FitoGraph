@@ -59,11 +59,6 @@ namespace FitoGraph.Api.Infrastructure
             FOOD = 2,
             USER = 3,
             GFACTOR = 4
-        }
-        public enum FoodAmountUnitEnum
-        {
-            GRAM = 1,
-            CUP = 400
-        }
+        }      
     }
 }

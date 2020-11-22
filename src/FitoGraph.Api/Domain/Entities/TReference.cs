@@ -117,6 +117,7 @@ namespace FitoGraph.Api.Domain.Entities
         [Column(TypeName = "decimal(10,2)")]
         public decimal Cholesterol { get; set; }
         public ICollection<TNutrition> TNutritions { get; set; }
-        public ICollection<TFood> TFood { get; set; }
+        public ICollection<TFood> TFoods { get; set; }
+        public ICollection<TFoodNutrition> TFoodNutritions { get; set; }
     }
 }
