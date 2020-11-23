@@ -67,5 +67,17 @@ namespace FitoGraph.Api.Areas.Admin.Controllers
             result = await _mediator.Send(model);
             return Ok(result);
         }
+        [HttpGet("food-types/{foodId?}")]
+        public async Task<IActionResult> GetFoodTypes(int foodId)
+        {
+            FirebaseUser user = HttpContext.GetFirebaseUser();
+            GetAllFoodTypesQuery model = new GetAllFoodTypesQuery()
+            {
+                firebaseId = user.UserId
+            };
+            ResultWrapper<GetAllFoodTypesOutput> result = new ResultWrapper<GetAllFoodTypesOutput>();
+            result = await _mediator.Send(model);
+            return Ok(result);
+        }
     }
 }

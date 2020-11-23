@@ -41,6 +41,7 @@ namespace FitoGraph.Api.Commands.Handler
             ResultWrapper<GetAllFoodTypesOutput> result = new ResultWrapper<GetAllFoodTypesOutput>();
 
             var tDataList = await _dbContext.TFoodType
+                .Where(x => request.foodId == 0 || x.TFoods.Any(z => z.Id == request.foodId))
                 .Include(x => x.TUserFoodTypes).ThenInclude(x => x.TUser).ToListAsync();
             var list = tDataList.Select(x => new PublicListItem()
             {
