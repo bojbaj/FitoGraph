@@ -69,8 +69,7 @@ namespace FitoGraph.Api.Areas.Admin.Handlers
                     tFood.TFoodTypeId = request.FoodTypeId;
                     _dbContext.TFood.Update(tFood);
                     _dbContext.SaveChanges();
-
-                    //TODO: Cascade DELETE!
+                    
                     List<TReference> tRefrences = _dbContext.TReference.Where(x => tFood.TFoodNutritions.Select(x => x.TReferenceId).Contains(x.Id)).ToList();
                     _dbContext.TFoodNutrition.RemoveRange(tFood.TFoodNutritions);
                     _dbContext.TReference.RemoveRange(tRefrences);
