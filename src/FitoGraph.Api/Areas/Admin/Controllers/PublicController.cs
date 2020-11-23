@@ -3,6 +3,8 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using FitoGraph.Api.Areas.Admin.Base;
+using FitoGraph.Api.Areas.Admin.Outputs;
+using FitoGraph.Api.Areas.Admin.Queries;
 using FitoGraph.Api.Areas.Customer.Base;
 using FitoGraph.Api.Commands;
 using FitoGraph.Api.Domain.Models;
@@ -76,6 +78,34 @@ namespace FitoGraph.Api.Areas.Admin.Controllers
                 firebaseId = user.UserId
             };
             ResultWrapper<GetAllFoodTypesOutput> result = new ResultWrapper<GetAllFoodTypesOutput>();
+            result = await _mediator.Send(model);
+            return Ok(result);
+        }
+        [HttpGet("nutrition-units/{nutritionId?}")]
+        public async Task<IActionResult> GetNutritionUnits(int nutritionId)
+        {
+            FirebaseUser user = HttpContext.GetFirebaseUser();
+            GetAllNutritionUnitsQuery model = new GetAllNutritionUnitsQuery()
+            {
+                firebaseId = user.UserId,
+                nutritionId = nutritionId
+            };
+            ResultWrapper<GetAllNutritionUnitsOutput> result = new ResultWrapper<GetAllNutritionUnitsOutput>();
+            result = await _mediator.Send(model);
+            return Ok(result);
+        }
+        [HttpGet("nutritions")]
+        public async Task<IActionResult> GetNutritionUnits(int pageSize = 20, int pageNumber = 1, string query = "")
+        {
+            FirebaseUser user = HttpContext.GetFirebaseUser();
+            GetAllNutritionsQuery model = new GetAllNutritionsQuery()
+            {
+                query = query,
+                pageNumber = pageNumber <= 0 ? 1 : pageNumber,
+                pageSize = pageSize <= 0 ? 1 : pageSize
+            };
+
+            ResultWrapper<GetAllNutritionsOutput> result = new ResultWrapper<GetAllNutritionsOutput>();
             result = await _mediator.Send(model);
             return Ok(result);
         }
