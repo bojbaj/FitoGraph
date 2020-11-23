@@ -106,5 +106,19 @@ namespace FitoGraph.Api.Areas.Supplier.Controllers
             ResultWrapper<UpdateSupplierOutput> updateSupplierResult = await _mediator.Send(updateSupplierCommand);
             return Ok(updateSupplierResult);
         }
+
+        [HttpGet("{supplierId}/foods/")]
+        public async Task<IActionResult> GetSupplierFoods(int supplierId)
+        {
+            FirebaseUser user = HttpContext.GetFirebaseUser();
+            GetSupplierFoodsQuery model = new GetSupplierFoodsQuery()
+            {
+                firebaseId = user.UserId,
+                SupplierId = supplierId
+            };
+            ResultWrapper<GetSupplierFoodsOutput> result = new ResultWrapper<GetSupplierFoodsOutput>();
+            result = await _mediator.Send(model);
+            return Ok(result);
+        }
     }
 }

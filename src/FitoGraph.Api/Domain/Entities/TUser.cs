@@ -45,5 +45,6 @@ namespace FitoGraph.Api.Domain.Entities
         public ICollection<TUserAllergy> TUserAllergies { get; set; }
         public ICollection<TUserDiet> TUserDiets { get; set; }
         public ICollection<TUserDeficiency> TUserDeficiencies { get; set; }
+        public ICollection<TFood> TFoods { get; set; }
     }
 }
