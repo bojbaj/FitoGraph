@@ -134,6 +134,13 @@ namespace FitoGraph.Api.Areas.Supplier.Controllers
             result = await _mediator.Send(model);
             return Ok(result);
         }
-
+        [HttpPost("foods/add")]
+        public async Task<IActionResult> GetSupplierFoodAdd(CreateSupplierFoodCommand model)
+        {
+            FirebaseUser user = HttpContext.GetFirebaseUser();
+            ResultWrapper<CreateSupplierFoodOutput> result = new ResultWrapper<CreateSupplierFoodOutput>();
+            result = await _mediator.Send(model);
+            return Ok(result);
+        }
     }
 }

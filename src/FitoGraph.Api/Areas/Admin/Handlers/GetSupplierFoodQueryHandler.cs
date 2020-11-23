@@ -38,6 +38,7 @@ namespace FitoGraph.Api.Areas.Supplier.Handlers
             {
                 Id = tData.Id,
                 Title = tData.Title,
+                Enabled = tData.Enabled,
                 Image = tData.Image.JoinWithCDNAddress(),
                 FoodTypeId = tData.TFoodTypeId,
                 FoodTypeName = tData.TFoodType.Title,

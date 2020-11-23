@@ -5,6 +5,7 @@ namespace FitoGraph.Api.Areas.Admin.Outputs
     public class GetSupplierFoodOutput
     {
         public int Id { get; set; }
+        public bool Enabled { get; set; }
         public string Title { get; set; }
         public string Image { get; set; }
         public int FoodTypeId { get; set; }

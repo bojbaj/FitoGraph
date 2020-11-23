@@ -57,8 +57,9 @@ namespace FitoGraph.Api.Infrastructure
         {
             NUTRITION = 1,
             FOOD = 2,
-            USER = 3,
-            GFACTOR = 4
+            FOOD_NUTIRTION = 3,
+            USER = 4,
+            GFACTOR = 5
         }      
     }
 }
