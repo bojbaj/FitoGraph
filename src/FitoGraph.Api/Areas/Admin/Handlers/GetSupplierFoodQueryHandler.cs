@@ -32,7 +32,12 @@ namespace FitoGraph.Api.Areas.Supplier.Handlers
                 .Include(x => x.TFoodNutritions).ThenInclude(x => x.TNutrition)
                 .Include(x => x.TFoodNutritions).ThenInclude(x => x.TNutritionUnit)
                 .FirstOrDefaultAsync(x => x.TUserId == request.SupplierId && x.Id == request.FoodId);
-
+            if (tData == null)
+            {
+                result.Status = false;
+                result.Message = "this food doesn't exists";
+                return result;
+            }
             result.Status = true;
             result.Result = new GetSupplierFoodOutput()
             {
