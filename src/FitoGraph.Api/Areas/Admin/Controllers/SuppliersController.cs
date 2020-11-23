@@ -135,10 +135,19 @@ namespace FitoGraph.Api.Areas.Supplier.Controllers
             return Ok(result);
         }
         [HttpPost("foods/add")]
-        public async Task<IActionResult> GetSupplierFoodAdd(CreateSupplierFoodCommand model)
+        public async Task<IActionResult> SupplierFoodAdd(CreateSupplierFoodCommand model)
         {
             FirebaseUser user = HttpContext.GetFirebaseUser();
             ResultWrapper<CreateSupplierFoodOutput> result = new ResultWrapper<CreateSupplierFoodOutput>();
+            result = await _mediator.Send(model);
+            return Ok(result);
+        }
+
+        [HttpPost("foods/update")]
+        public async Task<IActionResult> SupplierFoodUpdate(UpdateSupplierFoodCommand model)
+        {
+            FirebaseUser user = HttpContext.GetFirebaseUser();
+            ResultWrapper<UpdateSupplierFoodOutput> result = new ResultWrapper<UpdateSupplierFoodOutput>();
             result = await _mediator.Send(model);
             return Ok(result);
         }

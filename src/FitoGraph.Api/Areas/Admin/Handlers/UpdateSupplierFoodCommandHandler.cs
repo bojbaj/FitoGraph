@@ -25,54 +25,56 @@ using FitoGraph.Api.Infrastructure;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using static FitoGraph.Api.Infrastructure.AppEnums;
 
 namespace FitoGraph.Api.Areas.Admin.Handlers
 {
-    public class CreateSupplierFoodCommandHandler : IRequestHandler<CreateSupplierFoodCommand, ResultWrapper<CreateSupplierFoodOutput>>
+    public class UpdateSupplierFoodCommandHandler : IRequestHandler<UpdateSupplierFoodCommand, ResultWrapper<UpdateSupplierFoodOutput>>
     {
         private readonly AppDbContext _dbContext;
-        public CreateSupplierFoodCommandHandler(AppDbContext dbContext)
+        public UpdateSupplierFoodCommandHandler(AppDbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public Task<ResultWrapper<CreateSupplierFoodOutput>> Handle(CreateSupplierFoodCommand request, CancellationToken cancellationToken)
+        public Task<ResultWrapper<UpdateSupplierFoodOutput>> Handle(UpdateSupplierFoodCommand request, CancellationToken cancellationToken)
         {
-            ResultWrapper<CreateSupplierFoodOutput> createFoodResult = new ResultWrapper<CreateSupplierFoodOutput>();
+            ResultWrapper<UpdateSupplierFoodOutput> updateFoodResult = new ResultWrapper<UpdateSupplierFoodOutput>();
             if (!request.FoodNutritions.Any())
             {
-                createFoodResult.Status = false;
-                createFoodResult.Message = "please enter nutiritions!";
-                return Task.FromResult(createFoodResult);
+                updateFoodResult.Status = false;
+                updateFoodResult.Message = "please enter nutiritions!";
+                return Task.FromResult(updateFoodResult);
             }
             try
             {
                 using (TransactionScope transaction = new TransactionScope(TransactionScopeOption.RequiresNew))
                 {
-                    TFood tFood = new TFood()
+                    TFood tFood = _dbContext.TFood
+                        .Include(x => x.TFoodNutritions)
+                        .FirstOrDefault(x => x.Id == request.Id);
+
+                    if (tFood == null)
                     {
-                        Title = request.Title,
-                        Image = request.Image,
-                        Enabled = request.Enabled,
-                        Created = DateTime.Now,
-                        TFoodTypeId = request.FoodTypeId,
-                        TUserId = request.UserId,
-                        TFoodNutritions = new List<TFoodNutrition>(),
-                        TReference = new TReference()
-                        {
-                            Enabled = true,
-                            RecordType = ReferenceRecordTypeEnum.FOOD
-                        }
-                    };
-                    _dbContext.TFood.Add(tFood);
-                    _dbContext.SaveChanges();
-                    tFood.TReference.RecordId = tFood.Id;
-                    _dbContext.TReference.Update(tFood.TReference);
+                        updateFoodResult.Status = false;
+                        updateFoodResult.Message = "this food doesn't exists!";
+                        return Task.FromResult(updateFoodResult);
+                    }
+                    tFood.Title = request.Title;
+                    tFood.Image = request.Image;
+                    tFood.Enabled = request.Enabled;
+                    tFood.TFoodTypeId = request.FoodTypeId;
+                    _dbContext.TFood.Update(tFood);
                     _dbContext.SaveChanges();
 
+                    //TODO: Cascade DELETE!
+                    List<TReference> tRefrences = _dbContext.TReference.Where(x => tFood.TFoodNutritions.Select(x => x.TReferenceId).Contains(x.Id)).ToList();
+                    _dbContext.TFoodNutrition.RemoveRange(tFood.TFoodNutritions);
+                    _dbContext.TReference.RemoveRange(tRefrences);
+                    _dbContext.SaveChanges();
 
                     foreach (var nutrition in request.FoodNutritions)
                     {
@@ -101,8 +103,8 @@ namespace FitoGraph.Api.Areas.Admin.Handlers
                     }
                     _dbContext.SaveChanges();
                     transaction.Complete();
-                    createFoodResult.Status = true;
-                    createFoodResult.Result = new CreateSupplierFoodOutput()
+                    updateFoodResult.Status = true;
+                    updateFoodResult.Result = new UpdateSupplierFoodOutput()
                     {
                         Id = tFood.Id
                     };
@@ -110,15 +112,15 @@ namespace FitoGraph.Api.Areas.Admin.Handlers
             }
             catch (SqlException ex)
             {
-                createFoodResult.Status = false;
-                createFoodResult.Message = ex.ToJsonString();
+                updateFoodResult.Status = false;
+                updateFoodResult.Message = ex.ToJsonString();
             }
             catch (Exception ex)
             {
-                createFoodResult.Status = false;
-                createFoodResult.Message = ex.ToJsonString();
+                updateFoodResult.Status = false;
+                updateFoodResult.Message = ex.ToJsonString();
             }
-            return Task.FromResult(createFoodResult);
+            return Task.FromResult(updateFoodResult);
         }
     }
 }
