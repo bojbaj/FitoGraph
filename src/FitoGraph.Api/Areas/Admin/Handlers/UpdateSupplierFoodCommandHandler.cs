@@ -101,6 +101,8 @@ namespace FitoGraph.Api.Areas.Admin.Handlers
                         _dbContext.TReference.Update(foodNutrition.TReference);
                     }
                     _dbContext.SaveChanges();
+                    SqlParameter foodId = new SqlParameter("@FoodID", tFood.Id);
+                    _dbContext.Database.ExecuteSqlRaw("EXEC spCalculateFoodRefrence @FoodID", foodId);
                     transaction.Complete();
                     updateFoodResult.Status = true;
                     updateFoodResult.Result = new UpdateSupplierFoodOutput()

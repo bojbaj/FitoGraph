@@ -25,6 +25,7 @@ using FitoGraph.Api.Infrastructure;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using static FitoGraph.Api.Infrastructure.AppEnums;
@@ -100,6 +101,8 @@ namespace FitoGraph.Api.Areas.Admin.Handlers
                         _dbContext.TReference.Update(foodNutrition.TReference);
                     }
                     _dbContext.SaveChanges();
+                    SqlParameter foodId = new SqlParameter("@FoodID", tFood.Id);
+                    _dbContext.Database.ExecuteSqlRaw("EXEC spCalculateFoodRefrence @FoodID", foodId);
                     transaction.Complete();
                     createFoodResult.Status = true;
                     createFoodResult.Result = new CreateSupplierFoodOutput()
