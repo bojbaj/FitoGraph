@@ -13,8 +13,8 @@ namespace FitoGraph.Api.Areas.Admin.Outputs
         public List<FoodNutrition> FoodNutritions { get; set; }
         public class FoodNutrition
         {
-            public int Id { get; set; }
-            public string Name { get; set; }
+            public int NutritionId { get; set; }
+            public string NutritionName { get; set; }
             public int UnitId { get; set; }
             public string UnitName { get; set; }
             public decimal Amount { get; set; }

@@ -49,8 +49,8 @@ namespace FitoGraph.Api.Areas.Supplier.Handlers
                 FoodTypeName = tData.TFoodType.Title,
                 FoodNutritions = tData.TFoodNutritions.Select(x => new GetSupplierFoodOutput.FoodNutrition()
                 {
-                    Id = x.TNutritionId,
-                    Name = x.TNutrition.Title,
+                    NutritionId = x.TNutritionId,
+                    NutritionName = x.TNutrition.Title,
                     Amount = x.Amount,
                     UnitId = x.TNutritionUnitId,
                     UnitName = x.TNutritionUnit.Title
