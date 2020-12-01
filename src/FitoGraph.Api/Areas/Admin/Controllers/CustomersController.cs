@@ -36,11 +36,12 @@ namespace FitoGraph.Api.Areas.Admin.Controllers
         [HttpGet("list")]
         public async Task<IActionResult> GetCustomers(int pageSize = 20, int pageNumber = 1, string query = "")
         {
-            GetAllCustomersQuery model = new GetAllCustomersQuery(){
+            GetAllCustomersQuery model = new GetAllCustomersQuery()
+            {
                 query = query,
                 pageNumber = pageNumber <= 0 ? 1 : pageNumber,
                 pageSize = pageSize <= 0 ? 1 : pageSize
-            };            
+            };
 
             ResultWrapper<GetAllCustomersOutput> result = new ResultWrapper<GetAllCustomersOutput>();
             result = await _mediator.Send(model);
@@ -66,6 +67,26 @@ namespace FitoGraph.Api.Areas.Admin.Controllers
             FirebaseUser user = HttpContext.GetFirebaseUser();
             model.FireBaseId = user.UserId;
             ResultWrapper<DeleteCustomerOutput> result = new ResultWrapper<DeleteCustomerOutput>();
+            result = await _mediator.Send(model);
+            return Ok(result);
+        }
+        [HttpGet("g-factor/{id}")]
+        public async Task<IActionResult> GetGFactor(int Id)
+        {
+            FirebaseUser user = HttpContext.GetFirebaseUser();
+            GetCustomerGFactorQuery model = new GetCustomerGFactorQuery()
+            {
+                Id = Id
+            };
+            ResultWrapper<GetCustomerGFactorOutput> result = new ResultWrapper<GetCustomerGFactorOutput>();
+            result = await _mediator.Send(model);
+            return Ok(result);
+        }
+        [HttpPost("g-factor/update")]
+        public async Task<IActionResult> UpdateGFactor(UpdateCustomerGFactorCommand model)
+        {
+            FirebaseUser user = HttpContext.GetFirebaseUser();
+            ResultWrapper<UpdateCustomerGFactorOutput> result = new ResultWrapper<UpdateCustomerGFactorOutput>();
             result = await _mediator.Send(model);
             return Ok(result);
         }

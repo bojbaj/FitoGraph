@@ -33,6 +33,8 @@ namespace FitoGraph.Api.Domain.Entities
         public int? TBodyTypeId { get; set; }
         public int? TActivityLevelId { get; set; }
         public int? TWeeklyGoalId { get; set; }
+        public int? TReferenceId { get; set; }
+        public TReference TReference { get; set; }
         public Infrastructure.AppEnums.RoleEnum Role { get; set; }
         public TRegionCity TRegionCity { get; set; }
         public TBodyType TBodyType { get; set; }

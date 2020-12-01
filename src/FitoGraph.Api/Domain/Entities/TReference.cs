@@ -37,7 +37,7 @@ namespace FitoGraph.Api.Domain.Entities
         [Column(TypeName = "decimal(10,2)")]
         public decimal Chloride { get; set; }
         [Column(TypeName = "decimal(10,2)")]
-        public decimal Cupper { get; set; }
+        public decimal Copper { get; set; }
         [Column(TypeName = "decimal(10,2)")]
         public decimal Fluoride { get; set; }
         [Column(TypeName = "decimal(10,2)")]
@@ -119,5 +119,6 @@ namespace FitoGraph.Api.Domain.Entities
         public ICollection<TNutrition> TNutritions { get; set; }
         public ICollection<TFood> TFoods { get; set; }
         public ICollection<TFoodNutrition> TFoodNutritions { get; set; }
+        public ICollection<TUser> TUsers { get; set; }
     }
 }

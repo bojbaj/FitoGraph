@@ -4,14 +4,16 @@ using FitoGraph.Api.Domain.DB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FitoGraph.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201130123357_user_gfactor")]
+    partial class user_gfactor
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -440,13 +442,13 @@ namespace FitoGraph.Api.Migrations
                     b.Property<decimal>("Chromium")
                         .HasColumnType("decimal(10,2)");
 
-                    b.Property<decimal>("Copper")
-                        .HasColumnType("decimal(10,2)");
-
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("Cryptoxanthin")
+                        .HasColumnType("decimal(10,2)");
+
+                    b.Property<decimal>("Cupper")
                         .HasColumnType("decimal(10,2)");
 
                     b.Property<decimal>("Dietary_Fibre")
@@ -1089,7 +1091,7 @@ namespace FitoGraph.Api.Migrations
                         .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("FitoGraph.Api.Domain.Entities.TReference", "TReference")
-                        .WithMany("TUsers")
+                        .WithMany()
                         .HasForeignKey("TReferenceId")
                         .OnDelete(DeleteBehavior.NoAction);
 
