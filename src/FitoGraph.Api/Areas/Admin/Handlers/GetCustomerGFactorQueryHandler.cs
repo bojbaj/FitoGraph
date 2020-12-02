@@ -51,7 +51,34 @@ namespace FitoGraph.Api.Areas.Supplier.Handlers
                     {
                         Enabled = true,
                         RecordType = ReferenceRecordTypeEnum.GFACTOR,
-                        RecordId = tUser.Id
+                        RecordId = tUser.Id,
+                        Biotin_B7 = tUserReference.Biotin_B7,
+                        Calcium = 1,
+                        Chromium = 1,
+                        Copper = 1,
+                        Dietary_Fibre = 1,
+                        Fluoride = 1,
+                        Folate = 1,
+                        Iodine = 1,
+                        Iron = 1,
+                        Magnesium = 1,
+                        Manganese = 1,
+                        Molybdenum = 1,
+                        Niacin_B3 = 1,
+                        Pantothenic_Acid_B5 = 1,
+                        Phosphorus = 1,
+                        Potassium = 1,
+                        Riboflavin_B2 = 1,
+                        Selenium = 1,
+                        Sodium = 1,
+                        Thiamin_B1 = 1,
+                        Vitamin_A = 1,
+                        Vitamin_B12 = 1,
+                        Vitamin_B6 = 1,
+                        Vitamin_C = 1,
+                        Vitamin_D = 1,
+                        Vitamin_E = 1,
+                        Zinc = 1
                     };
                     _dbContext.TReference.Add(tUserReference);
                     _dbContext.SaveChanges();
