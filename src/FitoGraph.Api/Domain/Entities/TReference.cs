@@ -120,5 +120,6 @@ namespace FitoGraph.Api.Domain.Entities
         public ICollection<TFood> TFoods { get; set; }
         public ICollection<TFoodNutrition> TFoodNutritions { get; set; }
         public ICollection<TUser> TUsers { get; set; }
+        public ICollection<TReferenceInRange> TReferenceInRange { get; set; }
     }
 }

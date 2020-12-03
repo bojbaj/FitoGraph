@@ -59,7 +59,8 @@ namespace FitoGraph.Api.Infrastructure
             FOOD = 2,
             FOOD_NUTIRTION = 3,
             USER = 4,
-            GFACTOR = 5
+            GFACTOR = 5,
+            RANGE = 6,
         }      
     }
 }
