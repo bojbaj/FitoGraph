@@ -31,14 +31,27 @@ namespace FitoGraph.Api.Areas.Customer.Controllers
         }
 
         [HttpGet("list")]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> GetFoods()
         {
             FirebaseUser user = HttpContext.GetFirebaseUser();
             GetSuggestedFoodsQuery model = new GetSuggestedFoodsQuery()
             {
-                firebaseId = user.UserId                
+                firebaseId = user.UserId
             };
             ResultWrapper<GetSuggestedFoodsOutput> result = new ResultWrapper<GetSuggestedFoodsOutput>();
+            result = await _mediator.Send(model);
+            return Ok(result);
+        }
+
+        [HttpGet("get/{foodId}")]
+        public async Task<IActionResult> GetFood(int foodId)
+        {
+            FirebaseUser user = HttpContext.GetFirebaseUser();
+            GetFoodDetailQuery model = new GetFoodDetailQuery()
+            {
+                firebaseId = user.UserId
+            };
+            ResultWrapper<GetFoodDetailOutput> result = new ResultWrapper<GetFoodDetailOutput>();
             result = await _mediator.Send(model);
             return Ok(result);
         }
