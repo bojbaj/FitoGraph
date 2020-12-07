@@ -53,6 +53,9 @@ namespace FitoGraph.Api.Domain.DB
         public DbSet<TFoodNutrition> TFoodNutrition { get; set; }
         public DbSet<TNutritionUnit> TNutritionUnit { get; set; }
         public DbSet<TReferenceInRange> TReferenceInRange { get; set; }
-
+        public DbSet<TFoodNutritionCondition> TFoodNutritionCondition { get; set; }
+        public DbSet<TFoodAllergy> TFoodAllergy { get; set; }
+        public DbSet<TFoodDiet> TFoodDiet { get; set; }
+        public DbSet<TFoodDeficiency> TFoodDeficiency { get; set; }
     }
 }

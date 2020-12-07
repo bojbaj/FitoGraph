@@ -7,5 +7,6 @@ namespace FitoGraph.Api.Domain.Entities
         public string Title { get; set; }
         public string Image { get; set; }
         public ICollection<TUserNutritionCondition> TUserNutritionConditions { get; set; }
+        public ICollection<TFoodNutritionCondition> TFoodNutritionConditions { get; set; }
     }
 }

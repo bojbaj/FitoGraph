@@ -8,5 +8,6 @@ namespace FitoGraph.Api.Queries
     public class GetAllDeficienciesQuery : IRequest<ResultWrapper<GetAllDeficienciesOutput>>
     {
         public string firebaseId { get; set; }
+        public int foodId { get; set; }
     }
 }

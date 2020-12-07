@@ -8,5 +8,6 @@ namespace FitoGraph.Api.Queries
     public class GetAllAllergiesQuery : IRequest<ResultWrapper<GetAllAllergiesOutput>>
     {
         public string firebaseId { get; set; }
+        public int foodId { get; set; }
     }
 }

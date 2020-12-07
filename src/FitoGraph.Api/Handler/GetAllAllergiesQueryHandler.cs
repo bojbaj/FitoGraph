@@ -41,11 +41,13 @@ namespace FitoGraph.Api.Commands.Handler
             ResultWrapper<GetAllAllergiesOutput> result = new ResultWrapper<GetAllAllergiesOutput>();
 
             var tDataList = await _dbContext.TAllergy
-                .Include(x => x.TUserAllergies).ThenInclude(x => x.TUser).ToListAsync();
+                .Include(x => x.TUserAllergies).ThenInclude(x => x.TUser)
+                .Include(x => x.TFoodAllergies).ThenInclude(x => x.TFood)
+                .ToListAsync();
             var list = tDataList.Select(x => new PublicListItem()
             {
                 Enabled = x.Enabled,
-                Selected = x.TUserAllergies.Any(z => z.TUser.FireBaseId == request.firebaseId),
+                Selected = x.TUserAllergies.Any(z => z.TUser.FireBaseId == request.firebaseId) || x.TFoodAllergies.Any(z => z.TFood.Id == request.foodId),
                 Text = x.Title,
                 Value = x.Id.ToString(),
                 Image = x.Image.JoinWithCDNAddress()

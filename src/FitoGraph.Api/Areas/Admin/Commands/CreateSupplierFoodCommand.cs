@@ -12,12 +12,21 @@ namespace FitoGraph.Api.Areas.Admin.Commands
         public string Title { get; set; }
         public bool Enabled { get; set; }
         public string Image { get; set; }
+        public string Tags { get; set; }
         [Required]
         [Range(1, int.MaxValue, ErrorMessage = "Please select food type")]
         public int FoodTypeId { get; set; }
         [Required]
         [Range(1, int.MaxValue, ErrorMessage = "Please specify supplier")]
         public int UserId { get; set; }
+        [Required]
+        public List<int> Diets { get; set; }
+        [Required]
+        public List<int> Allergies { get; set; }
+        [Required]
+        public List<int> Deficiencies { get; set; }
+        [Required]
+        public List<int> NutritionConditions { get; set; }
         [Required]
         public List<FoodNutrition> FoodNutritions { get; set; }
         public class FoodNutrition

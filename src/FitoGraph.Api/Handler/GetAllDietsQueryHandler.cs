@@ -40,12 +40,14 @@ namespace FitoGraph.Api.Commands.Handler
         {
             ResultWrapper<GetAllDietsOutput> result = new ResultWrapper<GetAllDietsOutput>();
 
-            var tDataList = await _dbContext.TDiet
-                .Include(x => x.TUserDiets).ThenInclude(x => x.TUser).ToListAsync();
+            var tDataList = await _dbContext.TDiet                
+                .Include(x => x.TFoodDiets).ThenInclude(x => x.TFood)
+                .Include(x => x.TUserDiets).ThenInclude(x => x.TUser)
+                .ToListAsync();
             var list = tDataList.Select(x => new PublicListItem()
             {
                 Enabled = x.Enabled,
-                Selected = x.TUserDiets.Any(z => z.TUser.FireBaseId == request.firebaseId),
+                Selected = x.TUserDiets.Any(z => z.TUser.FireBaseId == request.firebaseId) || x.TFoodDiets.Any(z => z.TFood.Id == request.foodId),
                 Text = x.Title,
                 Value = x.Id.ToString(),
                 Image = x.Image.JoinWithCDNAddress()

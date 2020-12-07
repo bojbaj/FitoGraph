@@ -49,7 +49,8 @@ namespace FitoGraph.Api.Areas.Customer.Controllers
             FirebaseUser user = HttpContext.GetFirebaseUser();
             GetFoodDetailQuery model = new GetFoodDetailQuery()
             {
-                firebaseId = user.UserId
+                firebaseId = user.UserId,
+                foodId = foodId
             };
             ResultWrapper<GetFoodDetailOutput> result = new ResultWrapper<GetFoodDetailOutput>();
             result = await _mediator.Send(model);

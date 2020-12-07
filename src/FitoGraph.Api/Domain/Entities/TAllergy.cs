@@ -7,5 +7,6 @@ namespace FitoGraph.Api.Domain.Entities
         public string Title { get; set; }
         public string Image { get; set; }
         public ICollection<TUserAllergy> TUserAllergies { get; set; }
+        public ICollection<TFoodAllergy> TFoodAllergies { get; set; }
     }
 }

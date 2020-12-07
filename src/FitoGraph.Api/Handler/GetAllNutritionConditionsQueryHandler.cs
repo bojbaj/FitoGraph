@@ -41,11 +41,13 @@ namespace FitoGraph.Api.Commands.Handler
             ResultWrapper<GetAllNutritionConditionsOutput> result = new ResultWrapper<GetAllNutritionConditionsOutput>();
 
             var tDataList = await _dbContext.TNutritionCondition
-                .Include(x => x.TUserNutritionConditions).ThenInclude(x => x.TUser).ToListAsync();
+                .Include(x => x.TUserNutritionConditions).ThenInclude(x => x.TUser)
+                .Include(x => x.TFoodNutritionConditions).ThenInclude(x => x.TFood)
+                .ToListAsync();
             var list = tDataList.Select(x => new PublicListItem()
             {
                 Enabled = x.Enabled,
-                Selected = x.TUserNutritionConditions.Any(z => z.TUser.FireBaseId == request.firebaseId),
+                Selected = x.TUserNutritionConditions.Any(z => z.TUser.FireBaseId == request.firebaseId) || x.TFoodNutritionConditions.Any(z => z.TFood.Id == request.foodId),
                 Text = x.Title,
                 Value = x.Id.ToString(),
                 Image = x.Image.JoinWithCDNAddress()

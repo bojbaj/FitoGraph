@@ -41,11 +41,13 @@ namespace FitoGraph.Api.Commands.Handler
             ResultWrapper<GetAllDeficienciesOutput> result = new ResultWrapper<GetAllDeficienciesOutput>();
 
             var tDataList = await _dbContext.TDeficiency
-                .Include(x => x.TUserDeficiencies).ThenInclude(x => x.TUser).ToListAsync();
+                .Include(x => x.TUserDeficiencies).ThenInclude(x => x.TUser)
+                .Include(x => x.TFoodDeficiencies).ThenInclude(x => x.TFood)
+                .ToListAsync();
             var list = tDataList.Select(x => new PublicListItem()
             {
                 Enabled = x.Enabled,
-                Selected = x.TUserDeficiencies.Any(z => z.TUser.FireBaseId == request.firebaseId),
+                Selected = x.TUserDeficiencies.Any(z => z.TUser.FireBaseId == request.firebaseId) || x.TFoodDeficiencies.Any(z => z.TFood.Id == request.foodId),
                 Text = x.Title,
                 Value = x.Id.ToString(),
                 Image = x.Image.JoinWithCDNAddress()

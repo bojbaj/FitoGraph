@@ -57,6 +57,7 @@ namespace FitoGraph.Api.Areas.Admin.Handlers
                     {
                         Title = request.Title,
                         Image = request.Image,
+                        Tags = request.Tags,
                         Enabled = request.Enabled,
                         Created = DateTime.Now,
                         TFoodTypeId = request.FoodTypeId,
@@ -101,6 +102,88 @@ namespace FitoGraph.Api.Areas.Admin.Handlers
                         _dbContext.TReference.Update(foodNutrition.TReference);
                     }
                     _dbContext.SaveChanges();
+
+                    // Food Diets
+                    List<TFoodDiet> foodDiets = _dbContext.TFoodDiet.Where(x => x.TFood.Id == tFood.Id).ToList();
+                    _dbContext.TFoodDiet.RemoveRange(foodDiets.Where(x => !request.Diets.Contains(x.TDietId)));
+
+                    int selectedDietsCount = _dbContext.TDiet.Where(x => request.Diets.Contains(x.Id)).Count();
+                    if (selectedDietsCount != request.Diets.Count)
+                    {
+                        createFoodResult.Status = false;
+                        createFoodResult.Message = "Selected diets are invalid!";
+                        return Task.FromResult(createFoodResult);
+                    }
+                    foreach (int dietId in request.Diets.Where(x => !foodDiets.Any(z => z.TDietId == x)))
+                    {
+                        _dbContext.TFoodDiet.Add(new TFoodDiet()
+                        {
+                            TFoodId = tFood.Id,
+                            TDietId = dietId
+                        });
+                    }
+
+                    // Food Allergies
+                    List<TFoodAllergy> foodAllergies = _dbContext.TFoodAllergy.Where(x => x.TFood.Id == tFood.Id).ToList();
+                    _dbContext.TFoodAllergy.RemoveRange(foodAllergies.Where(x => !request.Allergies.Contains(x.TAllergyId)));
+
+                    int selectedAllergiesCount = _dbContext.TAllergy.Where(x => request.Allergies.Contains(x.Id)).Count();
+                    if (selectedAllergiesCount != request.Allergies.Count)
+                    {
+                        createFoodResult.Status = false;
+                        createFoodResult.Message = "Selected Allergies are invalid!";
+                        return Task.FromResult(createFoodResult);
+                    }
+                    foreach (int AllergyId in request.Allergies.Where(x => !foodAllergies.Any(z => z.TAllergyId == x)))
+                    {
+                        _dbContext.TFoodAllergy.Add(new TFoodAllergy()
+                        {
+                            TFoodId = tFood.Id,
+                            TAllergyId = AllergyId
+                        });
+                    }
+
+                    // Food Deficiencies
+                    List<TFoodDeficiency> foodDeficiencies = _dbContext.TFoodDeficiency.Where(x => x.TFood.Id == tFood.Id).ToList();
+                    _dbContext.TFoodDeficiency.RemoveRange(foodDeficiencies.Where(x => !request.Deficiencies.Contains(x.TDeficiencyId)));
+
+                    int selectedDeficienciesCount = _dbContext.TDeficiency.Where(x => request.Deficiencies.Contains(x.Id)).Count();
+                    if (selectedDeficienciesCount != request.Deficiencies.Count)
+                    {
+                        createFoodResult.Status = false;
+                        createFoodResult.Message = "Selected Deficiencies are invalid!";
+                        return Task.FromResult(createFoodResult);
+                    }
+                    foreach (int DeficiencyId in request.Deficiencies.Where(x => !foodDeficiencies.Any(z => z.TDeficiencyId == x)))
+                    {
+                        _dbContext.TFoodDeficiency.Add(new TFoodDeficiency()
+                        {
+                            TFoodId = tFood.Id,
+                            TDeficiencyId = DeficiencyId
+                        });
+                    }
+
+                    // Food NutritionCondition
+                    List<TFoodNutritionCondition> userNutritionConditions = _dbContext.TFoodNutritionCondition.Where(x => x.TFood.Id == tFood.Id).ToList();
+                    _dbContext.TFoodNutritionCondition.RemoveRange(userNutritionConditions.Where(x => !request.NutritionConditions.Contains(x.TNutritionConditionId)));
+
+                    int selectedNutritionConditionsCount = _dbContext.TNutritionCondition.Where(x => request.NutritionConditions.Contains(x.Id)).Count();
+                    if (selectedNutritionConditionsCount != request.NutritionConditions.Count)
+                    {
+                        createFoodResult.Status = false;
+                        createFoodResult.Message = "Selected nutrition Conditions are invalid!";
+                        return Task.FromResult(createFoodResult);
+                    }
+                    foreach (int NutritionConditionId in request.NutritionConditions.Where(x => !userNutritionConditions.Any(z => z.TNutritionConditionId == x)))
+                    {
+                        _dbContext.TFoodNutritionCondition.Add(new TFoodNutritionCondition()
+                        {
+                            TFoodId = tFood.Id,
+                            TNutritionConditionId = NutritionConditionId
+                        });
+                    }
+                    _dbContext.SaveChanges();
+
                     SqlParameter foodId = new SqlParameter("@FoodID", tFood.Id);
                     _dbContext.Database.ExecuteSqlRaw("EXEC spCalculateFoodRefrence @FoodID", foodId);
                     transaction.Complete();

@@ -109,5 +109,62 @@ namespace FitoGraph.Api.Areas.Admin.Controllers
             result = await _mediator.Send(model);
             return Ok(result);
         }
+
+        [HttpGet("allergies/{foodId?}")]
+        public async Task<IActionResult> GetAllergies(int foodId = 0)
+        {
+            FirebaseUser user = HttpContext.GetFirebaseUser();
+            GetAllAllergiesQuery model = new GetAllAllergiesQuery()
+            {
+                firebaseId = string.Empty,
+                foodId = foodId
+            };
+            ResultWrapper<GetAllAllergiesOutput> result = new ResultWrapper<GetAllAllergiesOutput>();
+            result = await _mediator.Send(model);
+            return Ok(result);
+        }
+
+        [HttpGet("deficiencies/{foodId?}")]
+        public async Task<IActionResult> GetDeficiencies(int foodId = 0)
+        {
+            FirebaseUser user = HttpContext.GetFirebaseUser();
+            GetAllDeficienciesQuery model = new GetAllDeficienciesQuery()
+            {
+                firebaseId = string.Empty,
+                foodId = foodId
+            };
+            ResultWrapper<GetAllDeficienciesOutput> result = new ResultWrapper<GetAllDeficienciesOutput>();
+            result = await _mediator.Send(model);
+            return Ok(result);
+        }
+
+        [HttpGet("diets/{foodId?}")]
+        public async Task<IActionResult> GetDiets(int foodId = 0)
+        {
+            FirebaseUser user = HttpContext.GetFirebaseUser();
+            GetAllDietsQuery model = new GetAllDietsQuery()
+            {
+                firebaseId = string.Empty,
+                foodId = foodId
+            };
+            ResultWrapper<GetAllDietsOutput> result = new ResultWrapper<GetAllDietsOutput>();
+            result = await _mediator.Send(model);
+            return Ok(result);
+        }
+
+        [HttpGet("nutrition-conditions/{foodId?}")]
+        public async Task<IActionResult> GetNutritionConditions(int foodId = 0)
+        {
+            FirebaseUser user = HttpContext.GetFirebaseUser();
+            GetAllNutritionConditionsQuery model = new GetAllNutritionConditionsQuery()
+            {
+                firebaseId = string.Empty,
+                foodId = foodId
+            };
+            ResultWrapper<GetAllNutritionConditionsOutput> result = new ResultWrapper<GetAllNutritionConditionsOutput>();
+            result = await _mediator.Send(model);
+            return Ok(result);
+        }
+
     }
 }
