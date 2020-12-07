@@ -1,4 +1,5 @@
 using System;
+using System.Data;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -13,6 +14,7 @@ using FitoGraph.Api.Domain.Entities;
 using FitoGraph.Api.Domain.Models;
 using FitoGraph.Api.Domain.Models.Auth;
 using FitoGraph.Api.Domain.Models.Outputs;
+using FitoGraph.Api.Domain.SP;
 using FitoGraph.Api.Helpers;
 using FitoGraph.Api.Helpers.FireBase;
 using FitoGraph.Api.Helpers.Lib;
@@ -38,7 +40,7 @@ namespace FitoGraph.Api.Commands.Handler
             _dbContext = dbContext;
         }
 
-        public async Task<ResultWrapper<GetSuggestedFoodsOutput>> Handle(GetSuggestedFoodsQuery request, CancellationToken cancellationToken)
+        public Task<ResultWrapper<GetSuggestedFoodsOutput>> Handle(GetSuggestedFoodsQuery request, CancellationToken cancellationToken)
         {
             ResultWrapper<GetSuggestedFoodsOutput> result = new ResultWrapper<GetSuggestedFoodsOutput>();
 
@@ -48,20 +50,20 @@ namespace FitoGraph.Api.Commands.Handler
             {
                 result.Status = false;
                 result.Message = "cannot find customer!";
-                return result;
+                return Task.FromResult(result);
             }
 
-            SqlParameter sqlParams = new SqlParameter("@UserID", tUser.Id);
-            string sqlQuery = "EXEC spFindBestFoodsForCustomer @UserID";
-            var tDataList = await _dbContext.TFood.FromSqlRaw(sqlQuery, sqlParams).ToListAsync();
+            var tDataList = _dbContext.SPFindBestFoodsForCustomer(tUser.Id);
 
-            var list = tDataList.Select(x => new PublicListItem()
+            var list = tDataList.Select(tData => new GetSuggestedFoodsOutput.FoodItem()
             {
-                Enabled = x.Enabled,
-                Selected = false,
-                Text = x.Title,
-                Value = x.Id.ToString(),
-                Image = x.Image.JoinWithCDNAddress()
+                Id = tData.Id,
+                Title = tData.Title,
+                Image = tData.Image.JoinWithCDNAddress(),
+                Tags = (tData.Tags ?? string.Empty).Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries).ToList(),
+                Price = tData.Price,
+                MatchRate = tData.MatchRate,
+                Restaurant = tData.Restaurant
             })
             .ToList();
             result.Status = true;
@@ -70,7 +72,7 @@ namespace FitoGraph.Api.Commands.Handler
                 list = list
             };
 
-            return result;
+            return Task.FromResult(result);
         }
     }
 }
