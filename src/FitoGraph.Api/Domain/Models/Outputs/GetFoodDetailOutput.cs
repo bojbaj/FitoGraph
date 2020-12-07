@@ -9,6 +9,7 @@ namespace FitoGraph.Api.Domain.Models.Outputs
         public bool Enabled { get; set; }
         public string Title { get; set; }
         public string Image { get; set; }
+        public decimal Price { get; set; }
         public List<string> Tags { get; set; }
         public int FoodTypeId { get; set; }
         public string FoodTypeName { get; set; }

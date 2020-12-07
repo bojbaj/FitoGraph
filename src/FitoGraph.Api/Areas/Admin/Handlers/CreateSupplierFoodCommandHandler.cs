@@ -58,6 +58,7 @@ namespace FitoGraph.Api.Areas.Admin.Handlers
                         Title = request.Title,
                         Image = request.Image,
                         Tags = request.Tags,
+                        Price = request.Price,
                         Enabled = request.Enabled,
                         Created = DateTime.Now,
                         TFoodTypeId = request.FoodTypeId,

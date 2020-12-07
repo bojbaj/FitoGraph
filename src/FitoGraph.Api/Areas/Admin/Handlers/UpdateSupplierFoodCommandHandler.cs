@@ -66,6 +66,7 @@ namespace FitoGraph.Api.Areas.Admin.Handlers
                     tFood.Title = request.Title;
                     tFood.Image = request.Image;
                     tFood.Tags = request.Tags;
+                    tFood.Price = request.Price;
                     tFood.Enabled = request.Enabled;
                     tFood.TFoodTypeId = request.FoodTypeId;
                     _dbContext.TFood.Update(tFood);

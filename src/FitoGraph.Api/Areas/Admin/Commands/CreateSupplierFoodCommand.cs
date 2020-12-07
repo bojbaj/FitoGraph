@@ -14,6 +14,9 @@ namespace FitoGraph.Api.Areas.Admin.Commands
         public string Image { get; set; }
         public string Tags { get; set; }
         [Required]
+        [Range(1, int.MaxValue, ErrorMessage = "Please enter a valid food price")]
+        public decimal Price { get; set; }
+        [Required]
         [Range(1, int.MaxValue, ErrorMessage = "Please select food type")]
         public int FoodTypeId { get; set; }
         [Required]

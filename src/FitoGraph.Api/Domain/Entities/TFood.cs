@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FitoGraph.Api.Domain.Entities
 {
@@ -7,6 +8,8 @@ namespace FitoGraph.Api.Domain.Entities
         public string Title { get; set; }
         public string Image { get; set; }
         public string Tags { get; set; }
+        [Column(TypeName = "decimal(10,2)")]
+        public decimal Price { get; set; }
         public int TReferenceId { get; set; }
         public TReference TReference { get; set; }
         public int TFoodTypeId { get; set; }

@@ -46,6 +46,7 @@ namespace FitoGraph.Api.Areas.Supplier.Handlers
                 Enabled = tData.Enabled,
                 Image = tData.Image.JoinWithCDNAddress(),
                 Tags = tData.Tags ?? string.Empty,
+                Price= tData.Price,
                 FoodTypeId = tData.TFoodTypeId,
                 FoodTypeName = tData.TFoodType.Title,
                 FoodNutritions = tData.TFoodNutritions.Select(x => new GetSupplierFoodOutput.FoodNutrition()
