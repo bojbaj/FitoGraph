@@ -60,6 +60,7 @@ namespace FitoGraph.Api.Commands.Handler
                 Title = tData.Title,
                 Image = tData.Image.JoinWithCDNAddress(),
                 Tags = (tData.Tags ?? string.Empty).Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries).ToList(),
+                Price = tData.Price,
                 Enabled = tData.Enabled,
                 FoodTypeId = tData.TFoodTypeId,
                 FoodTypeName = tData.TFoodType.Title,
