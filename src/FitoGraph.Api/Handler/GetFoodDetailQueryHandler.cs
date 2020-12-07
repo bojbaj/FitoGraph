@@ -45,8 +45,14 @@ namespace FitoGraph.Api.Commands.Handler
                 .Include(x => x.TReference)
                 .Include(x => x.TFoodNutritions).ThenInclude(x => x.TNutrition)
                 .Include(x => x.TFoodNutritions).ThenInclude(x => x.TNutritionUnit)
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(x => x.Id == request.foodId);
 
+            if (tData == null)
+            {
+                result.Status = false;
+                result.Message = "this food doesn't exists";
+                return result;
+            }
             result.Status = true;
             result.Result = new GetFoodDetailOutput()
             {
