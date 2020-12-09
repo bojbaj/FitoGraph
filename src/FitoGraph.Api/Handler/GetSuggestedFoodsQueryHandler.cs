@@ -63,7 +63,10 @@ namespace FitoGraph.Api.Commands.Handler
                 Tags = (tData.Tags ?? string.Empty).Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries).ToList(),
                 Price = tData.Price,
                 MatchRate = tData.MatchRate,
-                Restaurant = tData.Restaurant
+                Restaurant = tData.Restaurant,
+                Carb = tData.Carb,
+                Fat = tData.Fat,
+                Protein = tData.Protein
             })
             .ToList();
             result.Status = true;

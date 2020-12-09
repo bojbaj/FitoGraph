@@ -85,6 +85,9 @@ namespace FitoGraph.Api.Domain.DB
                             Restaurant = readerResult["Restaurant"].ToString(),
                             MatchRate = System.Convert.ToInt32(readerResult["MatchRate"]),
                             Price = System.Convert.ToDecimal(readerResult["Price"]),
+                            Carb = System.Convert.ToDecimal(readerResult["Carb"]),
+                            Protein = System.Convert.ToDecimal(readerResult["Protein"]),
+                            Fat = System.Convert.ToDecimal(readerResult["Fat"]),
                         });
                     }
                 }

@@ -14,6 +14,9 @@ namespace FitoGraph.Api.Domain.Models.Outputs
             public decimal Price { get; set; }
             public int MatchRate { get; set; }
             public string Restaurant { get; set; }
+            public decimal Protein { get; set; }
+            public decimal Fat { get; set; }
+            public decimal Carb { get; set; }
         }
     }
 }

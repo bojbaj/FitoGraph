@@ -6,7 +6,7 @@ BEGIN
 	DECLARE @Age INT
 	SELECT @Age = DATEPART(YEAR, GETDATE()) - BirthYear FROM TUser u WHERE u.id = @UserID	
 	
-	SELECT f.Id, f.Title, f.Image, f.Tags, f.Price,
+	SELECT f.Id, f.Title, f.Image, f.Tags, f.Price, food_r.Fat, food_r.Protein, food_r.carbohydrate Carb,
 	(f.Id % 4) MatchRate,
 	restaurant.RestaurantName 'Restaurant'
 	FROM TFood f
@@ -16,3 +16,5 @@ BEGIN
 END
 GO
 EXEC spFindBestFoodsForCustomer 1
+
+SELECT * FROM TFood t 
