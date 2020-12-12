@@ -34,9 +34,17 @@ namespace FitoGraph.Api.Areas.Customer.Controllers
         public async Task<IActionResult> GetFoods()
         {
             FirebaseUser user = HttpContext.GetFirebaseUser();
-            GetSuggestedFoodsQuery model = new GetSuggestedFoodsQuery()
+            GetProfileQuery profileModel = new GetProfileQuery()
             {
                 firebaseId = user.UserId
+            };
+            ResultWrapper<GetProfileOutput> profile = await _mediator.Send(profileModel);
+
+            int requiredCalorie = profile.Result.RequireCalories.toInt(0);
+            GetSuggestedFoodsQuery model = new GetSuggestedFoodsQuery()
+            {
+                firebaseId = user.UserId,
+                RequiredCalorie = requiredCalorie
             };
             ResultWrapper<GetSuggestedFoodsOutput> result = new ResultWrapper<GetSuggestedFoodsOutput>();
             result = await _mediator.Send(model);

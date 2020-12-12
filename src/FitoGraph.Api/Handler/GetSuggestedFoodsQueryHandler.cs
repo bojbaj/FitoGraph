@@ -52,8 +52,8 @@ namespace FitoGraph.Api.Commands.Handler
                 result.Message = "cannot find customer!";
                 return Task.FromResult(result);
             }
-
-            var tDataList = _dbContext.SPFindBestFoodsForCustomer(tUser.Id);
+ 
+            var tDataList = _dbContext.SPFindBestFoodsForCustomer(tUser.Id, request.RequiredCalorie);
 
             var list = tDataList.Select(tData => new GetSuggestedFoodsOutput.FoodItem()
             {
@@ -66,7 +66,11 @@ namespace FitoGraph.Api.Commands.Handler
                 Restaurant = tData.Restaurant,
                 Carb = tData.Carb,
                 Fat = tData.Fat,
-                Protein = tData.Protein
+                Protein = tData.Protein,
+                AllergyMatched = tData.AllergyMatched,
+                DietMatched = tData.DietMatched,
+                DeficiencyMatched = tData.DeficiencyMatched,
+                NutritionConditionMatched = tData.NutritionConditionMatched
             })
             .ToList();
             result.Status = true;

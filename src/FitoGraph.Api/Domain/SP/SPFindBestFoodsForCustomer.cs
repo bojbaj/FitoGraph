@@ -12,5 +12,12 @@ namespace FitoGraph.Api.Domain.SP
         public decimal Protein { get; set; }
         public decimal Fat { get; set; }
         public decimal Carb { get; set; }
+        public decimal CalorieDiff { get; set; }
+        public decimal Calorie { get; set; }
+        public bool AllergyMatched { get; set; }
+        public bool DietMatched { get; set; }
+        public bool DeficiencyMatched { get; set; }
+        public bool NutritionConditionMatched { get; set; }
+        public decimal TotalGFactor { get; set; }
     }
 }

@@ -97,5 +97,24 @@ namespace FitoGraph.Api.Infrastructure
             }
             return _DailyCalories.ToString("N2").toDecimal(0);
         }
+
+        public static decimal GetRequiredCalories(GoalEnum Goal, decimal DailyCalorie)
+        {
+            decimal _RequiredCalories = 0;
+            if (Goal == GoalEnum.MAINTAIN_WEIGHT)
+            {
+                _RequiredCalories = DailyCalorie;
+            }
+            else if (Goal == GoalEnum.LOSE_WEIGHT)
+            {
+                _RequiredCalories = DailyCalorie * 0.81M;
+            }
+            else if (Goal == GoalEnum.GAIN_WEIGHT)
+            {
+                _RequiredCalories = DailyCalorie / 0.81M;
+            }
+
+            return _RequiredCalories.ToString("N2").toDecimal(0);
+        }
     }
 }

@@ -61,16 +61,17 @@ namespace FitoGraph.Api.Domain.DB
         public DbSet<TFoodDiet> TFoodDiet { get; set; }
         public DbSet<TFoodDeficiency> TFoodDeficiency { get; set; }
 
-        public List<SP.SPFindBestFoodsForCustomer> SPFindBestFoodsForCustomer(int UserId)
+        public List<SP.SPFindBestFoodsForCustomer> SPFindBestFoodsForCustomer(int UserId, int requiredCalorie)
         {
             List<SP.SPFindBestFoodsForCustomer> result = new List<SP.SPFindBestFoodsForCustomer>();
             using (var command = Database.GetDbConnection().CreateCommand())
             {
-                string sqlQuery = $"EXEC {nameof(SPFindBestFoodsForCustomer)} @UserID";
+                string sqlQuery = $"EXEC {nameof(SPFindBestFoodsForCustomer)} @UserID, @RequiredCalorie";
                 command.CommandText = sqlQuery;
                 command.CommandType = CommandType.Text;
-                SqlParameter sqlParams = new SqlParameter("@UserID", UserId);
-                command.Parameters.Add(sqlParams);
+
+                command.Parameters.Add(new SqlParameter("@UserID", UserId));
+                command.Parameters.Add(new SqlParameter("@RequiredCalorie", requiredCalorie));
                 Database.OpenConnection();
                 using (var readerResult = command.ExecuteReader())
                 {
@@ -87,7 +88,13 @@ namespace FitoGraph.Api.Domain.DB
                             Price = System.Convert.ToDecimal(readerResult["Price"]),
                             Carb = System.Convert.ToDecimal(readerResult["Carb"]),
                             Protein = System.Convert.ToDecimal(readerResult["Protein"]),
-                            Fat = System.Convert.ToDecimal(readerResult["Fat"]),
+                            CalorieDiff = System.Convert.ToDecimal(readerResult["CalorieDiff"]),
+                            Calorie = System.Convert.ToDecimal(readerResult["Calorie"]),
+                            AllergyMatched = System.Convert.ToInt32(readerResult["AllergyMatched"]) == 1,
+                            DietMatched = System.Convert.ToInt32(readerResult["DietMatched"]) == 1,
+                            DeficiencyMatched = System.Convert.ToInt32(readerResult["DeficiencyMatched"]) == 1,
+                            NutritionConditionMatched = System.Convert.ToInt32(readerResult["NutritionConditionMatched"]) == 1,
+                            TotalGFactor = System.Convert.ToDecimal(readerResult["TotalGFactor"])
                         });
                     }
                 }

@@ -9,6 +9,8 @@ namespace FitoGraph.Api.Domain.Entities
         public int RecordId { get; set; }
         public ReferenceRecordTypeEnum RecordType { get; set; }
         [Column(TypeName = "decimal(10,2)")]
+        public decimal Calorie { get; set; }
+        [Column(TypeName = "decimal(10,2)")]
         public decimal Energy { get; set; }
         [Column(TypeName = "decimal(10,2)")]
         public decimal Protein { get; set; }

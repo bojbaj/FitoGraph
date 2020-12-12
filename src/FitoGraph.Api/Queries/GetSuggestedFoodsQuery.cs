@@ -7,6 +7,7 @@ namespace FitoGraph.Api.Queries
 {
     public class GetSuggestedFoodsQuery : IRequest<ResultWrapper<GetSuggestedFoodsOutput>>
     {
-        public string firebaseId { get; set; }        
+        public string firebaseId { get; set; }
+        public int RequiredCalorie { get; set; }
     }
 }

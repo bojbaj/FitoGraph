@@ -8,6 +8,7 @@ namespace FitoGraph.Api.Domain.Models.Utils
     {
 
         private GenderEnum GenderEn { get { return Enum.Parse<GenderEnum>(Gender.ToString()); } }
+        private GoalEnum GoalEn { get { return Enum.Parse<GoalEnum>(GoalId.ToString()); } }
         private decimal HeightInMeter { get { return Height / 100.0M; } }
         public int Age
         {
@@ -167,6 +168,18 @@ namespace FitoGraph.Api.Domain.Models.Utils
                 decimal weightDiff = maxDiff - Math.Min(maxDiff, Math.Abs(Weight - TargetWeight));
                 _ProgressInPercent = (weightDiff * 100) / maxDiff;
                 return _ProgressInPercent.ToString("N0").toDecimal(0);
+            }
+        }
+         private decimal _RequireCalories;
+        public decimal RequireCalories
+        {
+            get
+            {
+                if (_RequireCalories != 0)
+                    return _RequireCalories;
+
+                _RequireCalories = UserInfoCalculator.GetRequiredCalories(GoalEn, DailyCalories);
+                return _RequireCalories;
             }
         }
         public CustomerStateEnum CustomerState
