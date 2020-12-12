@@ -74,6 +74,7 @@ namespace FitoGraph.Api.Commands.Handler
                 }).ToList(),
                 VitaminMinreals = new GetFoodDetailOutput.VitaminMinreal()
                 {
+                    Calorie = tData.TReference.Calorie,
                     Energy = tData.TReference.Energy,
                     Protein = tData.TReference.Protein,
                     carbohydrate = tData.TReference.carbohydrate,

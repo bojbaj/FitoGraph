@@ -25,6 +25,7 @@ namespace FitoGraph.Api.Domain.Models.Outputs
         }
         public class VitaminMinreal
         {
+            public decimal Calorie { get; set; }
             public decimal Energy { get; set; }
             public decimal Protein { get; set; }
             public decimal carbohydrate { get; set; }
