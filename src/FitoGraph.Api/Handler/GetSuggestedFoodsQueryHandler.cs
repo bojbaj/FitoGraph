@@ -67,6 +67,7 @@ namespace FitoGraph.Api.Commands.Handler
                 Carb = tData.Carb,
                 Fat = tData.Fat,
                 Protein = tData.Protein,
+                Calorie = tData.Calorie,
                 AllergyMatched = tData.AllergyMatched,
                 DietMatched = tData.DietMatched,
                 DeficiencyMatched = tData.DeficiencyMatched,

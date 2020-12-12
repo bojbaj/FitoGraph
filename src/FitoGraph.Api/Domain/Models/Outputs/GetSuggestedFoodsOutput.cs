@@ -17,6 +17,7 @@ namespace FitoGraph.Api.Domain.Models.Outputs
             public decimal Protein { get; set; }
             public decimal Fat { get; set; }
             public decimal Carb { get; set; }
+            public decimal Calorie { get; set; }
             public bool AllergyMatched { get; set; }
             public bool DietMatched { get; set; }
             public bool DeficiencyMatched { get; set; }
