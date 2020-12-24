@@ -5,22 +5,22 @@ CREATE FUNCTION fReturnMatchRate (@Diff INT, @dietMatch TINYINT, @deficiencyMatc
 BEGIN
 		
 	IF @dietMatch = 1 OR @deficiencyMatch = 1 OR @nutritionConditionMatch = 1
-		RETURN 5	
+		RETURN 4	
 	
 	IF @Diff BETWEEN -200 AND 200
-		RETURN 5
+		RETURN 4
 	
 	IF @Diff BETWEEN -400 AND 400
-		RETURN 4
-
-	IF @Diff BETWEEN -600 AND 600
 		RETURN 3
 
-	IF @Diff BETWEEN -800 AND 800
+	IF @Diff BETWEEN -600 AND 600
 		RETURN 2
 
-	IF @Diff BETWEEN -1000 AND 1000
+	IF @Diff BETWEEN -800 AND 800
 		RETURN 1
+
+	IF @Diff BETWEEN -1000 AND 1000
+		RETURN 0
 
 	RETURN 0
 END 
