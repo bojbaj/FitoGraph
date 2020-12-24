@@ -52,7 +52,7 @@ namespace FitoGraph.Api.Areas.Admin.Handlers
                         Enabled = true,
                         RecordType = ReferenceRecordTypeEnum.GFACTOR,
                         RecordId = tUser.Id,
-                        Biotin_B7 = tUserReference.Biotin_B7,
+                        Biotin_B7 = 1,
                         Calcium = 1,
                         Chromium = 1,
                         Copper = 1,
