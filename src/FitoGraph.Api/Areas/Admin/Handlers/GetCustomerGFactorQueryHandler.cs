@@ -14,7 +14,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using static FitoGraph.Api.Infrastructure.AppEnums;
 
-namespace FitoGraph.Api.Areas.Supplier.Handlers
+namespace FitoGraph.Api.Areas.Admin.Handlers
 {
     public class GetCustomerGFactorQueryHandler : IRequestHandler<GetCustomerGFactorQuery, ResultWrapper<GetCustomerGFactorOutput>>
     {

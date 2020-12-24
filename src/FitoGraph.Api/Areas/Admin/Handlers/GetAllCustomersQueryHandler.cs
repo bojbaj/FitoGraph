@@ -9,7 +9,7 @@ using FitoGraph.Api.Helpers.FireBase;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace FitoGraph.Api.Areas.Customer.Handlers
+namespace FitoGraph.Api.Areas.Admin.Handlers
 {
     public class GetAllCustomersQueryHandler : IRequestHandler<GetAllCustomersQuery, ResultWrapper<GetAllCustomersOutput>>
     {

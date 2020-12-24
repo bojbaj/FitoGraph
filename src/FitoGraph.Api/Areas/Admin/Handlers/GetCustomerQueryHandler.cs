@@ -12,7 +12,7 @@ using FitoGraph.Api.Infrastructure;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace FitoGraph.Api.Areas.Supplier.Handlers
+namespace FitoGraph.Api.Areas.Admin.Handlers
 {
     public class GetCustomerQueryHandler : IRequestHandler<GetCustomerQuery, ResultWrapper<GetCustomerOutput>>
     {

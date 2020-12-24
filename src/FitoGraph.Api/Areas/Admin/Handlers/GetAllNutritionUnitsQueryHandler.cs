@@ -9,7 +9,7 @@ using FitoGraph.Api.Helpers.FireBase;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace FitoGraph.Api.Areas.Supplier.Handlers
+namespace FitoGraph.Api.Areas.Admin.Handlers
 {
     public class GetAllNutritionUnitsQueryHandler : IRequestHandler<GetAllNutritionUnitsQuery, ResultWrapper<GetAllNutritionUnitsOutput>>
     {

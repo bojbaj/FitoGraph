@@ -2,8 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using FitoGraph.Api.Areas.Admin.Outputs;
-using FitoGraph.Api.Areas.Admin.Queries;
+using FitoGraph.Api.Areas.Supplier.Outputs;
+using FitoGraph.Api.Areas.Supplier.Queries;
 using FitoGraph.Api.Domain.DB;
 using FitoGraph.Api.Domain.Models;
 using FitoGraph.Api.Helpers.FireBase;
@@ -11,7 +11,7 @@ using FitoGraph.Api.Infrastructure;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace FitoGraph.Api.Areas.Admin.Handlers
+namespace FitoGraph.Api.Areas.Supplier.Handlers
 {
     public class GetSupplierFoodQueryHandler : IRequestHandler<GetSupplierFoodQuery, ResultWrapper<GetSupplierFoodOutput>>
     {
@@ -31,7 +31,7 @@ namespace FitoGraph.Api.Areas.Admin.Handlers
                 .Include(x => x.TFoodType)
                 .Include(x => x.TFoodNutritions).ThenInclude(x => x.TNutrition)
                 .Include(x => x.TFoodNutritions).ThenInclude(x => x.TNutritionUnit)
-                .FirstOrDefaultAsync(x => x.TUserId == request.SupplierId && x.Id == request.FoodId);
+                .FirstOrDefaultAsync(x => x.TUser.FireBaseId == request.firebaseId && x.Id == request.FoodId);
             if (tData == null)
             {
                 result.Status = false;

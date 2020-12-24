@@ -1,8 +1,8 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using FitoGraph.Api.Areas.Admin.Outputs;
-using FitoGraph.Api.Areas.Admin.Queries;
+using FitoGraph.Api.Areas.Supplier.Outputs;
+using FitoGraph.Api.Areas.Supplier.Queries;
 using FitoGraph.Api.Domain.DB;
 using FitoGraph.Api.Domain.Models;
 using FitoGraph.Api.Helpers.FireBase;
@@ -10,7 +10,7 @@ using FitoGraph.Api.Infrastructure;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace FitoGraph.Api.Areas.Admin.Handlers
+namespace FitoGraph.Api.Areas.Supplier.Handlers
 {
     public class GetSupplierFoodsQueryHandler : IRequestHandler<GetSupplierFoodsQuery, ResultWrapper<GetSupplierFoodsOutput>>
     {
@@ -26,8 +26,8 @@ namespace FitoGraph.Api.Areas.Admin.Handlers
         {
             ResultWrapper<GetSupplierFoodsOutput> result = new ResultWrapper<GetSupplierFoodsOutput>();
 
-            var tDataList = await _dbContext.TFood
-                .Where(x => x.TUserId == request.SupplierId)                
+            var tDataList = await _dbContext.TFood            
+                .Where(x => x.TUser.FireBaseId == request.firebaseId)                
                 .ToListAsync();
             var list = tDataList.Select(x => new PublicListItem()
             {
