@@ -31,6 +31,10 @@ namespace FitoGraph.Api.Areas.Supplier.Handlers
                 .Include(x => x.TFoodType)
                 .Include(x => x.TFoodNutritions).ThenInclude(x => x.TNutrition)
                 .Include(x => x.TFoodNutritions).ThenInclude(x => x.TNutritionUnit)
+                .Include(x => x.TFoodAllergies).ThenInclude(x => x.TAllergy)
+                .Include(x => x.TFoodDiets).ThenInclude(x => x.TDiet)
+                .Include(x => x.TFoodDeficiencies).ThenInclude(x => x.TDeficiency)
+                .Include(x => x.TFoodNutritionConditions).ThenInclude(x => x.TNutritionCondition)
                 .FirstOrDefaultAsync(x => x.TUser.FireBaseId == request.firebaseId && x.Id == request.FoodId);
             if (tData == null)
             {
@@ -46,9 +50,41 @@ namespace FitoGraph.Api.Areas.Supplier.Handlers
                 Enabled = tData.Enabled,
                 Image = tData.Image.JoinWithCDNAddress(),
                 Tags = tData.Tags ?? string.Empty,
-                Price= tData.Price,
+                Price = tData.Price,
                 FoodTypeId = tData.TFoodTypeId,
                 FoodTypeName = tData.TFoodType.Title,
+                Allergies = tData.TFoodAllergies.Select(x => new PublicListItem()
+                {
+                    Value = x.TAllergy.Id.ToString(),
+                    Text = x.TAllergy.Title,
+                    Enabled = x.TAllergy.Enabled,
+                    Image = x.TAllergy.Image,
+                    Selected = true
+                }).ToList(),
+                Diets = tData.TFoodDiets.Select(x => new PublicListItem()
+                {
+                    Value = x.TDiet.ToString(),
+                    Text = x.TDiet.Title,
+                    Enabled = x.TDiet.Enabled,
+                    Image = x.TDiet.Image,
+                    Selected = true
+                }).ToList(),
+                Deficiencies = tData.TFoodDeficiencies.Select(x => new PublicListItem()
+                {
+                    Value = x.TDeficiency.Id.ToString(),
+                    Text = x.TDeficiency.Title,
+                    Enabled = x.TDeficiency.Enabled,
+                    Image = x.TDeficiency.Image,
+                    Selected = true
+                }).ToList(),
+                NutritionConditions = tData.TFoodNutritionConditions.Select(x => new PublicListItem()
+                {
+                    Value = x.TNutritionCondition.Id.ToString(),
+                    Text = x.TNutritionCondition.Title,
+                    Enabled = x.TNutritionCondition.Enabled,
+                    Image = x.TNutritionCondition.Image,
+                    Selected = true
+                }).ToList(),
                 FoodNutritions = tData.TFoodNutritions.Select(x => new GetSupplierFoodOutput.FoodNutrition()
                 {
                     NutritionId = x.TNutritionId,

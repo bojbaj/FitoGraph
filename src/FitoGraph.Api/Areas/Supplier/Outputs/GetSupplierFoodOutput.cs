@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using FitoGraph.Api.Domain.Models;
 
 namespace FitoGraph.Api.Areas.Supplier.Outputs
 {
@@ -12,6 +13,11 @@ namespace FitoGraph.Api.Areas.Supplier.Outputs
         public decimal Price { get; set; }
         public int FoodTypeId { get; set; }
         public string FoodTypeName { get; set; }
+        public List<PublicListItem> Allergies { get; set; }
+        public List<PublicListItem> Diets { get; set; }
+        public List<PublicListItem> Deficiencies { get; set; }
+        public List<PublicListItem> NutritionConditions { get; set; }
+
         public List<FoodNutrition> FoodNutritions { get; set; }
         public class FoodNutrition
         {
