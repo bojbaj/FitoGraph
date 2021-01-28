@@ -72,6 +72,7 @@ namespace FitoGraph.Api.Areas.Admin.Handlers
                 Gender = tUser.Gender,
                 TargetWeight = tUser.TargetWeight,
                 WeeklyGoalId = tUser.TWeeklyGoalId ?? 0,
+                WeeklyGoalCaloryPercent = tUser.TWeeklyGoal?.CaloryRequirePercent ?? 0,
                 GoalId = tUser.TWeeklyGoal?.TGoalId ?? 0,
                 ActivityLevelId = tUser.TActivityLevelId ?? 0
             };

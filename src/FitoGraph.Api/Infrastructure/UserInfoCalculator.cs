@@ -98,7 +98,7 @@ namespace FitoGraph.Api.Infrastructure
             return _DailyCalories.ToString("N2").toDecimal(0);
         }
 
-        public static decimal GetRequiredCalories(GoalEnum Goal, decimal DailyCalorie)
+        public static decimal GetRequiredCalories(GoalEnum Goal, decimal DailyCalorie, decimal GoalPercent)
         {
             decimal _RequiredCalories = 0;
             if (Goal == GoalEnum.MAINTAIN_WEIGHT)
@@ -107,11 +107,11 @@ namespace FitoGraph.Api.Infrastructure
             }
             else if (Goal == GoalEnum.LOSE_WEIGHT)
             {
-                _RequiredCalories = DailyCalorie * 0.81M;
+                _RequiredCalories = DailyCalorie * (GoalPercent / 100M);
             }
             else if (Goal == GoalEnum.GAIN_WEIGHT)
             {
-                _RequiredCalories = DailyCalorie / 0.81M;
+                _RequiredCalories = DailyCalorie / (GoalPercent / 100M);
             }
 
             return _RequiredCalories.ToString("N2").toDecimal(0);

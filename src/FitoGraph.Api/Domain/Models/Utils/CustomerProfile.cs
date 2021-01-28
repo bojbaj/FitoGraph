@@ -30,6 +30,7 @@ namespace FitoGraph.Api.Domain.Models.Utils
         public int ActivityLevelId { get; set; }
         public int GoalId { get; set; }
         public int WeeklyGoalId { get; set; }
+        public decimal WeeklyGoalCaloryPercent { get; set; }
         public BodyTypeOutput BodyType { get; set; }
         public int Gender { get; set; }
     }

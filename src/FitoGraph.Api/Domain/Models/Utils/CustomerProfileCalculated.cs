@@ -178,7 +178,7 @@ namespace FitoGraph.Api.Domain.Models.Utils
                 if (_RequireCalories != 0)
                     return _RequireCalories;
 
-                _RequireCalories = UserInfoCalculator.GetRequiredCalories(GoalEn, DailyCalories);
+                _RequireCalories = UserInfoCalculator.GetRequiredCalories(GoalEn, DailyCalories, WeeklyGoalCaloryPercent);
                 return _RequireCalories;
             }
         }
@@ -191,7 +191,7 @@ namespace FitoGraph.Api.Domain.Models.Utils
                 if (_RequireCaloriesForLaunch != 0)
                     return _RequireCaloriesForLaunch;
 
-                _RequireCaloriesForLaunch = UserInfoCalculator.GetRequiredCaloriesForLaunch(DailyCalories);
+                _RequireCaloriesForLaunch = UserInfoCalculator.GetRequiredCaloriesForLaunch(RequireCalories);
                 return _RequireCaloriesForLaunch;
             }
         }
