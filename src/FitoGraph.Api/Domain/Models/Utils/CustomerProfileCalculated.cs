@@ -170,7 +170,7 @@ namespace FitoGraph.Api.Domain.Models.Utils
                 return _ProgressInPercent.ToString("N0").toDecimal(0);
             }
         }
-         private decimal _RequireCalories;
+        private decimal _RequireCalories;
         public decimal RequireCalories
         {
             get
@@ -180,6 +180,19 @@ namespace FitoGraph.Api.Domain.Models.Utils
 
                 _RequireCalories = UserInfoCalculator.GetRequiredCalories(GoalEn, DailyCalories);
                 return _RequireCalories;
+            }
+        }
+
+        private decimal _RequireCaloriesForLaunch;
+        public decimal RequireCaloriesForLaunch
+        {
+            get
+            {
+                if (_RequireCaloriesForLaunch != 0)
+                    return _RequireCaloriesForLaunch;
+
+                _RequireCaloriesForLaunch = UserInfoCalculator.GetRequiredCaloriesForLaunch(DailyCalories);
+                return _RequireCaloriesForLaunch;
             }
         }
         public CustomerStateEnum CustomerState

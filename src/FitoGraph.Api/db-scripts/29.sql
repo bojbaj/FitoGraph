@@ -138,11 +138,22 @@ BEGIN
 	FROM TFood f 
 	JOIN TReference fr ON f.TReferenceId = fr.Id 
 	WHERE f.id = @FoodID
+		
+	INSERT INTO TFoodAllergy (TFoodId, TAllergyId, Created, Enabled)
+	SELECT @FoodID, a.Id, GETDATE(), 1 
+	FROM TFoodNutrition fn WITH(NOLOCK)
+	JOIN TNutrition n WITH(NOLOCK) ON n.id = fn.TNutritionId 
+	JOIN TAllergy a WITH(NOLOCK) ON n.Title LIKE '%' + a.Title + '%'
+	WHERE fn.TFoodId = @FoodID
+	AND a.Id NOT IN (SELECT fa.TAllergyId FROM TFoodAllergy fa WHERE fa.TFoodId = @FoodID)
+	
+	INSERT INTO TFoodAllergy (TFoodId, TAllergyId, Created, Enabled)
+	SELECT @FoodID, a.Id, GETDATE(), 1 
+	FROM TFood f WITH(NOLOCK)
+	JOIN TReference r WITH(NOLOCK) ON r.id = f.TReferenceId  
+	JOIN TAllergy a WITH(NOLOCK) ON a.Title  = 'Milk(lactose intolerance)'
+	WHERE f.id = @FoodID
+	AND r.Lactose  > 0
+	AND a.Id NOT IN (SELECT fa.TAllergyId FROM TFoodAllergy fa WHERE fa.TFoodId = @FoodID)
 END
 GO 
-UPDATE fr SET fr.Calorie = CAST(fr.Energy / 4.184 AS INT)
-FROM TFood f 
-JOIN TReference fr ON f.TReferenceId = fr.Id 
-GO
-UPDATE TAllergy SET Title = 'Peanut' WHERE Title = 'Peanuts'
-GO

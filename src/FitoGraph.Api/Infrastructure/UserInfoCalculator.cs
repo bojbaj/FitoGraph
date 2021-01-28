@@ -116,5 +116,10 @@ namespace FitoGraph.Api.Infrastructure
 
             return _RequiredCalories.ToString("N2").toDecimal(0);
         }
+        public static decimal GetRequiredCaloriesForLaunch(decimal DailyCalorie)
+        {
+            decimal _RequiredCaloriesForLaunch = DailyCalorie * 0.4M;
+            return _RequiredCaloriesForLaunch.ToString("N2").toDecimal(0);
+        }
     }
 }
