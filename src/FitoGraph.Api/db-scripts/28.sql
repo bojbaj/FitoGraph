@@ -32,9 +32,7 @@ CREATE PROCEDURE spFindBestFoodsForCustomer(@UserID INT, @Calorie INT) AS
 BEGIN
 	DECLARE @GFactorId INT = 0	
 	DECLARE @Age INT
-	SELECT @Age = DATEPART(YEAR, GETDATE()) - BirthYear FROM TUser u WHERE u.id = @UserID	
-		
-		
+	SELECT @Age = DATEPART(YEAR, GETDATE()) - BirthYear FROM TUser u WHERE u.id = @UserID		
 	
 	SELECT @GFactorId = u.TReferenceId FROM TUser u WHERE u.id = @UserID
 	
@@ -65,67 +63,67 @@ BEGIN
 	CASE WHEN EXISTS (SELECT 1 FROM #tmp_nutrition_conditions WHERE TFoodId = f.id) THEN 1 ELSE 0 END
 	) MatchRate,
 	(
-		(food_r.Energy * g_factor.Energy) +
-		(food_r.Protein * g_factor.Protein) +
-		(food_r.carbohydrate * g_factor.carbohydrate) +
-		(food_r.Fat * g_factor.Fat) +
-		(food_r.Ash * g_factor.Ash) +
-		(food_r.Dietary_Fibre * g_factor.Dietary_Fibre) +
-		(food_r.Fructose * g_factor.Fructose) +
-		(food_r.Glucose * g_factor.Glucose) +
-		(food_r.Sucrose * g_factor.Sucrose) +
-		(food_r.Lactose * g_factor.Lactose) +
-		(food_r.Total_Sugars * g_factor.Total_Sugars) +
-		(food_r.Starch * g_factor.Starch) +
-		(food_r.Calcium * g_factor.Calcium) +
-		(food_r.Chloride * g_factor.Chloride) +
-		(food_r.Copper * g_factor.Copper) +
-		(food_r.Fluoride * g_factor.Fluoride) +
-		(food_r.Iodine * g_factor.Iodine) +
-		(food_r.Iron * g_factor.Iron) +
-		(food_r.Magnesium * g_factor.Magnesium) +
-		(food_r.Manganese * g_factor.Manganese) +
-		(food_r.Phosphorus * g_factor.Phosphorus) +
-		(food_r.Potassium * g_factor.Potassium) +
-		(food_r.Selenium * g_factor.Selenium) +
-		(food_r.Sodium * g_factor.Sodium) +
-		(food_r.Sulphur * g_factor.Sulphur) +
-		(food_r.Tin * g_factor.Tin) +
-		(food_r.Zinc * g_factor.Zinc) +
-		(food_r.Alpha_Carotene * g_factor.Alpha_Carotene) +
-		(food_r.Beta_Carotene * g_factor.Beta_Carotene) +
-		(food_r.Cryptoxanthin * g_factor.Cryptoxanthin) +
-		(food_r.Vitamin_A * g_factor.Vitamin_A) +
-		(food_r.Lutein * g_factor.Lutein) +
-		(food_r.Lycopene * g_factor.Lycopene) +
-		(food_r.Thiamin_B1 * g_factor.Thiamin_B1) +
-		(food_r.Riboflavin_B2 * g_factor.Riboflavin_B2) +
-		(food_r.Niacin_B3 * g_factor.Niacin_B3) +
-		(food_r.Pantothenic_Acid_B5 * g_factor.Pantothenic_Acid_B5) +
-		(food_r.Vitamin_B6 * g_factor.Vitamin_B6) +
-		(food_r.Biotin_B7 * g_factor.Biotin_B7) +
-		(food_r.Vitamin_B12 * g_factor.Vitamin_B12) +
-		(food_r.Folate * g_factor.Folate) +
-		(food_r.Folic_Acid * g_factor.Folic_Acid) +
-		(food_r.Vitamin_C * g_factor.Vitamin_C) +
-		(food_r.Vitamin_D * g_factor.Vitamin_D) +
-		(food_r.Molybdenum * g_factor.Molybdenum) +
-		(food_r.Chromium * g_factor.Chromium) +
-		(food_r.Vitamin_E * g_factor.Vitamin_E) +
-		(food_r.Total_Saturated_Fatty_Acids * g_factor.Total_Saturated_Fatty_Acids) +
-		(food_r.Total_Monounsaturated_Fatty_Acids * g_factor.Total_Monounsaturated_Fatty_Acids) +
-		(food_r.Total_Polyunsaturated_Fatty_Acids * g_factor.Total_Polyunsaturated_Fatty_Acids) +
-		(food_r.Total_Long_Chain_Omega_3_Fatty_Acids * g_factor.Total_Long_Chain_Omega_3_Fatty_Acids) +
-		(food_r.Total_Trans_Fatty_Acids * g_factor.Total_Trans_Fatty_Acids) +
-		(food_r.Caffeine * g_factor.Caffeine) +
-		(food_r.Cholesterol * g_factor.Cholesterol)	
+		(food_r.Energy * ISNULL(g_factor.Energy, 1)) +
+		(food_r.Protein * ISNULL(g_factor.Protein, 1)) +
+		(food_r.carbohydrate * ISNULL(g_factor.carbohydrate, 1)) +
+		(food_r.Fat * ISNULL(g_factor.Fat, 1)) +
+		(food_r.Ash * ISNULL(g_factor.Ash, 1)) +
+		(food_r.Dietary_Fibre * ISNULL(g_factor.Dietary_Fibre, 1)) +
+		(food_r.Fructose * ISNULL(g_factor.Fructose, 1)) +
+		(food_r.Glucose * ISNULL(g_factor.Glucose, 1)) +
+		(food_r.Sucrose * ISNULL(g_factor.Sucrose, 1)) +
+		(food_r.Lactose * ISNULL(g_factor.Lactose, 1)) +
+		(food_r.Total_Sugars * ISNULL(g_factor.Total_Sugars, 1)) +
+		(food_r.Starch * ISNULL(g_factor.Starch, 1)) +
+		(food_r.Calcium * ISNULL(g_factor.Calcium, 1)) +
+		(food_r.Chloride * ISNULL(g_factor.Chloride, 1)) +
+		(food_r.Copper * ISNULL(g_factor.Copper, 1)) +
+		(food_r.Fluoride * ISNULL(g_factor.Fluoride, 1)) +
+		(food_r.Iodine * ISNULL(g_factor.Iodine, 1)) +
+		(food_r.Iron * ISNULL(g_factor.Iron, 1)) +
+		(food_r.Magnesium * ISNULL(g_factor.Magnesium, 1)) +
+		(food_r.Manganese * ISNULL(g_factor.Manganese, 1)) +
+		(food_r.Phosphorus * ISNULL(g_factor.Phosphorus, 1)) +
+		(food_r.Potassium * ISNULL(g_factor.Potassium, 1)) +
+		(food_r.Selenium * ISNULL(g_factor.Selenium, 1)) +
+		(food_r.Sodium * ISNULL(g_factor.Sodium, 1)) +
+		(food_r.Sulphur * ISNULL(g_factor.Sulphur, 1)) +
+		(food_r.Tin * ISNULL(g_factor.Tin, 1)) +
+		(food_r.Zinc * ISNULL(g_factor.Zinc, 1)) +
+		(food_r.Alpha_Carotene * ISNULL(g_factor.Alpha_Carotene, 1)) +
+		(food_r.Beta_Carotene * ISNULL(g_factor.Beta_Carotene, 1)) +
+		(food_r.Cryptoxanthin * ISNULL(g_factor.Cryptoxanthin, 1)) +
+		(food_r.Vitamin_A * ISNULL(g_factor.Vitamin_A, 1)) +
+		(food_r.Lutein * ISNULL(g_factor.Lutein, 1)) +
+		(food_r.Lycopene * ISNULL(g_factor.Lycopene, 1)) +
+		(food_r.Thiamin_B1 * ISNULL(g_factor.Thiamin_B1, 1)) +
+		(food_r.Riboflavin_B2 * ISNULL(g_factor.Riboflavin_B2, 1)) +
+		(food_r.Niacin_B3 * ISNULL(g_factor.Niacin_B3, 1)) +
+		(food_r.Pantothenic_Acid_B5 * ISNULL(g_factor.Pantothenic_Acid_B5, 1)) +
+		(food_r.Vitamin_B6 * ISNULL(g_factor.Vitamin_B6, 1)) +
+		(food_r.Biotin_B7 * ISNULL(g_factor.Biotin_B7, 1)) +
+		(food_r.Vitamin_B12 * ISNULL(g_factor.Vitamin_B12, 1)) +
+		(food_r.Folate * ISNULL(g_factor.Folate, 1)) +
+		(food_r.Folic_Acid * ISNULL(g_factor.Folic_Acid, 1)) +
+		(food_r.Vitamin_C * ISNULL(g_factor.Vitamin_C, 1)) +
+		(food_r.Vitamin_D * ISNULL(g_factor.Vitamin_D, 1)) +
+		(food_r.Molybdenum * ISNULL(g_factor.Molybdenum, 1)) +
+		(food_r.Chromium * ISNULL(g_factor.Chromium, 1)) +
+		(food_r.Vitamin_E * ISNULL(g_factor.Vitamin_E, 1)) +
+		(food_r.Total_Saturated_Fatty_Acids * ISNULL(g_factor.Total_Saturated_Fatty_Acids, 1)) +
+		(food_r.Total_Monounsaturated_Fatty_Acids * ISNULL(g_factor.Total_Monounsaturated_Fatty_Acids, 1)) +
+		(food_r.Total_Polyunsaturated_Fatty_Acids * ISNULL(g_factor.Total_Polyunsaturated_Fatty_Acids, 1)) +
+		(food_r.Total_Long_Chain_Omega_3_Fatty_Acids * ISNULL(g_factor.Total_Long_Chain_Omega_3_Fatty_Acids, 1)) +
+		(food_r.Total_Trans_Fatty_Acids * ISNULL(g_factor.Total_Trans_Fatty_Acids, 1)) +
+		(food_r.Caffeine * ISNULL(g_factor.Caffeine, 1)) +
+		(food_r.Cholesterol * ISNULL(g_factor.Cholesterol, 1))
 	) 
 	TotalGFactor
 	into #tmp_food_list
 	FROM TFood f
 	JOIN TReference food_r ON food_r.id = f.TReferenceId
 	JOIN TUser restaurant ON restaurant.id = f.TUserId	
-	JOIN TReference g_factor ON g_factor.id = @GFactorID
+	LEFT JOIN TReference g_factor ON g_factor.id = @GFactorID
 	WHERE f.Enabled = 1 --AND f.Price > 0
 	
 	SELECT *	
