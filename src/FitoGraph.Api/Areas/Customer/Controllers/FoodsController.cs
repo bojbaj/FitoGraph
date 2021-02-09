@@ -40,7 +40,7 @@ namespace FitoGraph.Api.Areas.Customer.Controllers
             };
             ResultWrapper<GetProfileOutput> profile = await _mediator.Send(profileModel);
 
-            int requiredCalorie = profile.Result.RequireCaloriesForLaunch.toInt(0);
+            int requiredCalorie = Decimal.ToInt32(profile.Result.RequireCaloriesForLaunch);
             GetSuggestedFoodsQuery model = new GetSuggestedFoodsQuery()
             {
                 firebaseId = user.UserId,

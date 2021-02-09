@@ -20,7 +20,7 @@ namespace FitoGraph.Api.Infrastructure
             int d = defValue;
             if (strValue == null)
                 return d;
-
+         
             if (int.TryParse(strValue.ToString().FixPersianNumbers(), out d))
                 return d;
             else
