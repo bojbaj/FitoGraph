@@ -1,3 +1,30 @@
+IF EXISTS (SELECT 1 FROM sys.sysobjects WHERE name = 'fReturnMatchRate')
+	DROP FUNCTION fReturnMatchRate
+GO
+CREATE FUNCTION fReturnMatchRate (@Diff INT, @dietMatch TINYINT, @deficiencyMatch TINYINT, @nutritionConditionMatch TINYINT) RETURNS INT AS 
+BEGIN
+		
+	-- IF @dietMatch = 1 OR @deficiencyMatch = 1 OR @nutritionConditionMatch = 1
+	-- 	RETURN 4	
+	
+	IF @Diff BETWEEN -200 AND 200
+		RETURN 4
+	
+	IF @Diff BETWEEN -400 AND 400
+		RETURN 3
+
+	IF @Diff BETWEEN -600 AND 600
+		RETURN 2
+
+	IF @Diff BETWEEN -800 AND 800
+		RETURN 1
+
+	IF @Diff BETWEEN -1000 AND 1000
+		RETURN 0
+
+	RETURN 0
+END 
+GO
 IF EXISTS (SELECT 1 FROM sys.sysobjects WHERE name = 'spFindBestFoodsForCustomer')
 	DROP PROCEDURE spFindBestFoodsForCustomer
 GO
