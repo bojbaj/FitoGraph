@@ -130,8 +130,8 @@ BEGIN
 	FROM #tmp_food_list t	
 	ORDER BY 
 	t.MatchRate DESC,
-	ABS(t.CalorieDiff) ASC,
-	t.TotalGFactor DESC	
+	t.TotalGFactor DESC,
+	ABS(t.CalorieDiff) ASC
 END
 GO
 EXEC spFindBestFoodsForCustomer 30, 886
