@@ -48,5 +48,9 @@ namespace FitoGraph.Api.Domain.Entities
         public ICollection<TUserDiet> TUserDiets { get; set; }
         public ICollection<TUserDeficiency> TUserDeficiencies { get; set; }
         public ICollection<TFood> TFoods { get; set; }
+        [InverseProperty("TUser")]
+        public ICollection<TOrder> TUserOrders { get; set; }
+        [InverseProperty("TSupplier")]
+        public ICollection<TOrder> TSullpierOrders { get; set; }
     }
 }
