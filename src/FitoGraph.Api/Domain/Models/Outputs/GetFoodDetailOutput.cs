@@ -14,7 +14,8 @@ namespace FitoGraph.Api.Domain.Models.Outputs
         public int FoodTypeId { get; set; }
         public string FoodTypeName { get; set; }
         public List<FoodNutrition> FoodNutritions { get; set; }
-        public VitaminMinreal VitaminMinreals { get; set; }       
+        public VitaminMinreal VitaminMinreals { get; set; }
+        public SupplierShare PaymentShare { get; set; }
         public class FoodNutrition
         {
             public int NutritionId { get; set; }
@@ -80,6 +81,20 @@ namespace FitoGraph.Api.Domain.Models.Outputs
             public decimal Total_Trans_Fatty_Acids { get; set; }
             public decimal Caffeine { get; set; }
             public decimal Cholesterol { get; set; }
+        }
+
+        public class SupplierShare
+        {
+            public decimal TotalFoodPrice { get; set; }
+            public decimal SharePercent { get; set; }
+            public string ShareAccount { get; set; }
+            public decimal SharePrice
+            {
+                get
+                {
+                    return TotalFoodPrice - (TotalFoodPrice * (SharePercent / 100));
+                }
+            }
         }
     }
 }

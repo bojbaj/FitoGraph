@@ -65,6 +65,9 @@ namespace FitoGraph.Api.Areas.Admin.Handlers
                 tUser.Phone = request.Phone;
                 tUser.TRegionCityId = request.RegionCityId;
                 tUser.RestaurantName = request.RestaurantName;
+                tUser.ShareAccount = request.ShareAccount;
+                tUser.SharePercent = request.SharePercent;
+
                 _dbContext.Update(tUser);
                 await _dbContext.SaveChangesAsync();
 

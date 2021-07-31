@@ -28,6 +28,9 @@ namespace FitoGraph.Api.Domain.Entities
         public decimal Fat { get; set; }
         [Column(TypeName = "decimal(6,2)")]
         public decimal TargetWeight { get; set; }
+        public string ShareAccount { get; set; }
+        [Column(TypeName = "decimal(6,2)")]
+        public decimal SharePercent { get; set; }
         public int? TRegionCityId { get; set; }
         public int Gender { get; set; }
         public int? TBodyTypeId { get; set; }

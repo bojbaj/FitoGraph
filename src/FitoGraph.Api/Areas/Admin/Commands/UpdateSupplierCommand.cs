@@ -9,7 +9,7 @@ namespace FitoGraph.Api.Areas.Admin.Commands
     public class UpdateSupplierCommand : IRequest<ResultWrapper<UpdateSupplierOutput>>
     {
         [Required]
-        public int  Id { get; set; }
+        public int Id { get; set; }
         [Required]
         [Range(1, 2, ErrorMessage = "Please select your gender")]
         public int Gender { get; set; }
@@ -28,5 +28,8 @@ namespace FitoGraph.Api.Areas.Admin.Commands
         public string PostalCode { get; set; }
         [Required]
         public string Phone { get; set; }
+        public string ShareAccount { get; set; }
+        [Range(1, 99, ErrorMessage = "Please enter a valid share percent between 1 and 99")]
+        public decimal SharePercent { get; set; }
     }
 }

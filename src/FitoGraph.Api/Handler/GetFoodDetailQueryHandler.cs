@@ -45,6 +45,7 @@ namespace FitoGraph.Api.Commands.Handler
                 .Include(x => x.TReference)
                 .Include(x => x.TFoodNutritions).ThenInclude(x => x.TNutrition)
                 .Include(x => x.TFoodNutritions).ThenInclude(x => x.TNutritionUnit)
+                .Include(x => x.TUser)
                 .FirstOrDefaultAsync(x => x.Id == request.foodId);
 
             if (tData == null)
@@ -129,6 +130,12 @@ namespace FitoGraph.Api.Commands.Handler
                     Total_Trans_Fatty_Acids = tData.TReference.Total_Trans_Fatty_Acids,
                     Caffeine = tData.TReference.Caffeine,
                     Cholesterol = tData.TReference.Cholesterol,
+                },
+                PaymentShare = new GetFoodDetailOutput.SupplierShare()
+                {
+                    ShareAccount = tData.TUser.ShareAccount,
+                    SharePercent = tData.TUser.SharePercent,
+                    TotalFoodPrice = tData.Price                    
                 }
             };
 

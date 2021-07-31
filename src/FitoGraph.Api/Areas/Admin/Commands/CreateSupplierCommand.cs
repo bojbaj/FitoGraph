@@ -11,7 +11,7 @@ namespace FitoGraph.Api.Areas.Admin.Commands
         [Required]
         public string Email { get; set; }
         [Required]
-        public string Password { get; set; }        
+        public string Password { get; set; }
         [Required]
         [Range(1, 2, ErrorMessage = "Please select your gender")]
         public int Gender { get; set; }
@@ -32,5 +32,8 @@ namespace FitoGraph.Api.Areas.Admin.Commands
         public string PostalCode { get; set; }
         [Required]
         public string Phone { get; set; }
+        public string ShareAccount { get; set; }
+        [Range(1, 99, ErrorMessage = "Please enter a valid share percent between 1 and 99")]
+        public decimal SharePercent { get; set; }
     }
 }
