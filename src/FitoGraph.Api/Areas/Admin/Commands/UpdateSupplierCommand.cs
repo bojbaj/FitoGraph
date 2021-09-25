@@ -31,5 +31,7 @@ namespace FitoGraph.Api.Areas.Admin.Commands
         public string ShareAccount { get; set; }
         [Range(1, 99, ErrorMessage = "Please enter a valid share percent between 1 and 99")]
         public decimal SharePercent { get; set; }
+        public decimal Lat { get; set; }        
+        public decimal Lng { get; set; }
     }
 }

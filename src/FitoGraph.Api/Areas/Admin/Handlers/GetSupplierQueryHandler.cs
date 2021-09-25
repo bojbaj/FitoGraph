@@ -48,7 +48,9 @@ namespace FitoGraph.Api.Areas.Admin.Handlers
                 RegionCountryId = tData.TRegionCity?.TRegionState?.TRegionCountryId ?? 0,
                 RestaurantName = tData.RestaurantName,
                 ShareAccount = tData.ShareAccount,
-                SharePercent = tData.SharePercent
+                SharePercent = tData.SharePercent,
+                Lat = tData.Lat,
+                Lng = tData.Lng
             };
 
             return result;

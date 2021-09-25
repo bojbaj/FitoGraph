@@ -67,7 +67,9 @@ namespace FitoGraph.Api.Areas.Admin.Handlers
                         TRegionCityId = request.RegionCityId,
                         RestaurantName = request.RestaurantName,
                         ShareAccount = request.ShareAccount,
-                        SharePercent = request.SharePercent
+                        SharePercent = request.SharePercent,
+                        Lat = request.Lat,
+                        Lng = request.Lng
                     };
                     _dbContext.TUser.Add(tUser);
                 }
@@ -84,6 +86,8 @@ namespace FitoGraph.Api.Areas.Admin.Handlers
                     tUser.RestaurantName = request.RestaurantName;
                     tUser.ShareAccount = request.ShareAccount;
                     tUser.SharePercent = request.SharePercent;
+                    tUser.Lat = request.Lat;
+                    tUser.Lng = request.Lng;
                 }
                 await _dbContext.SaveChangesAsync();
                 createUserResult.Status = true;

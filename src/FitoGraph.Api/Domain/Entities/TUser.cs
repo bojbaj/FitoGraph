@@ -31,6 +31,10 @@ namespace FitoGraph.Api.Domain.Entities
         public string ShareAccount { get; set; }
         [Column(TypeName = "decimal(6,2)")]
         public decimal SharePercent { get; set; }
+        [Column(TypeName = "decimal(11,8)")]
+        public decimal Lat { get; set; }
+        [Column(TypeName = "decimal(11,8)")]
+        public decimal Lng { get; set; }
         public int? TRegionCityId { get; set; }
         public int Gender { get; set; }
         public int? TBodyTypeId { get; set; }
