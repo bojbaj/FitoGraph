@@ -17,5 +17,7 @@ namespace FitoGraph.Api.Areas.Admin.Outputs
         public string Phone { get; set; }
         public string ShareAccount { get; set; }
         public decimal SharePercent { get; set; }
+        public decimal Lat { get; set; }
+        public decimal Lng { get; set; }
     }
 }
