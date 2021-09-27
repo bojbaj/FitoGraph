@@ -165,6 +165,18 @@ namespace FitoGraph.Api.Areas.Admin.Controllers
             result = await _mediator.Send(model);
             return Ok(result);
         }
-
+        [HttpGet("sports/{articleId?}")]
+        public async Task<IActionResult> GetSports(int articleId = 0)
+        {
+            FirebaseUser user = HttpContext.GetFirebaseUser();
+            GetAllDietsQuery model = new GetAllDietsQuery()
+            {
+                firebaseId = string.Empty,
+                foodId = articleId
+            };
+            ResultWrapper<GetAllDietsOutput> result = new ResultWrapper<GetAllDietsOutput>();
+            result = await _mediator.Send(model);
+            return Ok(result);
+        }
     }
 }

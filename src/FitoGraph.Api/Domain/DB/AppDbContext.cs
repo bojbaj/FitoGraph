@@ -62,6 +62,8 @@ namespace FitoGraph.Api.Domain.DB
         public DbSet<TFoodDeficiency> TFoodDeficiency { get; set; }
         public DbSet<TOrder> TOrder { get; set; }
         public DbSet<TOrderDetail> TOrderDetail { get; set; }
+        public DbSet<TArticle> TArticle { get; set; }
+        public DbSet<TArticleSport> TArticleSport { get; set; }
 
         public List<SP.SPFindBestFoodsForCustomer> SPFindBestFoodsForCustomer(int UserId, int requiredCalorie)
         {

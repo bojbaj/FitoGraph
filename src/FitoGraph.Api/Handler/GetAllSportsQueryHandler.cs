@@ -42,11 +42,12 @@ namespace FitoGraph.Api.Commands.Handler
 
             var tDataList = await _dbContext.TSport
                 .Include(x => x.TUserSports).ThenInclude(x => x.TUser)
+                .Include(x => x.TArticleSports).ThenInclude(x => x.TArticle)
                 .ToListAsync();
             var list = tDataList.Select(x => new PublicListItem()
             {
                 Enabled = x.Enabled,
-                Selected = x.TUserSports.Any(z => z.TUser.FireBaseId == request.firebaseId),
+                Selected = x.TUserSports.Any(z => z.TUser.FireBaseId == request.firebaseId) || x.TArticleSports.Any(z => z.TArticle.Id == request.articleId),
                 Text = x.Title,
                 Value = x.Id.ToString(),
                 Image = x.Image.JoinWithCDNAddress()
