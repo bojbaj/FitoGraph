@@ -73,8 +73,6 @@ namespace FitoGraph.Api.Areas.Articles.Controllers
         [HttpPost("add")]
         public async Task<IActionResult> Add([FromBody] CreateArticleCommand createArticlesCommand)
         {
-            ResultWrapper<RegisterOutput> result = new ResultWrapper<RegisterOutput>();
-            createArticlesCommand.FireBaseId = result.Result.LocalId;
             ResultWrapper<CreateArticleOutput> createArticlesResult = await _mediator.Send(createArticlesCommand);
             return Ok(createArticlesResult);
         }
