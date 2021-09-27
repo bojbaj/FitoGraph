@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -16,6 +17,8 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
+using Stripe;
+using Stripe.Checkout;
 using static FitoGraph.Api.Infrastructure.AppEnums;
 
 namespace FitoGraph.Api.Areas.Customer.Controllers
@@ -53,6 +56,62 @@ namespace FitoGraph.Api.Areas.Customer.Controllers
                 orderId = orderId
             };
             ResultWrapper<GetCustomerOrderDetailOutput> result = await _mediator.Send(model);
+            return Ok(result);
+        }
+
+        [HttpPost("create-payment-session")]
+        public async Task<IActionResult> CreatePaymentSession([FromBody] CustomerCreatePaymentSessionCommand model)
+        {
+            FirebaseUser user = HttpContext.GetFirebaseUser();
+            model.firebaseId = user.UserId;
+
+            string secretKey = "sk_test_51JKejjB9j2pHQUNgVymkcotBwOhw64UhTOxrOWLn6QzpdIqmUOGh0lJCkozGMgWNLYQcg4XKriYmiNjfDRiwujnV00Lv2iKYgC";
+            StripeConfiguration.ApiKey = secretKey;
+
+            var options = new SessionCreateOptions()
+            {
+                PaymentMethodTypes = new List<String>() { "card" },
+                LineItems = new List<SessionLineItemOptions>() { },
+                PaymentIntentData = new SessionPaymentIntentDataOptions()
+                {
+                    ApplicationFeeAmount = 500,
+                    TransferData = new SessionPaymentIntentDataTransferDataOptions()
+                    {
+                        Destination = "acct_1JL9JuPUzKlkrnDH"
+                    }
+                },
+                Mode = "payment",
+                SuccessUrl = model.SuccessUrl,
+                CancelUrl = model.CancelUrl
+            };
+            foreach (var item in model.OrderItems)
+            {
+                options.LineItems.Add(new SessionLineItemOptions()
+                {
+                    Quantity = item.Amount,
+                    PriceData = new SessionLineItemPriceDataOptions()
+                    {
+                        Currency = "usd",
+                        UnitAmount = item.Price,
+                        ProductData = new SessionLineItemPriceDataProductDataOptions()
+                        {
+                            Name = item.FoodId.ToString()
+                        }
+                    }
+                });
+            }
+            var service = new SessionService();
+            Session session = await service.CreateAsync(options);
+
+            ResultWrapper<CustomerCreatePaymentSessionOutput> result =
+            new ResultWrapper<CustomerCreatePaymentSessionOutput>()
+            {
+                Result = new CustomerCreatePaymentSessionOutput()
+                {
+                    SessionId = session.Id,
+                    SessionUrl = session.Url
+                }
+            };
             return Ok(result);
         }
 
