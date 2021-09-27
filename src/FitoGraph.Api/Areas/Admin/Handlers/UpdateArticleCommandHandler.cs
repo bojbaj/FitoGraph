@@ -57,6 +57,7 @@ namespace FitoGraph.Api.Areas.Admin.Handlers
                         return Task.FromResult(updateArticleResult);
                     }
                     tArticle.Title = request.Title;
+                    tArticle.Summary = request.Summary;
                     tArticle.Image = request.Image;
                     tArticle.Content = request.Content;
                     tArticle.Image = request.Image;

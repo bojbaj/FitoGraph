@@ -13,8 +13,10 @@ namespace FitoGraph.Api.Areas.Admin.Commands
         [Required]
         public string Title { get; set; }
         [Required]
+        public string Summary { get; set; }
+        [Required]
         public string Content { get; set; }
-        public string Image { get; set; }        
+        public string Image { get; set; }
         public bool Enabled { get; set; }
         public List<int> Sports { get; set; }
     }

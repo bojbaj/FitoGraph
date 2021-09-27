@@ -35,6 +35,7 @@ namespace FitoGraph.Api.Areas.Admin.Handlers
             {
                 Id = tData.Id,
                 Title = tData.Title,
+                Summary = tData.Summary,
                 Image = tData.Image,
                 Content = tData.Content,
                 Sports = tData.TArticleSports
