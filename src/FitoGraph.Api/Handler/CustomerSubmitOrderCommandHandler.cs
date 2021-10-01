@@ -52,7 +52,9 @@ namespace FitoGraph.Api.Commands.Handler
                         return Task.FromResult(result);
                     }
 
-                    TOrder tOrder = _dbContext.TOrder.FirstOrDefault(x => x.TrackingCode == request.UID.ToString());
+                    TOrder tOrder = _dbContext.TOrder
+                        .Include(x => x.TUser)
+                        .FirstOrDefault(x => x.TUser.FireBaseId == request.firebaseId && x.TrackingCode == request.UID.ToString());
                     if (tOrder == null)
                     {
                         result.Status = false;
