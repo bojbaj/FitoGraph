@@ -48,6 +48,7 @@ namespace FitoGraph.Api.Areas.Admin.Handlers
                     TArticle tArticle = new TArticle()
                     {
                         Title = request.Title,
+                        Content = request.Content,
                         Summary = request.Summary,
                         Image = request.Image,
                         Enabled = request.Enabled,
