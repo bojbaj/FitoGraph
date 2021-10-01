@@ -106,6 +106,7 @@ namespace FitoGraph.Api.Areas.Customer.Controllers
             ResultWrapper<CustomerCreatePaymentSessionOutput> result =
             new ResultWrapper<CustomerCreatePaymentSessionOutput>()
             {
+                Status = true,
                 Result = new CustomerCreatePaymentSessionOutput()
                 {
                     SessionId = session.Id,
