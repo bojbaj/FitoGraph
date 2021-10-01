@@ -77,6 +77,7 @@ namespace FitoGraph.Api.Commands.Handler
                         return Task.FromResult(result);
                     }
 
+                    TPayment.Success = true;
                     TPayment.Used = true;
                     _dbContext.TPayment.Update(TPayment);
                     _dbContext.SaveChanges();
