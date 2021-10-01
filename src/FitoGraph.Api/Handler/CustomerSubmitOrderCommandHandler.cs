@@ -53,10 +53,10 @@ namespace FitoGraph.Api.Commands.Handler
                     }
 
                     TOrder tOrder = _dbContext.TOrder.FirstOrDefault(x => x.TrackingCode == request.UID.ToString());
-                    if (tOrder != null)
+                    if (tOrder == null)
                     {
                         result.Status = false;
-                        result.Message = "Order is duplicated!";
+                        result.Message = "can't find order!";
                         return Task.FromResult(result);
                     }
 
@@ -77,6 +77,10 @@ namespace FitoGraph.Api.Commands.Handler
 
                     TPayment.Used = true;
                     _dbContext.TPayment.Update(TPayment);
+                    _dbContext.SaveChanges();
+
+                    tOrder.Submited = true;
+                    _dbContext.TOrder.Update(tOrder);
                     _dbContext.SaveChanges();
 
                     transaction.Complete();

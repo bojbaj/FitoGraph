@@ -56,6 +56,7 @@ namespace FitoGraph.Api.Commands.Handler
             var list = _dbContext.TOrder
                 .Include(x => x.TSupplier)
                 .Where(x => x.TUserId == tUser.Id)
+                .Where(x => x.Submited)
                 .Select(tData => new GetCustomerOrdersOutput.OrderItem()
                 {
                     Id = tData.Id,

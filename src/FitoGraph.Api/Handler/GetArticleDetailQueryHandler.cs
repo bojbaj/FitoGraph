@@ -41,18 +41,9 @@ namespace FitoGraph.Api.Commands.Handler
         {
             ResultWrapper<GetArticleDetailOutput> result = new ResultWrapper<GetArticleDetailOutput>();
 
-            List<int> favoriteSports = await _dbContext.TUserSport
-                .Include(x => x.TUser)
-                .Where(x => x.TUser.FireBaseId == request.firebaseId)
-                .Select(x => x.TSportId)
-                .ToListAsync();
-
             var tData = await _dbContext.TArticle
                 .Include(x => x.TArticleSports)
                 .ThenInclude(x => x.TSport)
-                .Where(x =>
-                    !favoriteSports.Any() || x.TArticleSports.Any(z => favoriteSports.Contains(z.TSportId))
-                )
                 .FirstOrDefaultAsync(x => x.Id == request.articleId);
 
             if (tData == null)

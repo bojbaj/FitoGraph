@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -40,7 +41,21 @@ namespace FitoGraph.Api.Commands.Handler
         {
             ResultWrapper<GetCustomerArticlesOutput> result = new ResultWrapper<GetCustomerArticlesOutput>();
 
+            List<int> favoriteSports = await _dbContext.TUserSport
+                .Include(x => x.TUser)
+                .Where(x => x.TUser.FireBaseId == request.firebaseId)
+                .Select(x => x.TSportId)
+                .ToListAsync();
+
             var tDataList = await _dbContext.TArticle
+                .Include(x => x.TArticleSports)
+                .ThenInclude(x => x.TSport)
+                .Where(x => x.Enabled)
+                .Where(x =>
+                    !favoriteSports.Any() || x.TArticleSports.Any(z => favoriteSports.Contains(z.TSportId))
+                )
+                .OrderByDescending(x => x.Id)
+                .Take(10)
                 .ToListAsync();
             var list = tDataList.Select(x => new GetCustomerArticlesOutput.ArticleItem()
             {
@@ -49,8 +64,6 @@ namespace FitoGraph.Api.Commands.Handler
                 Summary = x.Summary,
                 Image = x.Image.JoinWithCDNAddress()
             })
-            .OrderByDescending(x => x.Id)
-            .Take(10)
             .ToList();
             result.Status = true;
             result.Result = new GetCustomerArticlesOutput()
