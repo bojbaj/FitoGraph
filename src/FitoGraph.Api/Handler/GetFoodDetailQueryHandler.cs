@@ -65,6 +65,8 @@ namespace FitoGraph.Api.Commands.Handler
                 Enabled = tData.Enabled,
                 FoodTypeId = tData.TFoodTypeId,
                 FoodTypeName = tData.TFoodType.Title,
+                Lat = tData.TUser.Lat,
+                Lng = tData.TUser.Lng,
                 FoodNutritions = tData.TFoodNutritions.Select(x => new GetFoodDetailOutput.FoodNutrition()
                 {
                     NutritionId = x.TNutritionId,

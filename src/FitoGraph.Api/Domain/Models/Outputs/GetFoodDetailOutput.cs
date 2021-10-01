@@ -13,6 +13,8 @@ namespace FitoGraph.Api.Domain.Models.Outputs
         public List<string> Tags { get; set; }
         public int FoodTypeId { get; set; }
         public string FoodTypeName { get; set; }
+        public decimal Lat { get; set; }
+        public decimal Lng { get; set; }
         public List<FoodNutrition> FoodNutritions { get; set; }
         public VitaminMinreal VitaminMinreals { get; set; }
         public SupplierShare PaymentShare { get; set; }
@@ -82,7 +84,6 @@ namespace FitoGraph.Api.Domain.Models.Outputs
             public decimal Caffeine { get; set; }
             public decimal Cholesterol { get; set; }
         }
-
         public class SupplierShare
         {
             public decimal TotalFoodPrice { get; set; }
