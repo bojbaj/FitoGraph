@@ -19,6 +19,7 @@ namespace FitoGraph.Api.Domain.Entities
         public int TSupplierId { get; set; }
         [ForeignKey("TSupplierId")]
         public TUser TSupplier { get; set; }
+        public bool Submited { get; set; }
 
         public ICollection<TOrderDetail> TOrderDetails { get; set; }
     }

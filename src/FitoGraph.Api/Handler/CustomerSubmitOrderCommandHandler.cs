@@ -52,24 +52,7 @@ namespace FitoGraph.Api.Commands.Handler
                         return Task.FromResult(result);
                     }
 
-                    if (!request.OrderItems.Any())
-                    {
-                        result.Status = false;
-                        result.Message = "invalid foods data!";
-                        return Task.FromResult(result);
-                    }
-
-                    TUser tSupplier = _dbContext.TFood
-                        .Include(x => x.TUser)
-                        .FirstOrDefault(x => x.Id == request.OrderItems.First().FoodId)?.TUser;
-                    if (tSupplier == null)
-                    {
-                        result.Status = false;
-                        result.Message = "cannot find supplier!";
-                        return Task.FromResult(result);
-                    }
-
-                    TOrder tOrder = _dbContext.TOrder.FirstOrDefault(x => x.TrackingCode == request.Transaction.id.ToString());
+                    TOrder tOrder = _dbContext.TOrder.FirstOrDefault(x => x.TrackingCode == request.UID.ToString());
                     if (tOrder != null)
                     {
                         result.Status = false;
@@ -78,7 +61,7 @@ namespace FitoGraph.Api.Commands.Handler
                     }
 
                     TPayment TPayment = _dbContext.TPayment
-                        .FirstOrDefault(x => x.UniqueId == request.Transaction.id && x.UserId == tUser.Id);
+                        .FirstOrDefault(x => x.UniqueId == request.UID && x.UserId == tUser.Id);
                     if (TPayment == null)
                     {
                         result.Status = false;
@@ -92,58 +75,7 @@ namespace FitoGraph.Api.Commands.Handler
                         return Task.FromResult(result);
                     }
 
-                    string generatedCode = "";
-                    string generatedTitle = "";
-
-                    tOrder = new TOrder()
-                    {
-                        Enabled = true,
-                        Code = generatedCode,
-                        Created = DateTime.Now,
-                        Date = DateTime.Now,
-                        Title = generatedTitle,
-                        TrackingCode = request.Transaction.id.ToString(),
-                        TSupplierId = tSupplier.Id,
-                        TUserId = tUser.Id,
-                        TotalPayablePrice = 0
-                    };
-                    _dbContext.TOrder.Add(tOrder);
-                    _dbContext.SaveChanges();
-
-                    decimal TotalPayablePrice = 0;
-                    foreach (var detail in request.OrderItems)
-                    {
-                        TFood food = _dbContext.TFood
-                            .FirstOrDefault(x => x.Id == detail.FoodId);
-
-                        if (food == null)
-                        {
-                            result.Status = false;
-                            result.Message = "invalid food data!";
-                            return Task.FromResult(result);
-                        }
-                        TOrderDetail tOrderDetail = new TOrderDetail()
-                        {
-                            Enabled = true,
-                            Created = DateTime.Now,
-                            Amount = detail.Amount,
-                            TFoodId = food.Id,
-                            TUserId = tSupplier.Id,
-                            UnitPrice = food.Price,
-                            RowPrice = food.Price * detail.Amount,
-                            TOrderId = tOrder.Id
-                        };
-                        TotalPayablePrice += tOrderDetail.RowPrice;
-                        _dbContext.TOrderDetail.Add(tOrderDetail);
-                    }
-                    _dbContext.SaveChanges();
-
-                    tOrder.TotalPayablePrice = TotalPayablePrice;
-                    _dbContext.TOrder.Update(tOrder);
-                    _dbContext.SaveChanges();
-
                     TPayment.Used = true;
-                    TPayment.OrderId = tOrder.Id;
                     _dbContext.TPayment.Update(TPayment);
                     _dbContext.SaveChanges();
 
