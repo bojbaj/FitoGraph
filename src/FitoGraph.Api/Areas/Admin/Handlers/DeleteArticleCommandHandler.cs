@@ -34,6 +34,7 @@ namespace FitoGraph.Api.Areas.Admin.Handlers
                     result.Message = "Article doesn't exists";
                     return result;
                 }
+                _dbContext.TArticleSport.RemoveRange(tData.TArticleSports);
                 _dbContext.TArticle.Remove(tData);
                 await _dbContext.SaveChangesAsync();
                 result.Status = true;
