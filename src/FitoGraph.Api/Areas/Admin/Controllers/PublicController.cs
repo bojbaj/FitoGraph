@@ -169,12 +169,12 @@ namespace FitoGraph.Api.Areas.Admin.Controllers
         public async Task<IActionResult> GetSports(int articleId = 0)
         {
             FirebaseUser user = HttpContext.GetFirebaseUser();
-            GetAllDietsQuery model = new GetAllDietsQuery()
+            GetAllSportsQuery model = new GetAllSportsQuery()
             {
                 firebaseId = string.Empty,
-                foodId = articleId
+                articleId = articleId
             };
-            ResultWrapper<GetAllDietsOutput> result = new ResultWrapper<GetAllDietsOutput>();
+            ResultWrapper<GetAllSportsOutput> result = new ResultWrapper<GetAllSportsOutput>();
             result = await _mediator.Send(model);
             return Ok(result);
         }
