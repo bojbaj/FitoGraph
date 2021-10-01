@@ -212,5 +212,17 @@ namespace FitoGraph.Api.Areas.Customer.Controllers
             result = await _mediator.Send(model);
             return Ok(result);
         }
+        [HttpGet("articles/{articleId}")]
+        public async Task<IActionResult> GetArticle(int articleId)
+        {
+            FirebaseUser user = HttpContext.GetFirebaseUser();
+            GetArticleDetailQuery model = new GetArticleDetailQuery()
+            {
+                firebaseId = user.UserId,
+                articleId = articleId
+            };
+            ResultWrapper<GetArticleDetailOutput> result = await _mediator.Send(model);
+            return Ok(result);
+        }
     }
 }
