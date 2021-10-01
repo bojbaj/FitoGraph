@@ -37,6 +37,7 @@ namespace FitoGraph.Api.Areas.Admin.Handlers
                 Title = tData.Title,
                 Summary = tData.Summary,
                 Image = tData.Image,
+                Enabled = tData.Enabled,
                 Content = tData.Content,
                 Sports = tData.TArticleSports
                 .Select(x => new PublicListItem()

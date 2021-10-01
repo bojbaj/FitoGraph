@@ -10,6 +10,7 @@ namespace FitoGraph.Api.Areas.Admin.Outputs
         public string Summary { get; set; }
         public string Content { get; set; }
         public string Image { get; set; }
+        public bool Enabled { get; set; }
         public List<PublicListItem> Sports { get; set; }
 
     }
