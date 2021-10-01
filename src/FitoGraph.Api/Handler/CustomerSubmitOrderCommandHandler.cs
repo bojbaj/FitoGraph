@@ -69,7 +69,7 @@ namespace FitoGraph.Api.Commands.Handler
                         return Task.FromResult(result);
                     }
 
-                    TOrder tOrder = _dbContext.TOrder.FirstOrDefault(x => x.TrackingCode == request.Transaction.id);
+                    TOrder tOrder = _dbContext.TOrder.FirstOrDefault(x => x.TrackingCode == request.Transaction.id.ToString());
                     if (tOrder != null)
                     {
                         result.Status = false;
@@ -102,7 +102,7 @@ namespace FitoGraph.Api.Commands.Handler
                         Created = DateTime.Now,
                         Date = DateTime.Now,
                         Title = generatedTitle,
-                        TrackingCode = request.Transaction.id,
+                        TrackingCode = request.Transaction.id.ToString(),
                         TSupplierId = tSupplier.Id,
                         TUserId = tUser.Id,
                         TotalPayablePrice = 0
