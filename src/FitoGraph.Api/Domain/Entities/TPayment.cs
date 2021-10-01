@@ -8,6 +8,7 @@ namespace FitoGraph.Api.Domain.Entities
     {
         public Guid UniqueId { get; set; }
         public int UserId { get; set; }
+        [Column(TypeName = "decimal(10,2)")]
         public decimal Amount { get; set; }
         public bool Success { get; set; }
         public bool Used { get; set; }
