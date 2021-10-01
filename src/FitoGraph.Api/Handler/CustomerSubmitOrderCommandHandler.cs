@@ -77,6 +77,21 @@ namespace FitoGraph.Api.Commands.Handler
                         return Task.FromResult(result);
                     }
 
+                    TPayment TPayment = _dbContext.TPayment
+                        .FirstOrDefault(x => x.UniqueId == request.Transaction.id && x.UserId == tUser.Id);
+                    if (TPayment == null)
+                    {
+                        result.Status = false;
+                        result.Message = "cannot find uid!";
+                        return Task.FromResult(result);
+                    }
+                    if (TPayment.Used)
+                    {
+                        result.Status = false;
+                        result.Message = "already submited!";
+                        return Task.FromResult(result);
+                    }
+
                     string generatedCode = "";
                     string generatedTitle = "";
 
@@ -125,6 +140,11 @@ namespace FitoGraph.Api.Commands.Handler
 
                     tOrder.TotalPayablePrice = TotalPayablePrice;
                     _dbContext.TOrder.Update(tOrder);
+                    _dbContext.SaveChanges();
+
+                    TPayment.Used = true;
+                    TPayment.OrderId = tOrder.Id;
+                    _dbContext.TPayment.Update(TPayment);
                     _dbContext.SaveChanges();
 
                     transaction.Complete();
